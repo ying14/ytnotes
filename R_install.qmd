@@ -1,7 +1,13 @@
+---
+title: "R install notes"
+format: html
+editor: visual
+---
 
+## R installation
 
-library(tidyverse)
-
+```{r}
+#| eval: false
 
 cran.pkgs <- c("tidyverse",
              "rlang",
@@ -54,3 +60,5 @@ BiocManager::install(bioc.pkgs)
 # git clone https://github.mskcc.org/taury/ytpipeline
 
 
+
+```

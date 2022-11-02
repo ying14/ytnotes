@@ -1,0 +1,75 @@
+---
+title: "Git commands"
+format: html
+editor: visual
+---
+
+Download repository
+
+``` bash
+git clone https://github.com/ying14/yingtools2
+```
+
+Inspect origins
+
+``` bash
+git remote -v
+```
+
+Shows what branch we are on, and which files have changed, whether staged or not.
+
+``` bash
+git status
+```
+
+Stage changes
+
+``` bash
+git add README.md
+```
+
+Undo staging
+
+``` bash
+git reset HEAD README.md
+```
+
+Stage changes
+
+``` bash
+git add --all
+```
+
+`git add README.md` for a specific file
+
+Commit staged changes
+
+``` bash
+git commit -m 'message'
+```
+
+Push committed changes
+
+``` bash
+git push
+```
+
+Pull committed changes
+
+``` bash
+git pull
+```
+
+Log of changes, with hash
+
+``` bash
+git log
+```
+
+fresh install of repo
+
+``` bash
+git fetch --all
+git reset --hard origin/main
+git pull origin main
+```
