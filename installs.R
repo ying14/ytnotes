@@ -1,0 +1,56 @@
+
+
+library(tidyverse)
+
+
+cran.pkgs <- c("tidyverse",
+             "rlang",
+             "roxygen2",
+             "remotes",
+             "reticulate",
+             "reshape2",
+             "plyr",
+             "xlsx",
+             "formula.tools",
+             "Hmisc",
+             "ggrepel",
+             "ggfittext",
+             "BiocManager",
+             "rbenchmark",
+             "tictoc",
+             "cmprsk", 
+             "DT", 
+             "shiny", 
+             "RJDBC", 
+             "shinycssloaders", 
+             "shinyvalidate", 
+             "ggiraph",
+             "rjson", 
+             "pingr", 
+             "styler",
+             "logistf",
+             "coxphf")
+install.packages(cran.pkgs)
+
+bioc.pkgs <- c("dada2",
+               "seqinr",
+               "phyloseq",
+               "ggtree",
+               "msa",
+               "DECIPHER",
+               "phangorn")
+BiocManager::install(bioc.pkgs)
+
+
+
+# remotes::install_github("ying14/yingtools2")
+# remotes::install_git("https://github.mskcc.org/taury/ytrecipes.git")
+# remotes::install_git("https://github.mskcc.org/taury/ytdata.git")
+# remotes::install_git("https://github.mskcc.org/taury/ytpipeline.git")
+
+# git clone https://github.com/ying14/yingtools2
+# git clone https://github.mskcc.org/taury/ytrecipes
+# git clone https://github.mskcc.org/taury/ytdata
+# git clone https://github.mskcc.org/taury/ytpipeline
+
+
