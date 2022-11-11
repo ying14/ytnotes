@@ -43,6 +43,7 @@ bioc.pkgs <- c("dada2",
                "phyloseq",
                "ggtree",
                "msa",
+               "phytools",
                "DECIPHER",
                "phangorn")
 BiocManager::install(bioc.pkgs)

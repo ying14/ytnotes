@@ -1,0 +1,59 @@
+---
+title: "SQL Commands"
+format: html
+editor: visual
+---
+
+Check if `B` is a subset of `A`:
+
+```sql
+SELECT *
+FROM   B
+WHERE  NOT EXISTS (SELECT 1 
+                   FROM   A 
+                   WHERE  A.ID = B.ID)
+```
+
+
+
+```sql
+with
+w (mrn, ord_id, test_date) as
+( select distinct LR_MRN, LR_ORD_ID, LR_PERFORMED_DTE from
+idb.LAB_TEXT_LINE
+JOIN idb.LAB_RESULTS
+on LR_MRN=LTL_MRN
+and LR_PERFORMED_DTE=LTL_PERFORMED_DTE
+and LR_RESULT_GUID=LTL_RESULT_GUID
+
+x (key, val, rnum) AS
+( SELECT LTL_RESULT_GUID, LTL_TEXT_RESULT, LTL_LINE_NO
+FROM idb.LAB_TEXT_LINE
+JOIN idb.LAB_RESULTS
+on LR_MRN=LTL_MRN
+and LR_PERFORMED_DTE=LTL_PERFORMED_DTE
+and LR_RESULT_GUID=LTL_RESULT_GUID
+join w
+on LR_MRN=mrn
+and LR_ORD_ID=ord_id
+and LR_PERFORMED_DTE=test_date),
+
+y(key, str, cnt, cnt_max) AS
+( SELECT key, VARCHAR('', 14025), 0, MAX(rnum)
+FROM x
+GROUP BY key
+UNION ALL
+SELECT y.key, y.str || RTRIM(CHAR(x.val)), y.cnt + 1, y.cnt_max
+FROM x, y
+WHERE x.key = y.key AND
+x.rnum = y.cnt + 1 AND
+y.cnt < y.cnt_max ),
+
+z as (SELECT key, str
+FROM y
+WHERE y.cnt = y.cnt_max)
+
+select * from idb.LAB_RESULTS left join z
+on LR_RESULT_GUID=KEY
+
+```

@@ -14,7 +14,7 @@ library(tidyverse)
 library(yingtools2)
 html.files <- list.files(pattern="html$")
 tbl <- tibble(link=html.files) %>% 
-  mutate(label=link,
+  mutate(label=gsub("\\.html$","",link),
          md=str_glue("[{label}]({link})")) %>%
   filter(link!="index.html")
 
@@ -22,7 +22,5 @@ toc <- paste(tbl$md,collapse="\n\n")
 
 ```
 
-
 `r toc`
-
 

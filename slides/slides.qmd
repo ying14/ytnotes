@@ -1,0 +1,94 @@
+---
+title: "Ying's Slides"
+author: "Ying Taur"
+format: revealjs
+editor: source
+execute: 
+  echo: false
+  warning: false
+bibliography: references.bib
+csl: nature.csl
+---
+
+```{r}
+#| fig-cap: Plot of Mtcars
+library(tidyverse)
+library(yingtools2)
+```
+
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+
+## Bullets
+
+When you click the **Render** button a document will be generated that includes:
+
+-   Content authored with markdown
+-   Output from executable code
+
+## Code
+
+When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+
+## Code chunk
+
+Here is a code chunk:
+```{r}
+#| echo: true
+#| code-line-numbers: false
+ggplot(diamonds,aes(x=carat,y=price,color=cut)) + geom_point()
+
+```
+
+
+## Table
+
+Here is a table:
+```{r}
+knitr::kable(mtcars)
+```
+
+
+## Data Table
+
+Here is a table:
+```{r}
+DT::datatable(mtcars)
+```
+
+
+
+## Citations and Footnotes
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this. The `echo: false` option disables the printing of code (only output is displayed).
+
+Here is a footnote reference,[^aa] and another.[^longnote] You can also reference inline!^[Hello. I am an inline footnote.]
+
+<!-- These footnote definitions can go anywhere make sure there is blank line before/after -->
+
+[^aa]: Here is the footnote.
+
+[^longnote]: Here's one with multiple blocks.
+  Subsequent paragraphs are indented to show that they
+belong to the previous footnote.
+
+        { some.code }
+
+  The whole paragraph can be indented, or just the first
+  line.  In this way, multi-paragraph footnotes work like
+  multi-paragraph list items.
+
+
+
+
+Here is a sentence with citation using bibliography. [@cordonnier2009randomized]
+
+The sentence has multiple references. [@adibi2012reduction; @gold2008human; @roach1991ciprofloxacin]
+

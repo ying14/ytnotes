@@ -57,6 +57,24 @@ flowchart LR
 
 ![](unnamed.jpg){width="255"}
 
+Here is a footnote reference,[^aa] and another.[^longnote] You can also reference inline!^[Hello. I am an inline footnote.]
+
+<!-- These footnote definitions can go anywhere make sure there is blank line before/after -->
+
+[^aa]: Here is the footnote.
+
+[^longnote]: Here's one with multiple blocks.
+  Subsequent paragraphs are indented to show that they
+belong to the previous footnote.
+
+        { some.code }
+
+  The whole paragraph can be indented, or just the first
+  line.  In this way, multi-paragraph footnotes work like
+  multi-paragraph list items.
+
+
+
 ------------------------------------------------------------------------
 
 ## Running R Code
