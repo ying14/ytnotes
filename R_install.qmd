@@ -9,46 +9,49 @@ editor: visual
 ```{r}
 #| eval: false
 
-cran.pkgs <- c("tidyverse",
-             "rlang",
-             "roxygen2",
-             "remotes",
-             "reticulate",
-             "reshape2",
-             "plyr",
-             "xlsx",
-             "formula.tools",
-             "Hmisc",
-             "ggrepel",
-             "ggfittext",
-             "BiocManager",
-             "rbenchmark",
-             "tictoc",
-             "cmprsk", 
-             "DT", 
-             "shiny", 
-             "RJDBC", 
-             "shinycssloaders", 
-             "shinyvalidate", 
-             "ggiraph",
-             "rjson", 
-             "pingr", 
-             "styler",
-             "logistf",
-             "coxphf")
+cran.pkgs <- c(
+  "tidyverse",
+  "rlang",
+  "roxygen2",
+  "remotes",
+  "reticulate",
+  "reshape2",
+  "plyr",
+  "xlsx",
+  "formula.tools",
+  "Hmisc",
+  "ggrepel",
+  "ggfittext",
+  "BiocManager",
+  "rbenchmark",
+  "tictoc",
+  "cmprsk",
+  "DT",
+  "shiny",
+  "RJDBC",
+  "shinycssloaders",
+  "shinyvalidate",
+  "ggiraph",
+  "rjson",
+  "pingr",
+  "styler",
+  "logistf",
+  "coxphf",
+  "roxygen2Comment"
+)
 install.packages(cran.pkgs)
 
-bioc.pkgs <- c("dada2",
-               "seqinr",
-               "phyloseq",
-               "ggtree",
-               "msa",
-               "phytools",
-               "DECIPHER",
-               "phangorn")
+bioc.pkgs <- c(
+  "dada2",
+  "seqinr",
+  "phyloseq",
+  "ggtree",
+  "msa",
+  "phytools",
+  "DECIPHER",
+  "phangorn"
+)
 BiocManager::install(bioc.pkgs)
-
-
 
 # remotes::install_github("ying14/yingtools2")
 # remotes::install_git("https://github.mskcc.org/taury/ytrecipes.git")
@@ -59,7 +62,5 @@ BiocManager::install(bioc.pkgs)
 # git clone https://github.mskcc.org/taury/ytrecipes
 # git clone https://github.mskcc.org/taury/ytdata
 # git clone https://github.mskcc.org/taury/ytpipeline
-
-
 
 ```
