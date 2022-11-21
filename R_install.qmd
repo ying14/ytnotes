@@ -37,6 +37,8 @@ cran.pkgs <- c(
   "styler",
   "logistf",
   "coxphf",
+  "Rtsne",
+  "umap",
   "roxygen2Comment"
 )
 install.packages(cran.pkgs)

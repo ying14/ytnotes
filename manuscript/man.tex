@@ -177,7 +177,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, borderline west={3pt}{0pt}{shadecolor}, enhanced, sharp corners, frame hidden, boxrule=0pt, interior hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, breakable, enhanced, sharp corners, interior hidden, frame hidden, boxrule=0pt]}{\end{tcolorbox}}\fi
 
 \hypertarget{sec-introduction}{%
 \subsection{Introduction}\label{sec-introduction}}
@@ -237,6 +237,14 @@ across from the sea. The girl at the booth sold fifty bonds. The small
 pup gnawed a hole in the sock. The fish twisted and turned on the bent
 hook. Press the pants and sew a button on the vest. The swan dive was
 far short of perfect.
+
+\begin{figure}
+
+\hfill{} \includegraphics{man_files/figure-pdf/unnamed-chunk-2-1.pdf}
+
+\caption{Important scatterplot}
+
+\end{figure}
 
 The beauty of the view stunned the young boy. Two blue fish swam in the
 tank. Her purse was full of useless trash. The colt reared and threw the
@@ -470,13 +478,38 @@ was worn in a thin silver ring. The fruit peel was cut in thick slices.
 The Navy attacked the big task force. See the cat glaring at the scared
 mouse. There are more than two factors here. The hat brim was wide and
 too droopy. The lawyer tried to lose his case. The grass curled around
-the fence post. You can see a wrapped text thing at \textbf{?@fig-wrap}.
+the fence post. You can see a wrapped text thing at Figure
+\ref{fig-wrap}.
 
 \begin{wrapfigure}{0}{0.4\linewidth}
 \centering
 \includegraphics[width=0.7\linewidth]{stamp1b.jpg}
-\caption{caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
+\caption{\label{fig-wrap}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
 \vspace{-3pt}
+\end{wrapfigure}
+
+A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
+Both lost their lives in the raging storm. We talked of the slide show
+in the circus. Use a pencil to write the first draft. He ran half way to
+the hardware store. The clock struck to mark the third period. A small
+creek cut across the field. Cars and busses stalled in snow drifts. The
+set of china hit, the floor with a crash. This is a grand season for
+hikes on the road. The dune rose from the edge of the water. Those words
+were the cue for the actor to leave. A yacht slid around the point into
+the bay. The two met while playing on the sand. The ink stain dried on
+the finished page. The walled town was seized without a fight. The lease
+ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of
+the car woke the sleeping cop. The heart beat strongly and with firm
+strokes. The pearl was worn in a thin silver ring. The fruit peel was
+cut in thick slices. The Navy attacked the big task force. See the cat
+glaring at the scared mouse. You can see a wrapped text thing at Figure
+\ref{fig-wrap2}.
+
+\begin{wrapfigure}{l}{0.4\linewidth}
+  \centering
+  \includegraphics[width=0.7\linewidth]{stamp1a.jpg}
+  \caption{\label{fig-wrap2}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
+  \vspace{-3pt}
 \end{wrapfigure}
 
 A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
@@ -512,24 +545,34 @@ was worn in a thin silver ring. The fruit peel was cut in thick slices.
 The Navy attacked the big task force. See the cat glaring at the scared
 mouse. There are more than two factors here. The hat brim was wide and
 too droopy. The lawyer tried to lose his case. The grass curled around
-the fence post. A yacht slid around the point into the bay. The two met
-while playing on the sand. The ink stain dried on the finished page. The
-walled town was seized without a fight. The lease ran out in sixteen
-weeks. A tame squirrel makes a nice pet. The horn of the car woke the
-sleeping cop. The heart beat strongly and with firm strokes. The pearl
-was worn in a thin silver ring. The fruit peel was cut in thick slices.
-The Navy attacked the big task force. See the cat glaring at the scared
-mouse. There are more than two factors here. The hat brim was wide and
-too droopy. The lawyer tried to lose his case. The grass curled around
-the fence post.
+the fence post. See Table \ref{tbl-mtsmall}.
 
-\begin{wrapfigure}{1}{0.4\linewidth}
-\centering
+\begin{wrapfigure}{l}{0.4\linewidth}
+  \centering
+::: {.cell}
+::: {.cell-output .cell-output-stdout}
+```
 
-asdfasdfasdfasfd
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Thu Nov 17 09:38:46 2022
+\begin{tabular}{rrr}
+  \hline
+ & Sepal.Length & Sepal.Width \\ 
+  \hline
+1 & 5.10 & 3.50 \\ 
+  2 & 4.90 & 3.00 \\ 
+  3 & 4.70 & 3.20 \\ 
+  4 & 4.60 & 3.10 \\ 
+  5 & 5.00 & 3.60 \\ 
+  6 & 5.40 & 3.90 \\ 
+   \hline
+\end{tabular}
+```
+:::
+:::
 
-\caption{caption here}
-\vspace{-3pt}
+  \caption{\label{tbl-mtsmall}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
+  \vspace{-3pt}
 \end{wrapfigure}
 
 A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
@@ -565,7 +608,9 @@ was worn in a thin silver ring. The fruit peel was cut in thick slices.
 The Navy attacked the big task force. See the cat glaring at the scared
 mouse. There are more than two factors here. The hat brim was wide and
 too droopy. The lawyer tried to lose his case. The grass curled around
-the fence post.
+the fence post. See Table Figure \ref{fig-diamonds-small}.
+
+\includegraphics{man_files/figure-pdf/unnamed-chunk-7-1.pdf}
 
 A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
 Both lost their lives in the raging storm. We talked of the slide show

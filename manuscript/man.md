@@ -77,14 +77,14 @@ The sentence has multiple references. [@adibi2012reduction; @gold2008human; @roa
 
 Black-Scholes (@eq-black-scholes) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options:
 
-
-
 $$
 \frac{\partial \mathrm C}{ \partial \mathrm t } + \frac{1}{2}\sigma^{2} \mathrm S^{2}
 \frac{\partial^{2} \mathrm C}{\partial \mathrm C^2}
   + \mathrm r \mathrm S \frac{\partial \mathrm C}{\partial \mathrm S}\ =
   \mathrm r \mathrm C 
 $$ {#eq-black-scholes}
+
+
 
 {{< pagebreak >}}
 
@@ -95,6 +95,16 @@ $$ {#eq-black-scholes}
 ## Other materials
 
 The birch canoe slid on the smooth planks. Glue the sheet to the dark blue background. It's easy to tell the depth of a well. These days a chicken leg is a rare dish. Rice is often served in round bowls. The juice of lemons makes fine punch. The box was thrown beside the parked truck. The hogs were fed chopped corn and garbage. Four hours of steady work faced us. Large size in stockings is hard to sell. Check out @sec-introduction for additional content. The boy was there when the sun rose. ![](stamp1a.jpg){height="1em"} A rod is used to catch pink salmon. The source of the huge river is the clear spring. Kick the ball straight and follow through. Help the woman get back to her feet. A pot of tea helps to pass the evening. Smoky fires lack flame and heat. The soft cushion broke the man's fall. The salt breeze came across from the sea. The girl at the booth sold fifty bonds. The small pup gnawed a hole in the sock. The fish twisted and turned on the bent hook. Press the pants and sew a button on the vest. The swan dive was far short of perfect.
+
+
+::: {.cell layout-align="right" wrapfigure='["R",0.3]'}
+::: {.cell-output-display}
+![Important scatterplot](man_files/figure-pdf/unnamed-chunk-2-1.pdf){fig-align='right' width=.3\textwidth}
+:::
+:::
+
+
+
 
 The beauty of the view stunned the young boy. Two blue fish swam in the tank. Her purse was full of useless trash. The colt reared and threw the tall rider. It snowed, rained, and hailed the same morning. Read verse out loud for pleasure. Hoist the load to your left shoulder. Take the winding path to reach the lake. Note closely the size of the gas tank. Wipe the grease off his dirty face. See @fig-stamp1a to see the stamp I'm talking about.
 
@@ -151,8 +161,7 @@ A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lo
 ![stamp AA again](stamp1a.jpg){#fig-stamp3-again}
 :::
 
-
-A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. You can see a wrapped text thing at @fig-wrap.
+A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. You can see a wrapped text thing at Figure \ref{fig-wrap}.
 
 
 
@@ -160,43 +169,73 @@ A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lo
 \begin{wrapfigure}{0}{0.4\linewidth}
 \centering
 \includegraphics[width=0.7\linewidth]{stamp1b.jpg}
-\caption{caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
+\caption{\label{fig-wrap}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
 \vspace{-3pt}
 \end{wrapfigure}
 ```
 
 
-A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post.
+A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. You can see a wrapped text thing at Figure \ref{fig-wrap2}.
 
 
 
 ```{=tex}
-\begin{wrapfigure}{1}{0.4\linewidth}
-\centering
-
-asdfasdfasdfasfd
-
-\caption{caption here}
-\vspace{-3pt}
+\begin{wrapfigure}{l}{0.4\linewidth}
+  \centering
+  \includegraphics[width=0.7\linewidth]{stamp1a.jpg}
+  \caption{\label{fig-wrap2}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
+  \vspace{-3pt}
 \end{wrapfigure}
 ```
 
 
+A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. See Table \ref{tbl-mtsmall}.
+
+
+
+````{=tex}
+\begin{wrapfigure}{l}{0.4\linewidth}
+  \centering
+::: {.cell}
+::: {.cell-output .cell-output-stdout}
+```
+
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Thu Nov 17 09:38:46 2022
+\begin{tabular}{rrr}
+  \hline
+ & Sepal.Length & Sepal.Width \\ 
+  \hline
+1 & 5.10 & 3.50 \\ 
+  2 & 4.90 & 3.00 \\ 
+  3 & 4.70 & 3.20 \\ 
+  4 & 4.60 & 3.10 \\ 
+  5 & 5.00 & 3.60 \\ 
+  6 & 5.40 & 3.90 \\ 
+   \hline
+\end{tabular}
+```
+:::
+:::
+
+  \caption{\label{tbl-mtsmall}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
+  \vspace{-3pt}
+\end{wrapfigure}
+````
+
+A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. See Table Figure \ref{fig-diamonds-small}.
+
+
+
+::: {.cell wrapfigure='["r",0.3]'}
+::: {.cell-output-display}
+![](man_files/figure-pdf/unnamed-chunk-7-1.pdf)
+:::
+:::
+
 A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post.
 
-<!-- \begin{wrapfigure}{1}{0.4\linewidth} -->
-
-<!-- \centering -->
-
-<!-- asdfasdfasdasdf asdfasdf s -->
-
-<!-- \caption{caption here} -->
-
-<!-- \vspace{-3pt} -->
-
-<!-- \end{wrapfigure} -->
-
-A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. Both lost their lives in the raging storm. We talked of the slide show in the circus. Use a pencil to write the first draft. He ran half way to the hardware store. The clock struck to mark the third period. A small creek cut across the field. Cars and busses stalled in snow drifts. The set of china hit, the floor with a crash. This is a grand season for hikes on the road. The dune rose from the edge of the water. Those words were the cue for the actor to leave. A yacht slid around the point into the bay. The two met while playing on the sand. The ink stain dried on the finished page. The walled town was seized without a fight. The lease ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of the car woke the sleeping cop. The heart beat strongly and with firm strokes. The pearl was worn in a thin silver ring. The fruit peel was cut in thick slices. The Navy attacked the big task force. See the cat glaring at the scared mouse. There are more than two factors here. The hat brim was wide and too droopy. The lawyer tried to lose his case. The grass curled around the fence post. <!-- does not work for pdf -->
+<!-- does not work for pdf -->
 
 ::: columns
 ::: {.column width="50%"}
