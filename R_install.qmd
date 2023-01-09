@@ -4,6 +4,28 @@ format: html
 editor: visual
 ---
 
+
+```{r, include=FALSE, eval=FALSE}
+
+remotes::dev_package_deps("yingtools2")
+yy <- remotes::package_deps("ggrepel")
+
+
+yy$package
+
+yy %>% dt
+
+pkgs <- installed.packages() %>% as_tibble()
+
+setdiff(pkgs$Package,c(cran.pkgs,bioc.pkgs))
+xx=available.packages()
+package.dependencies(x, check = FALSE,
+                     depLevel = c("Depends", "Imports", "Suggests"))
+
+```
+
+
+
 ## R installation
 
 ```{r}
