@@ -119,6 +119,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#extract-top-3-rows" id="toc-extract-top-3-rows" class="nav-link" data-scroll-target="#extract-top-3-rows">Extract top 3 rows</a></li>
   <li><a href="#multiple-row-filter-criteria" id="toc-multiple-row-filter-criteria" class="nav-link" data-scroll-target="#multiple-row-filter-criteria">Multiple row filter criteria</a></li>
   </ul></li>
+  <li><a href="#selectrename-columns" id="toc-selectrename-columns" class="nav-link" data-scroll-target="#selectrename-columns">Select/Rename columns</a>
+  <ul>
+  <li><a href="#routine-select" id="toc-routine-select" class="nav-link" data-scroll-target="#routine-select">Routine select</a></li>
+  <li><a href="#select-columns-using-regex-pattern" id="toc-select-columns-using-regex-pattern" class="nav-link" data-scroll-target="#select-columns-using-regex-pattern">Select columns using regex pattern</a></li>
+  <li><a href="#select-columns-of-a-certain-type" id="toc-select-columns-of-a-certain-type" class="nav-link" data-scroll-target="#select-columns-of-a-certain-type">Select columns of a certain type</a></li>
+  <li><a href="#select-all-columns-except-those-specified" id="toc-select-all-columns-except-those-specified" class="nav-link" data-scroll-target="#select-all-columns-except-those-specified">Select all columns <em>except</em> those specified</a></li>
+  <li><a href="#select-columns-and-rename" id="toc-select-columns-and-rename" class="nav-link" data-scroll-target="#select-columns-and-rename">Select columns and rename</a></li>
+  <li><a href="#select-all-columns-and-add-prefix" id="toc-select-all-columns-and-add-prefix" class="nav-link" data-scroll-target="#select-all-columns-and-add-prefix">Select all columns and add prefix</a></li>
+  <li><a href="#select-and-programmatically-rename" id="toc-select-and-programmatically-rename" class="nav-link" data-scroll-target="#select-and-programmatically-rename">Select and programmatically rename</a></li>
+  </ul></li>
   <li><a href="#mutatetransmute" id="toc-mutatetransmute" class="nav-link" data-scroll-target="#mutatetransmute">Mutate/Transmute</a>
   <ul>
   <li><a href="#mutate" id="toc-mutate" class="nav-link" data-scroll-target="#mutate">Mutate</a></li>
@@ -128,7 +138,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#count-rows-by-group" id="toc-count-rows-by-group" class="nav-link" data-scroll-target="#count-rows-by-group">Count rows by group</a></li>
   <li><a href="#calculate-various-summaries-by-group" id="toc-calculate-various-summaries-by-group" class="nav-link" data-scroll-target="#calculate-various-summaries-by-group">Calculate various summaries by group</a></li>
-  <li><a href="#select-first-sorted-row-by-group" id="toc-select-first-sorted-row-by-group" class="nav-link" data-scroll-target="#select-first-sorted-row-by-group">Select first sorted row by group</a></li>
+  <li><a href="#select-first-row-after-sorting-by-group" id="toc-select-first-row-after-sorting-by-group" class="nav-link" data-scroll-target="#select-first-row-after-sorting-by-group">Select first row after sorting, by group</a></li>
   </ul></li>
   <li><a href="#apply-to-specific-columns-across" id="toc-apply-to-specific-columns-across" class="nav-link" data-scroll-target="#apply-to-specific-columns-across">Apply to specific columns (across)</a>
   <ul>
@@ -151,7 +161,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#nested-columns" id="toc-nested-columns" class="nav-link" data-scroll-target="#nested-columns">Nested columns</a>
   <ul>
-  <li><a href="#split-string-into-nested-list-unnest-into-long-format" id="toc-split-string-into-nested-list-unnest-into-long-format" class="nav-link" data-scroll-target="#split-string-into-nested-list-unnest-into-long-format">Split string into nested list, unnest into long format</a></li>
+  <li><a href="#split-string-column-into-nested-list-unnest-into-long-format" id="toc-split-string-column-into-nested-list-unnest-into-long-format" class="nav-link" data-scroll-target="#split-string-column-into-nested-list-unnest-into-long-format">Split string column into nested list, unnest into long format</a></li>
   <li><a href="#move-columns-into-single-nested-column-then-unnest-to-individual-columns-again." id="toc-move-columns-into-single-nested-column-then-unnest-to-individual-columns-again." class="nav-link" data-scroll-target="#move-columns-into-single-nested-column-then-unnest-to-individual-columns-again.">Move columns into single nested column, then unnest to individual columns again.</a></li>
   <li><a href="#nested-table-in-a-single-column-by-group" id="toc-nested-table-in-a-single-column-by-group" class="nav-link" data-scroll-target="#nested-table-in-a-single-column-by-group">Nested table in a single column, by group</a></li>
   </ul></li>
@@ -183,18 +193,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="column" style="width:49%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>DMr <span class="ot">&lt;-</span> diamonds</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>band_members_r <span class="ot">&lt;-</span> band_members</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>band_instruments_r <span class="ot">&lt;-</span> band_instruments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="ot">&lt;-</span> diamonds</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>BAND_MEMBERSr <span class="ot">&lt;-</span> band_members</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>BAND_INSTRUMENTS_r <span class="ot">&lt;-</span> band_instruments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>DMp <span class="op">=</span> pl.from_pandas(r.DMr)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>band_members_p <span class="op">=</span> pl.from_pandas(r.band_members_r)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>band_instruments_p <span class="op">=</span> pl.from_pandas(r.band_instruments_r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>DIAMONDSp <span class="op">=</span> pl.from_pandas(r.DIAMONDSr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>BAND_MEMBERS_p <span class="op">=</span> pl.from_pandas(r.BAND_MEMBERSr)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>BAND_INSTRUMENTSp <span class="op">=</span> pl.from_pandas(r.BAND_INSTRUMENTS_r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -229,16 +239,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>DMr<span class="sc">$</span>color</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>DMr[[<span class="st">"color"</span>]]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span> <span class="fu">pull</span>(color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr<span class="sc">$</span>color <span class="co">#method 1</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>DIAMONDSr[[<span class="st">"color"</span>]] <span class="co">#method 2</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">pull</span>(color) <span class="co">#method 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>DMp[<span class="st">'color'</span>]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>DMp.get_column(<span class="st">'color'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSp[<span class="st">'color'</span>] <span class="co">#method 1</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>DIAMONDSp.get_column(<span class="st">'color'</span>) <span class="co">#method 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -249,21 +259,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(DMr) <span class="co">#height</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(DMr) <span class="co">#width</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(DMr) <span class="co">#height and width</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(DMr,class) <span class="co">#list of classes</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(DMr) <span class="co">#column datatypes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(DIAMONDSr) <span class="co">#height</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(DIAMONDSr) <span class="co">#width</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(DIAMONDSr) <span class="co">#height and width</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(DIAMONDSr,class) <span class="co">#list of classes</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(DIAMONDSr) <span class="co">#column datatypes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>DMp.height <span class="co">#height</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>DMp.width <span class="co">#width</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>DMp.shape <span class="co">#height and width</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>DMp.dtypes <span class="co">#list of classes</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>DMp.schema <span class="co">#column datatypes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSp.height <span class="co">#height</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>DIAMONDSp.width <span class="co">#width</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>DIAMONDSp.shape <span class="co">#height and width (tuple)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>DIAMONDSp.columns <span class="co">#column names (list)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>DIAMONDSp.dtypes <span class="co">#datatypes (list)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>DIAMONDSp.schema <span class="co">#column datatypes (dict)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -275,16 +286,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>DMr[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,] <span class="co">#standard R</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(DMr,<span class="dv">3</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="co">#dplyr way</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,] <span class="co">#method 1</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(DIAMONDSr,<span class="dv">3</span>) <span class="co">#method 2</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="co">#method 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>DMp[[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],:].to_pandas()</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>DMp.head(<span class="dv">3</span>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSp[[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],:].to_pandas()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>DIAMONDSp.head(<span class="dv">3</span>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -294,7 +305,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(clarity<span class="sc">==</span><span class="st">"VVS1"</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         price<span class="sc">&gt;</span><span class="dv">2000</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">grepl</span>(<span class="st">"[DEF]"</span>,color))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -303,13 +314,164 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  .<span class="bu">filter</span>(</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'clarity'</span>)<span class="op">==</span><span class="st">'VVS1'</span>) <span class="op">&amp;</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'price'</span>) <span class="op">&gt;</span> <span class="dv">2000</span>) <span class="op">&amp;</span> </span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'color'</span>).cast(pl.Utf8).<span class="bu">str</span>.contains(<span class="st">'[DEF]'</span>))</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="selectrename-columns" class="level3">
+<h3 class="anchored" data-anchor-id="selectrename-columns">Select/Rename columns</h3>
+<section id="routine-select" class="level6">
+<h6 class="anchored" data-anchor-id="routine-select">Routine select</h6>
+<div class="columns">
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">select</span>(carat,cut,clarity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:2%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  .select([<span class="st">'carat'</span>,<span class="st">'cut'</span>,<span class="st">'clarity'</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="select-columns-using-regex-pattern" class="level6">
+<h6 class="anchored" data-anchor-id="select-columns-using-regex-pattern">Select columns using regex pattern</h6>
+<div class="columns">
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">matches</span>(<span class="st">"^c"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:2%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  .select([</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'^c.*$'</span>)  </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="select-columns-of-a-certain-type" class="level6">
+<h6 class="anchored" data-anchor-id="select-columns-of-a-certain-type">Select columns of a certain type</h6>
+<div class="columns">
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:2%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  .select([</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    pl.col(pl.Categorical)  </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="select-all-columns-except-those-specified" class="level6">
+<h6 class="anchored" data-anchor-id="select-all-columns-except-those-specified">Select all columns <em>except</em> those specified</h6>
+<div class="columns">
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(x,y,z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:2%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  .select([</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    pl.<span class="bu">all</span>().exclude([<span class="st">'x'</span>,<span class="st">'y'</span>,<span class="st">'z'</span>])</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="select-columns-and-rename" class="level6">
+<h6 class="anchored" data-anchor-id="select-columns-and-rename">Select columns and rename</h6>
+<div class="columns">
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">price_usd=</span>price,<span class="at">length=</span>x,<span class="at">width=</span>y,<span class="at">depth=</span>z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:2%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  .select([</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).alias(<span class="st">'price_usd'</span>),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'x'</span>).alias(<span class="st">'length'</span>),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'y'</span>).alias(<span class="st">'width'</span>),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'z'</span>).alias(<span class="st">'depth'</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="select-all-columns-and-add-prefix" class="level6">
+<h6 class="anchored" data-anchor-id="select-all-columns-and-add-prefix">Select all columns and add prefix</h6>
+<div class="columns">
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">rename_with</span>(<span class="at">.fn=</span><span class="sc">~</span><span class="fu">paste0</span>(<span class="st">"var_"</span>,.))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:2%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  .select([</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    pl.<span class="bu">all</span>().prefix(<span class="st">'var_'</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="select-and-programmatically-rename" class="level6">
+<h6 class="anchored" data-anchor-id="select-and-programmatically-rename">Select and programmatically rename</h6>
+<div class="columns">
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>varmap <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"price_usd"</span><span class="ot">=</span><span class="st">"price"</span>,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>            <span class="st">"length"</span><span class="ot">=</span><span class="st">"x"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">"width"</span><span class="ot">=</span><span class="st">"y"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"depth"</span><span class="ot">=</span><span class="st">"z"</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!!!</span>varmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:2%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>varmap <span class="op">=</span> {<span class="st">'price'</span>:<span class="st">'price_usd'</span>,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">'x'</span>:<span class="st">'length'</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">'y'</span>:<span class="st">'width'</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">'z'</span>:<span class="st">'depthx'</span>}</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  .select(varmap)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  .rename(varmap)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -322,20 +484,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">price_thousands=</span>price<span class="sc">*</span><span class="dv">1000</span>,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">xyz=</span><span class="fu">paste</span>(x,y,z,<span class="at">sep=</span><span class="st">"+"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">price_thousands=</span>price<span class="sc">*</span><span class="dv">1000</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_price=</span><span class="fu">log</span>(price),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">xyz=</span><span class="fu">paste</span>(x,y,z,<span class="at">sep=</span><span class="st">"+"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'price'</span>)<span class="op">*</span><span class="dv">1000</span>).alias(<span class="st">'price_thousands'</span>),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    pl.concat_str([pl.col(<span class="st">'x'</span>),pl.col(<span class="st">'y'</span>),pl.col(<span class="st">'z'</span>)],sep<span class="op">=</span><span class="st">'+'</span>).alias(<span class="st">'xyz'</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'price'</span>)<span class="op">*</span><span class="dv">1000</span>).alias(<span class="st">'price_thousands'</span>),</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).log().alias(<span class="st">'log_price'</span>),</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    pl.concat_str([pl.col(<span class="st">'x'</span>),pl.col(<span class="st">'y'</span>),pl.col(<span class="st">'z'</span>)],sep<span class="op">=</span><span class="st">'+'</span>).alias(<span class="st">'xyz'</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -345,30 +509,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">color_is_DEF=</span>color <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"D"</span>,<span class="st">"E"</span>,<span class="st">"F"</span>),</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">color_status=</span><span class="fu">case_when</span>(</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      color<span class="sc">==</span><span class="st">"J"</span> <span class="sc">~</span> <span class="st">"very poor"</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>      color <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"H"</span>,<span class="st">"I"</span>) <span class="sc">~</span> <span class="st">"poor"</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>      color <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"F"</span>,<span class="st">"G"</span>) <span class="sc">~</span> <span class="st">"ok"</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"excellent"</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">color_is_DEF=</span>color <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"D"</span>,<span class="st">"E"</span>,<span class="st">"F"</span>),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">color_status=</span><span class="fu">case_when</span>(</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>      color<span class="sc">==</span><span class="st">"J"</span> <span class="sc">~</span> <span class="st">"very poor"</span>,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>      color <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"H"</span>,<span class="st">"I"</span>) <span class="sc">~</span> <span class="st">"poor"</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>      color <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"F"</span>,<span class="st">"G"</span>) <span class="sc">~</span> <span class="st">"ok"</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"excellent"</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">clarity=</span><span class="fu">str_to_title</span>(clarity))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  .select([</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'color'</span>).cast(pl.Utf8).is_in([<span class="st">'D'</span>,<span class="st">'E'</span>,<span class="st">'F'</span>]).alias(<span class="st">'color_is_DEF'</span>),</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    pl.when(pl.col(<span class="st">'color'</span>)<span class="op">==</span><span class="st">'J'</span>).then(<span class="st">'very poor'</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>      .when(pl.col(<span class="st">'color'</span>).cast(pl.Utf8).is_in([<span class="st">'H'</span>,<span class="st">'I'</span>])).then(<span class="st">'poor'</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>      .when(pl.col(<span class="st">'color'</span>).cast(pl.Utf8).is_in([<span class="st">'F'</span>,<span class="st">'G'</span>])).then(<span class="st">'ok'</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>      .otherwise(<span class="st">'excellent'</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>      .alias(<span class="st">'color_status'</span>)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  .select([</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'color'</span>).cast(pl.Utf8).is_in([<span class="st">'D'</span>,<span class="st">'E'</span>,<span class="st">'F'</span>]).alias(<span class="st">'color_is_DEF'</span>),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    pl.when(pl.col(<span class="st">'color'</span>)<span class="op">==</span><span class="st">'J'</span>).then(<span class="st">'very poor'</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>      .when(pl.col(<span class="st">'color'</span>).cast(pl.Utf8).is_in([<span class="st">'H'</span>,<span class="st">'I'</span>])).then(<span class="st">'poor'</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>      .when(pl.col(<span class="st">'color'</span>).cast(pl.Utf8).is_in([<span class="st">'F'</span>,<span class="st">'G'</span>])).then(<span class="st">'ok'</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>      .otherwise(<span class="st">'excellent'</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>      .alias(<span class="st">'color_status'</span>),</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'clarity'</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> s: s.title())</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -381,23 +547,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut,color) <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups=</span><span class="st">"drop"</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span> <span class="fu">count</span>(cut,color) <span class="co">#shortcut</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut,color) <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups=</span><span class="st">"drop"</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> <span class="fu">count</span>(cut,color) <span class="co">#shortcut</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  .groupby([<span class="st">'cut'</span>,<span class="st">'color'</span>])</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  .agg([</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    pl.count().alias(<span class="st">'n'</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  .groupby([<span class="st">'cut'</span>,<span class="st">'color'</span>])</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  .agg([</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    pl.count().alias(<span class="st">'n'</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -407,51 +573,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_price=</span><span class="fu">mean</span>(price),</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_price=</span><span class="fu">max</span>(price),</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">available_colors=</span><span class="fu">paste</span>(<span class="fu">sort</span>(<span class="fu">unique</span>(color)),<span class="at">collapse=</span><span class="st">", "</span>),</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups=</span><span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_price=</span><span class="fu">mean</span>(price),</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_price=</span><span class="fu">max</span>(price),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">available_colors=</span><span class="fu">paste</span>(<span class="fu">sort</span>(<span class="fu">unique</span>(color)),<span class="at">collapse=</span><span class="st">", "</span>),</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups=</span><span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  .groupby(<span class="st">'cut'</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  .agg([</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    pl.count().alias(<span class="st">'n'</span>),</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).mean().alias(<span class="st">'mean_price'</span>),</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).<span class="bu">max</span>().alias(<span class="st">'max_price'</span>),</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'color'</span>).unique().cast(pl.Utf8).sort().<span class="bu">str</span>.concat(<span class="st">', '</span>).alias(<span class="st">'availble_colors'</span>)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  .groupby(<span class="st">'cut'</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  .agg([</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    pl.count().alias(<span class="st">'n'</span>),</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).mean().alias(<span class="st">'mean_price'</span>),</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).<span class="bu">max</span>().alias(<span class="st">'max_price'</span>),</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'color'</span>).unique().cast(pl.Utf8).sort().<span class="bu">str</span>.concat(<span class="st">', '</span>).alias(<span class="st">'availble_colors'</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="select-first-sorted-row-by-group" class="level6">
-<h6 class="anchored" data-anchor-id="select-first-sorted-row-by-group">Select first sorted row by group</h6>
+<section id="select-first-row-after-sorting-by-group" class="level6">
+<h6 class="anchored" data-anchor-id="select-first-row-after-sorting-by-group">Select first row after sorting, by group</h6>
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(price),depth) <span class="sc">%&gt;%</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(price),depth) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  .sort([<span class="st">'price'</span>,<span class="st">'depth'</span>],reverse<span class="op">=</span>[<span class="va">True</span>,<span class="va">False</span>])</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  .groupby(<span class="st">'cut'</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  .head(<span class="dv">1</span>)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  .sort([<span class="st">'price'</span>,<span class="st">'depth'</span>],reverse<span class="op">=</span>[<span class="va">True</span>,<span class="va">False</span>])</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  .groupby(<span class="st">'cut'</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  .head(<span class="dv">1</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -464,18 +630,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>MTr <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.fns=</span><span class="sc">~</span><span class="fu">paste0</span>(.,<span class="st">"_xyz"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.fns=</span><span class="sc">~</span><span class="fu">paste0</span>(.,<span class="st">"_xyz"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(MTp</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    pl.<span class="bu">all</span>()<span class="op">+</span><span class="st">'_xyz'</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    pl.<span class="bu">all</span>()<span class="op">+</span><span class="st">'_xyz'</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -485,24 +651,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="fu">across</span>(<span class="at">.cols=</span><span class="fu">matches</span>(<span class="st">"^c"</span>),<span class="at">.fns=</span><span class="sc">~</span><span class="fu">paste0</span>(.,<span class="st">"_x"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="fu">across</span>(<span class="at">.cols=</span><span class="fu">matches</span>(<span class="st">"^c"</span>),<span class="at">.fns=</span><span class="sc">~</span><span class="fu">paste0</span>(.,<span class="st">"_x"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (DMp</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   .select([</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     pl.col('^c.*$') + '_x'</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   ])</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ).to_pandas()</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  .select([</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'^c.*$'</span>)</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (DIAMONDSp</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   .select([</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     pl.col('^c.*$') + '_x'</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   ])</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ).to_pandas()</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  .select([</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'^c.*$'</span>)</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -512,19 +678,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols=</span><span class="fu">where</span>(is.numeric),</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">.fns=</span><span class="sc">~</span>. <span class="sc">*</span> <span class="dv">1000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols=</span><span class="fu">where</span>(is.numeric),</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">.fns=</span><span class="sc">~</span>. <span class="sc">*</span> <span class="dv">1000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    pl.col([pl.Float64,pl.Int32]) <span class="op">*</span> <span class="dv">1000</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    pl.col([pl.Float64,pl.Int32]) <span class="op">*</span> <span class="dv">1000</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -537,15 +703,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>band_members_r <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(band_instruments_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>BAND_MEMBERSr <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(BAND_INSTRUMENTS_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(band_members_p</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  .join(band_instruments_p,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>(BAND_MEMBERS_p</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  .join(BAND_INSTRUMENTSp,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -555,15 +721,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>band_members_r <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(band_instruments_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>BAND_MEMBERSr <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(BAND_INSTRUMENTS_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(band_members_p</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  .join(band_instruments_p,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'inner'</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>(BAND_MEMBERS_p</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  .join(BAND_INSTRUMENTSp,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'inner'</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -573,15 +739,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>band_members_r <span class="sc">%&gt;%</span> <span class="fu">right_join</span>(band_instruments_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>BAND_MEMBERSr <span class="sc">%&gt;%</span> <span class="fu">right_join</span>(BAND_INSTRUMENTS_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>(band_members_p</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  .join(band_instruments_p,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'right'</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>(BAND_MEMBERS_p</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  .join(BAND_INSTRUMENTSp,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -591,15 +757,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>band_members_r <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(band_instruments_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>BAND_MEMBERSr <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(BAND_INSTRUMENTS_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>(band_members_p</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  .join(band_instruments_p,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'outer'</span>)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>(BAND_MEMBERS_p</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  .join(BAND_INSTRUMENTSp,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'outer'</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -609,15 +775,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>band_members_r <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(band_instruments_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>BAND_MEMBERSr <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(BAND_INSTRUMENTS_r,<span class="at">by=</span><span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>(band_members_p</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  .join(band_instruments_p,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'anti'</span>)</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>(BAND_MEMBERS_p</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  .join(BAND_INSTRUMENTSp,on<span class="op">=</span><span class="st">'name'</span>,how<span class="op">=</span><span class="st">'anti'</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -630,17 +796,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>diamonds</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(x,y,z),<span class="at">names_to=</span><span class="st">"axis"</span>,<span class="at">values_to=</span><span class="st">"mm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>diamonds</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(x,y,z),<span class="at">names_to=</span><span class="st">"axis"</span>,<span class="at">values_to=</span><span class="st">"mm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  .melt(id_vars<span class="op">=</span><span class="bu">list</span>(<span class="bu">set</span>(DMp.columns).difference([<span class="st">'x'</span>,<span class="st">'y'</span>,<span class="st">'z'</span>])),variable_name<span class="op">=</span><span class="st">'variable'</span>,value_name<span class="op">=</span><span class="st">'value'</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  .melt(id_vars<span class="op">=</span><span class="bu">list</span>(<span class="bu">set</span>(DIAMONDSp.columns).difference([<span class="st">'x'</span>,<span class="st">'y'</span>,<span class="st">'z'</span>])),variable_name<span class="op">=</span><span class="st">'variable'</span>,value_name<span class="op">=</span><span class="st">'value'</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -650,16 +816,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols=</span>clarity,<span class="at">names_from=</span>cut,<span class="at">values_from=</span>price,<span class="at">values_fn=</span>mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols=</span>clarity,<span class="at">names_from=</span>cut,<span class="at">values_from=</span>price,<span class="at">values_fn=</span>mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  .pivot(index<span class="op">=</span><span class="st">'clarity'</span>,values<span class="op">=</span><span class="st">'price'</span>,columns<span class="op">=</span><span class="st">'cut'</span>,aggregate_fn<span class="op">=</span><span class="st">'mean'</span>)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  .pivot(index<span class="op">=</span><span class="st">'clarity'</span>,values<span class="op">=</span><span class="st">'price'</span>,columns<span class="op">=</span><span class="st">'cut'</span>,aggregate_fn<span class="op">=</span><span class="st">'mean'</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -667,25 +833,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="nested-columns" class="level3">
 <h3 class="anchored" data-anchor-id="nested-columns">Nested columns</h3>
-<section id="split-string-into-nested-list-unnest-into-long-format" class="level6">
-<h6 class="anchored" data-anchor-id="split-string-into-nested-list-unnest-into-long-format">Split string into nested list, unnest into long format</h6>
+<section id="split-string-column-into-nested-list-unnest-into-long-format" class="level6">
+<h6 class="anchored" data-anchor-id="split-string-column-into-nested-list-unnest-into-long-format">Split string column into nested list, unnest into long format</h6>
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cut_word=</span><span class="fu">str_split</span>(cut,<span class="st">" "</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(cut_word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cut_word=</span><span class="fu">str_split</span>(cut,<span class="st">" "</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(cut_word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'cut'</span>).cast(pl.Utf8).<span class="bu">str</span>.split(<span class="st">' '</span>).alias(<span class="st">'cut_word'</span>),</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  .explode(<span class="st">'cut_word'</span>)</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'cut'</span>).cast(pl.Utf8).<span class="bu">str</span>.split(<span class="st">' '</span>).alias(<span class="st">'cut_word'</span>),</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  .explode(<span class="st">'cut_word'</span>)</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -695,21 +861,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">col_color_clarity=</span><span class="fu">c</span>(cut,color,clarity)) <span class="sc">%&gt;%</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(col_color_clarity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">col_color_clarity=</span><span class="fu">c</span>(cut,color,clarity)) <span class="sc">%&gt;%</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(col_color_clarity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    pl.struct(pl.col([<span class="st">'cut'</span>,<span class="st">'color'</span>,<span class="st">'clarity'</span>])).alias(<span class="st">'cut_color_clarity'</span>)</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  .drop([<span class="st">'cut'</span>,<span class="st">'color'</span>,<span class="st">'clarity'</span>])</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  .unnest(<span class="st">'cut_color_clarity'</span>)</span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  .with_columns([</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    pl.struct(pl.col([<span class="st">'cut'</span>,<span class="st">'color'</span>,<span class="st">'clarity'</span>])).alias(<span class="st">'cut_color_clarity'</span>)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  .drop([<span class="st">'cut'</span>,<span class="st">'color'</span>,<span class="st">'clarity'</span>])</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  .unnest(<span class="st">'cut_color_clarity'</span>)</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -719,21 +885,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>DMr <span class="sc">%&gt;%</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(color) <span class="sc">%&gt;%</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">group_info=</span><span class="sc">-</span>color) <span class="sc">%&gt;%</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>DIAMONDSr <span class="sc">%&gt;%</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(color) <span class="sc">%&gt;%</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">group_info=</span><span class="sc">-</span>color) <span class="sc">%&gt;%</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>(DMp</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  .groupby(<span class="st">'color'</span>)</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  .agg([</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    pl.struct(pl.<span class="bu">all</span>().exclude(<span class="st">'color'</span>)).alias(<span class="st">'group_info'</span>)</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>(DIAMONDSp</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  .groupby(<span class="st">'color'</span>)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  .agg([</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    pl.struct(pl.<span class="bu">all</span>().exclude(<span class="st">'color'</span>)).alias(<span class="st">'group_info'</span>)</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>).to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -741,42 +907,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- :::::::::::::: {.columns} -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{r} -->
-<!-- MTr     # r code -->
+<!-- DIAMONDSr     # r code -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- ::: {.column width="2%"} -->
 <!-- <!-- empty column to create gap -->
-<p>–&gt; <!-- ::: --> <!-- ::: {.column width="49%"} --> <!-- ```{python} --> <!-- MTp.to_pandas()    # python --> <!-- ``` --> <!-- ::: --> <!-- :::::::::::::: --></p>
+<p>–&gt; <!-- ::: --> <!-- ::: {.column width="49%"} --> <!-- ```{python} --> <!-- DIAMONDSp.to_pandas()    # python --> <!-- ``` --> <!-- ::: --> <!-- :::::::::::::: --></p>
 <!-- ###### xxxx -->
 <!-- :::::::::::::: {.columns} -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{r} -->
-<!-- MTr     # r code -->
+<!-- DIAMONDSr     # r code -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- ::: {.column width="2%"} -->
 <!-- <!-- empty column to create gap -->
-<p>–&gt; <!-- ::: --> <!-- ::: {.column width="49%"} --> <!-- ```{python} --> <!-- MTp.to_pandas()    # python --> <!-- ``` --> <!-- ::: --> <!-- :::::::::::::: --></p>
+<p>–&gt; <!-- ::: --> <!-- ::: {.column width="49%"} --> <!-- ```{python} --> <!-- DIAMONDSp.to_pandas()    # python --> <!-- ``` --> <!-- ::: --> <!-- :::::::::::::: --></p>
 <!-- ###### xxxx -->
 <!-- :::::::::::::: {.columns} -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{r} -->
-<!-- MTr     # r code -->
+<!-- DIAMONDSr     # r code -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- ::: {.column width="2%"} -->
 <!-- <!-- empty column to create gap -->
-<p>–&gt; <!-- ::: --> <!-- ::: {.column width="49%"} --> <!-- ```{python} --> <!-- MTp.to_pandas()    # python --> <!-- ``` --> <!-- ::: --> <!-- :::::::::::::: --></p>
+<p>–&gt; <!-- ::: --> <!-- ::: {.column width="49%"} --> <!-- ```{python} --> <!-- DIAMONDSp.to_pandas()    # python --> <!-- ``` --> <!-- ::: --> <!-- :::::::::::::: --></p>
 <!-- ###### xxxx -->
 <!-- :::::::::::::: {.columns} -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{r} -->
-<!-- MTr     # r code -->
+<!-- DIAMONDSr     # r code -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- ::: {.column width="2%"} -->
 <!-- <!-- empty column to create gap -->
-<p>–&gt; <!-- ::: --> <!-- ::: {.column width="49%"} --> <!-- ```{python} --> <!-- MTp.to_pandas()    # python --> <!-- ``` --> <!-- ::: --> <!-- :::::::::::::: --></p>
+<p>–&gt; <!-- ::: --> <!-- ::: {.column width="49%"} --> <!-- ```{python} --> <!-- DIAMONDSp.to_pandas()    # python --> <!-- ``` --> <!-- ::: --> <!-- :::::::::::::: --></p>
 </section>
 </section>
 
