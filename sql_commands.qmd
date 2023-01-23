@@ -1,12 +1,12 @@
 ---
 title: "SQL Commands"
 format: html
-editor: visual
+editor: source
 ---
 
 Check if `B` is a subset of `A`:
 
-```sql
+``` sql
 SELECT *
 FROM   B
 WHERE  NOT EXISTS (SELECT 1 
@@ -14,9 +14,7 @@ WHERE  NOT EXISTS (SELECT 1
                    WHERE  A.ID = B.ID)
 ```
 
-
-
-```sql
+``` sql
 with
 w (mrn, ord_id, test_date) as
 ( select distinct LR_MRN, LR_ORD_ID, LR_PERFORMED_DTE from
@@ -55,5 +53,4 @@ WHERE y.cnt = y.cnt_max)
 
 select * from idb.LAB_RESULTS left join z
 on LR_RESULT_GUID=KEY
-
 ```

@@ -1,0 +1,785 @@
+---
+title: "Polars notes"
+format: html
+editor: source
+toc: true
+toc-depth: 6
+toc-location: right
+fontsize: small #small, medium, large, 1.2em, 12px, ...
+execute:
+  echo: true #whether to include code block
+  eval: false #whether to run code
+  warning: false #include warnings
+  error: false #include errors
+  output: false #include output
+  # include: false #catch all for  preventing any results (code + results)
+---
+
+
+
+### Load package and data
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+library(tidyverse)
+DMr <- diamonds
+band_members_r <- band_members
+band_instruments_r <- band_instruments
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+import polars as pl
+DMp = pl.from_pandas(r.DMr)
+band_members_p = pl.from_pandas(r.band_members_r)
+band_instruments_p = pl.from_pandas(r.band_instruments_r)
+```
+:::
+::::::::::::::
+
+
+###### Generate a data frame from scratch
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+tibble(
+  id=1:3,
+  color=c("blue","red","green"),
+  size=c("small","medium","large")
+)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+pl.DataFrame(
+  {
+    'id': [1, 2, 3],
+    'color': ['blue', 'red', 'green'],
+    'size': ['small', 'medium', 'large']
+  }
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+###### Extract vector
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr$color
+DMr[["color"]]
+DMr %>% pull(color)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+DMp['color']
+DMp.get_column('color')
+```
+:::
+::::::::::::::
+
+
+
+
+
+
+### Table Characteristics
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+nrow(DMr) #height
+ncol(DMr) #width
+dim(DMr) #height and width
+map(DMr,class) #list of classes
+glimpse(DMr) #column datatypes
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+DMp.height #height
+DMp.width #width
+DMp.shape #height and width
+DMp.dtypes #list of classes
+DMp.schema #column datatypes
+```
+:::
+::::::::::::::
+
+
+
+### Row/Column Filtering
+
+###### Extract top 3 rows
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr[1:3,] #standard R
+head(DMr,3)
+DMr %>% slice(1:3) #dplyr way
+
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+DMp[[1,2,3],:].to_pandas()
+DMp.head(3).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Multiple row filter criteria
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr %>% 
+  filter(clarity=="VVS1",
+         price>2000,
+         grepl("[DEF]",color))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .filter(
+    (pl.col('clarity')=='VVS1') &
+    (pl.col('price') > 2000) & 
+    (pl.col('color').cast(pl.Utf8).str.contains('[DEF]'))
+  )
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+
+
+### Mutate/Transmute
+
+
+###### Mutate
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+
+DMr %>%
+  mutate(price_thousands=price*1000,
+         xyz=paste(x,y,z,sep="+"))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .with_columns([
+    (pl.col('price')*1000).alias('price_thousands'),
+    pl.concat_str([pl.col('x'),pl.col('y'),pl.col('z')],sep='+').alias('xyz')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Transmute
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+
+DMr %>%
+  transmute(
+    color_is_DEF=color %in% c("D","E","F"),
+    color_status=case_when(
+      color=="J" ~ "very poor",
+      color %in% c("H","I") ~ "poor",
+      color %in% c("F","G") ~ "ok",
+      TRUE ~ "excellent"
+    ))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .select([
+    pl.col('color').cast(pl.Utf8).is_in(['D','E','F']).alias('color_is_DEF'),
+    pl.when(pl.col('color')=='J').then('very poor')
+      .when(pl.col('color').cast(pl.Utf8).is_in(['H','I'])).then('poor')
+      .when(pl.col('color').cast(pl.Utf8).is_in(['F','G'])).then('ok')
+      .otherwise('excellent')
+      .alias('color_status')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+
+### Group By and Summarize
+
+
+###### Count rows by group
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr %>% 
+  group_by(cut,color) %>%
+  summarize(n=n(),
+            .groups="drop")
+
+DMr %>% count(cut,color) #shortcut
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .groupby(['cut','color'])
+  .agg([
+    pl.count().alias('n')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+###### Calculate various summaries by group
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr %>%
+  group_by(cut) %>%
+  summarize(n=n(),
+            mean_price=mean(price),
+            max_price=max(price),
+            available_colors=paste(sort(unique(color)),collapse=", "),
+            .groups="drop")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .groupby('cut')
+  .agg([
+    pl.count().alias('n'),
+    pl.col('price').mean().alias('mean_price'),
+    pl.col('price').max().alias('max_price'),
+    pl.col('color').unique().cast(pl.Utf8).sort().str.concat(', ').alias('availble_colors')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Select first sorted row by group
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr %>%
+  group_by(cut) %>%
+  arrange(desc(price),depth) %>%
+  slice(1) %>%
+  ungroup()
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .sort(['price','depth'],reverse=[True,False])
+  .groupby('cut')
+  .head(1)
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+
+
+
+
+### Apply to specific columns (across)
+
+###### Apply to all columns
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+MTr %>% 
+  mutate(across(.fns=~paste0(.,"_xyz")))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(MTp
+  .with_columns([
+    pl.all()+'_xyz'
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+###### Apply to columns using regex
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr %>% 
+  transmute(across(.cols=matches("^c"),.fns=~paste0(.,"_x")))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+# (DMp
+#   .select([
+#     pl.col('^c.*$') + '_x'
+#   ])
+# ).to_pandas()
+
+(DMp
+  .select([
+    pl.col('^c.*$')
+  ])
+).to_pandas()
+
+```
+:::
+::::::::::::::
+
+
+
+###### Apply to columns of a certain type
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr %>% 
+  mutate(across(.cols=where(is.numeric),
+                .fns=~. * 1000))
+
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .with_columns([
+    pl.col([pl.Float64,pl.Int32]) * 1000
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+### Joins
+
+
+
+###### Left join
+	
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+band_members_r %>% left_join(band_instruments_r,by="name")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(band_members_p
+  .join(band_instruments_p,on='name',how='left')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+###### Inner join
+	
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+band_members_r %>% inner_join(band_instruments_r,by="name")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(band_members_p
+  .join(band_instruments_p,on='name',how='inner')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+###### Right join
+	
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+band_members_r %>% right_join(band_instruments_r,by="name")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(band_members_p
+  .join(band_instruments_p,on='name',how='right')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Outer join
+	
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+band_members_r %>% full_join(band_instruments_r,by="name")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(band_members_p
+  .join(band_instruments_p,on='name',how='outer')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Anti join
+	
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+band_members_r %>% anti_join(band_instruments_r,by="name")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(band_members_p
+  .join(band_instruments_p,on='name',how='anti')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+### Pivoting/Reshaping 
+
+###### Pivot Longer
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds
+DMr %>%
+  pivot_longer(cols=c(x,y,z),names_to="axis",values_to="mm")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .melt(id_vars=list(set(DMp.columns).difference(['x','y','z'])),variable_name='variable',value_name='value')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+###### Pivot Wider
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr %>%
+  pivot_wider(id_cols=clarity,names_from=cut,values_from=price,values_fn=mean)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .pivot(index='clarity',values='price',columns='cut',aggregate_fn='mean')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+### Nested columns
+
+###### Split string into nested list, unnest into long format
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr %>%
+  mutate(cut_word=str_split(cut," ")) %>%
+  unnest(cut_word)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .with_columns([
+    pl.col('cut').cast(pl.Utf8).str.split(' ').alias('cut_word'),
+  ])
+  .explode('cut_word')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+###### Move columns into single nested column, then unnest to individual columns again.
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+
+
+DMr %>%
+  nest(col_color_clarity=c(cut,color,clarity)) %>%
+  unnest(col_color_clarity)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .with_columns([
+    pl.struct(pl.col(['cut','color','clarity'])).alias('cut_color_clarity')
+  ])
+  .drop(['cut','color','clarity'])
+  .unnest('cut_color_clarity')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+###### Nested table in a single column, by group
+
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+DMr %>%
+  group_by(color) %>%
+  nest(group_info=-color) %>%
+  ungroup()
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(DMp
+  .groupby('color')
+  .agg([
+    pl.struct(pl.all().exclude('color')).alias('group_info')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+<!-- ###### xxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- MTr     # r code -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{python} -->
+<!-- MTp.to_pandas()    # python -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+<!-- ###### xxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- MTr     # r code -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{python} -->
+<!-- MTp.to_pandas()    # python -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+
+
+<!-- ###### xxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- MTr     # r code -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{python} -->
+<!-- MTp.to_pandas()    # python -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+<!-- ###### xxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- MTr     # r code -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{python} -->
+<!-- MTp.to_pandas()    # python -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+

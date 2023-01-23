@@ -146,3 +146,9 @@ Terminate session
 ``` sh
 x2goterminate-session <sessio_ID>
 ```
+
+
+
+
+
+
