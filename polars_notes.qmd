@@ -16,16 +16,15 @@ execute:
 ---
 
 
-
-### Load package and data
+### Load package and data 
 
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
 library(tidyverse)
-DIAMONDSr <- diamonds
-BAND_MEMBERSr <- band_members
-BAND_INSTRUMENTS_r <- band_instruments
+diamonds
+band_members
+band_instruments
 ```
 :::
 ::: {.column width="2%"}
@@ -34,9 +33,9 @@ BAND_INSTRUMENTS_r <- band_instruments
 ::: {.column width="49%"}
 ```{python}
 import polars as pl
-DIAMONDSp = pl.from_pandas(r.DIAMONDSr)
-BAND_MEMBERS_p = pl.from_pandas(r.BAND_MEMBERSr)
-BAND_INSTRUMENTSp = pl.from_pandas(r.BAND_INSTRUMENTS_r)
+diamonds_polars = pl.from_pandas(r.diamonds)
+band_members_polars = pl.from_pandas(r.band_members)
+band_instruments_polars = pl.from_pandas(r.band_instruments)
 ```
 :::
 ::::::::::::::
@@ -73,16 +72,21 @@ pl.DataFrame(
 
 
 
-
-
-###### Extract vector
+###### Read in a TSV file, explicitly
 
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr$color #method 1
-DIAMONDSr[["color"]] #method 2
-DIAMONDSr %>% pull(color) #method 3
+file <- "C:/Users/Ying/Desktop/samples/mock/Sample_GutZymo1_IGO_13699_36.kaiju_summary1.tsv"
+
+cols <- list(
+  "outfile"=col_character(), 
+  "percent"=col_double(),
+  "numseqs"=col_integer(),
+  "taxid"=col_character(), 
+  "taxon_name"=col_skip()
+)
+table <- read_tsv(file,skip=1,col_names=names(cols),col_types=cols, na=c("", "NA"))
 ```
 :::
 ::: {.column width="2%"}
@@ -90,8 +94,50 @@ DIAMONDSr %>% pull(color) #method 3
 :::
 ::: {.column width="49%"}
 ```{python}
-DIAMONDSp['color'] #method 1
-DIAMONDSp.get_column('color') #method 2
+cols = {
+  'outfile':pl.Utf8, 
+  'percent':pl.Float64,
+  'numseqs':pl.Int64,
+  'taxid':pl.Utf8, 
+  'taxon_name':None
+}
+
+# read_csv method: 
+columns = [i for i,v in enumerate(cols.values()) if v is not None]
+new_columns = [k for k,v in cols.items() if v is not None]
+dtypes = {k:v for k,v in cols.items() if v is not None}
+table = pl.read_csv(r.file, skip_rows=1, sep='\t', has_header=False, null_values=['','NA'], columns=columns, new_columns=new_columns, dtypes=dtypes)
+
+# lazy_csv method: 
+colnames = ['column_'+str(i+1) for i,v in enumerate(cols.values())]
+dtypes = {k:(v if v is not None else pl.Utf8) for k,v in zip(colnames,cols.values())}
+select_expr = [pl.col(n).alias(c) for n,c,t in zip(colnames,cols.keys(),cols.values()) if t is not None]
+table_lazy = pl.scan_csv(r.file, skip_rows=1, sep='\t', has_header=False, dtypes=dtypes).select(select_expr).collect()
+```
+:::
+::::::::::::::
+
+
+
+
+
+###### Extract vector
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds$color #method 1
+diamonds[["color"]] #method 2
+diamonds %>% pull(color) #method 3
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+diamonds_polars['color'] #method 1
+diamonds_polars.get_column('color') #method 2
 ```
 :::
 ::::::::::::::
@@ -106,11 +152,11 @@ DIAMONDSp.get_column('color') #method 2
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-nrow(DIAMONDSr) #height
-ncol(DIAMONDSr) #width
-dim(DIAMONDSr) #height and width
-map(DIAMONDSr,class) #list of classes
-glimpse(DIAMONDSr) #column datatypes
+nrow(diamonds) #height
+ncol(diamonds) #width
+dim(diamonds) #height and width
+map(diamonds,class) #list of classes
+glimpse(diamonds) #column datatypes
 ```
 :::
 ::: {.column width="2%"}
@@ -118,12 +164,12 @@ glimpse(DIAMONDSr) #column datatypes
 :::
 ::: {.column width="49%"}
 ```{python}
-DIAMONDSp.height #height
-DIAMONDSp.width #width
-DIAMONDSp.shape #height and width (tuple)
-DIAMONDSp.columns #column names (list)
-DIAMONDSp.dtypes #datatypes (list)
-DIAMONDSp.schema #column datatypes (dict)
+diamonds_polars.height #height
+diamonds_polars.width #width
+diamonds_polars.shape #height and width (tuple)
+diamonds_polars.columns #column names (list)
+diamonds_polars.dtypes #datatypes (list)
+diamonds_polars.schema #column datatypes (dict)
 ```
 :::
 ::::::::::::::
@@ -137,9 +183,9 @@ DIAMONDSp.schema #column datatypes (dict)
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr[1:3,] #method 1
-head(DIAMONDSr,3) #method 2
-DIAMONDSr %>% slice(1:3) #method 3
+diamonds[1:3,] #method 1
+head(diamonds,3) #method 2
+diamonds %>% slice(1:3) #method 3
 ```
 :::
 ::: {.column width="2%"}
@@ -147,8 +193,8 @@ DIAMONDSr %>% slice(1:3) #method 3
 :::
 ::: {.column width="49%"}
 ```{python}
-DIAMONDSp[[1,2,3],:].to_pandas()
-DIAMONDSp.head(3).to_pandas()
+diamonds_polars[[1,2,3],:].to_pandas()
+diamonds_polars.head(3).to_pandas()
 ```
 :::
 ::::::::::::::
@@ -159,7 +205,7 @@ DIAMONDSp.head(3).to_pandas()
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% 
+diamonds %>% 
   filter(clarity=="VVS1",
          price>2000,
          grepl("[DEF]",color))
@@ -170,7 +216,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .filter(
     (pl.col('clarity')=='VVS1') &
     (pl.col('price') > 2000) & 
@@ -197,7 +243,7 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% select(carat,cut,clarity)
+diamonds %>% select(carat,cut,clarity)
 ```
 :::
 ::: {.column width="2%"}
@@ -205,7 +251,7 @@ DIAMONDSr %>% select(carat,cut,clarity)
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .select(['carat','cut','clarity'])
 ).to_pandas()
 ```
@@ -219,7 +265,7 @@ DIAMONDSr %>% select(carat,cut,clarity)
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% select(matches("^c"))
+diamonds %>% select(matches("^c"))
 ```
 :::
 ::: {.column width="2%"}
@@ -227,7 +273,7 @@ DIAMONDSr %>% select(matches("^c"))
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .select([
     pl.col('^c.*$')  
   ])
@@ -243,7 +289,7 @@ DIAMONDSr %>% select(matches("^c"))
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% select(where(is.factor))
+diamonds %>% select(where(is.factor))
 ```
 :::
 ::: {.column width="2%"}
@@ -251,7 +297,7 @@ DIAMONDSr %>% select(where(is.factor))
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .select([
     pl.col(pl.Categorical)  
   ])
@@ -271,7 +317,7 @@ DIAMONDSr %>% select(where(is.factor))
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% select(-c(x,y,z))
+diamonds %>% select(-c(x,y,z))
 ```
 :::
 ::: {.column width="2%"}
@@ -279,7 +325,7 @@ DIAMONDSr %>% select(-c(x,y,z))
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .select([
     pl.all().exclude(['x','y','z'])
   ])
@@ -295,7 +341,7 @@ DIAMONDSr %>% select(-c(x,y,z))
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% select(price_usd=price,length=x,width=y,depth=z)
+diamonds %>% select(price_usd=price,length=x,width=y,depth=z)
 ```
 :::
 ::: {.column width="2%"}
@@ -303,7 +349,7 @@ DIAMONDSr %>% select(price_usd=price,length=x,width=y,depth=z)
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .select([
     pl.col('price').alias('price_usd'),
     pl.col('x').alias('length'),
@@ -322,7 +368,7 @@ DIAMONDSr %>% select(price_usd=price,length=x,width=y,depth=z)
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% rename_with(.fn=~paste0("var_",.))
+diamonds %>% rename_with(.fn=~paste0("var_",.))
 ```
 :::
 ::: {.column width="2%"}
@@ -330,7 +376,7 @@ DIAMONDSr %>% rename_with(.fn=~paste0("var_",.))
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .select([
     pl.all().prefix('var_')
   ])
@@ -351,7 +397,7 @@ varmap <- c("price_usd"="price",
             "length"="x",
             "width"="y",
             "depth"="z")
-DIAMONDSr %>% select(!!!varmap)
+diamonds %>% select(!!!varmap)
 ```
 :::
 ::: {.column width="2%"}
@@ -362,8 +408,8 @@ DIAMONDSr %>% select(!!!varmap)
 varmap = {'price':'price_usd',
           'x':'length',
           'y':'width',
-          'z':'depthx'}
-(DIAMONDSp
+          'z':'depth'}
+(diamonds_polars
   .select(varmap)
   .rename(varmap)
 ).to_pandas()
@@ -381,7 +427,7 @@ varmap = {'price':'price_usd',
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>%
+diamonds %>%
   mutate(price_thousands=price*1000,
          log_price=log(price),
          xyz=paste(x,y,z,sep="+"))
@@ -392,7 +438,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .with_columns([
     (pl.col('price')*1000).alias('price_thousands'),
     pl.col('price').log().alias('log_price'),
@@ -409,7 +455,7 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>%
+diamonds %>%
   transmute(
     color_is_DEF=color %in% c("D","E","F"),
     color_status=case_when(
@@ -426,7 +472,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .select([
     pl.col('color').cast(pl.Utf8).is_in(['D','E','F']).alias('color_is_DEF'),
     pl.when(pl.col('color')=='J').then('very poor')
@@ -453,12 +499,12 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% 
+diamonds %>% 
   group_by(cut,color) %>%
   summarize(n=n(),
             .groups="drop")
 
-DIAMONDSr %>% count(cut,color) #shortcut
+diamonds %>% count(cut,color) #shortcut
 ```
 :::
 ::: {.column width="2%"}
@@ -466,7 +512,7 @@ DIAMONDSr %>% count(cut,color) #shortcut
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .groupby(['cut','color'])
   .agg([
     pl.count().alias('n')
@@ -481,7 +527,7 @@ DIAMONDSr %>% count(cut,color) #shortcut
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>%
+diamonds %>%
   group_by(cut) %>%
   summarize(n=n(),
             mean_price=mean(price),
@@ -495,7 +541,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .groupby('cut')
   .agg([
     pl.count().alias('n'),
@@ -514,7 +560,7 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>%
+diamonds %>%
   group_by(cut) %>%
   arrange(desc(price),depth) %>%
   slice(1) %>%
@@ -526,7 +572,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .sort(['price','depth'],reverse=[True,False])
   .groupby('cut')
   .head(1)
@@ -546,14 +592,14 @@ DIAMONDSr %>%
 
 
 
-### Apply to specific columns (across)
+### Apply function across columns
 
 ###### Apply to all columns
 
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% 
+diamonds %>% 
   mutate(across(.fns=~paste0(.,"_xyz")))
 ```
 :::
@@ -562,7 +608,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .with_columns([
     pl.all()+'_xyz'
   ])
@@ -579,7 +625,7 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% 
+diamonds %>% 
   transmute(across(.cols=matches("^c"),.fns=~paste0(.,"_x")))
 ```
 :::
@@ -588,18 +634,11 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-# (DIAMONDSp
-#   .select([
-#     pl.col('^c.*$') + '_x'
-#   ])
-# ).to_pandas()
-
-(DIAMONDSp
+(diamonds_polars
   .select([
-    pl.col('^c.*$')
+    pl.col('^c.*$') + '_x'
   ])
 ).to_pandas()
-
 ```
 :::
 ::::::::::::::
@@ -611,7 +650,7 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>% 
+diamonds %>% 
   mutate(across(.cols=where(is.numeric),
                 .fns=~. * 1000))
 
@@ -622,7 +661,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .with_columns([
     pl.col([pl.Float64,pl.Int32]) * 1000
   ])
@@ -644,7 +683,7 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-BAND_MEMBERSr %>% left_join(BAND_INSTRUMENTS_r,by="name")
+band_members %>% left_join(band_instruments,by="name")
 ```
 :::
 ::: {.column width="2%"}
@@ -652,8 +691,8 @@ BAND_MEMBERSr %>% left_join(BAND_INSTRUMENTS_r,by="name")
 :::
 ::: {.column width="49%"}
 ```{python}
-(BAND_MEMBERS_p
-  .join(BAND_INSTRUMENTSp,on='name',how='left')
+(band_members_polars
+  .join(band_instruments_polars,on='name',how='left')
 ).to_pandas()
 ```
 :::
@@ -666,7 +705,7 @@ BAND_MEMBERSr %>% left_join(BAND_INSTRUMENTS_r,by="name")
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-BAND_MEMBERSr %>% inner_join(BAND_INSTRUMENTS_r,by="name")
+band_members %>% inner_join(band_instruments,by="name")
 ```
 :::
 ::: {.column width="2%"}
@@ -674,34 +713,14 @@ BAND_MEMBERSr %>% inner_join(BAND_INSTRUMENTS_r,by="name")
 :::
 ::: {.column width="49%"}
 ```{python}
-(BAND_MEMBERS_p
-  .join(BAND_INSTRUMENTSp,on='name',how='inner')
+(band_members_polars
+  .join(band_instruments_polars,on='name',how='inner')
 ).to_pandas()
 ```
 :::
 ::::::::::::::
 
 
-
-###### Right join
-	
-:::::::::::::: {.columns}
-::: {.column width="49%"}
-```{r}
-BAND_MEMBERSr %>% right_join(BAND_INSTRUMENTS_r,by="name")
-```
-:::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
-```{python}
-(BAND_MEMBERS_p
-  .join(BAND_INSTRUMENTSp,on='name',how='right')
-).to_pandas()
-```
-:::
-::::::::::::::
 
 
 ###### Outer join
@@ -709,7 +728,7 @@ BAND_MEMBERSr %>% right_join(BAND_INSTRUMENTS_r,by="name")
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-BAND_MEMBERSr %>% full_join(BAND_INSTRUMENTS_r,by="name")
+band_members %>% full_join(band_instruments,by="name")
 ```
 :::
 ::: {.column width="2%"}
@@ -717,8 +736,8 @@ BAND_MEMBERSr %>% full_join(BAND_INSTRUMENTS_r,by="name")
 :::
 ::: {.column width="49%"}
 ```{python}
-(BAND_MEMBERS_p
-  .join(BAND_INSTRUMENTSp,on='name',how='outer')
+(band_members_polars
+  .join(band_instruments_polars,on='name',how='outer')
 ).to_pandas()
 ```
 :::
@@ -730,7 +749,7 @@ BAND_MEMBERSr %>% full_join(BAND_INSTRUMENTS_r,by="name")
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-BAND_MEMBERSr %>% anti_join(BAND_INSTRUMENTS_r,by="name")
+band_members %>% anti_join(band_instruments,by="name")
 ```
 :::
 ::: {.column width="2%"}
@@ -738,8 +757,8 @@ BAND_MEMBERSr %>% anti_join(BAND_INSTRUMENTS_r,by="name")
 :::
 ::: {.column width="49%"}
 ```{python}
-(BAND_MEMBERS_p
-  .join(BAND_INSTRUMENTSp,on='name',how='anti')
+(band_members_polars
+  .join(band_instruments_polars,on='name',how='anti')
 ).to_pandas()
 ```
 :::
@@ -752,8 +771,7 @@ BAND_MEMBERSr %>% anti_join(BAND_INSTRUMENTS_r,by="name")
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-diamonds
-DIAMONDSr %>%
+diamonds %>%
   pivot_longer(cols=c(x,y,z),names_to="axis",values_to="mm")
 ```
 :::
@@ -762,8 +780,8 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
-  .melt(id_vars=list(set(DIAMONDSp.columns).difference(['x','y','z'])),variable_name='variable',value_name='value')
+(diamonds_polars
+  .melt(id_vars=list(set(diamonds_polars.columns).difference(['x','y','z'])),variable_name='variable',value_name='value')
 ).to_pandas()
 ```
 :::
@@ -777,7 +795,7 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>%
+diamonds %>%
   pivot_wider(id_cols=clarity,names_from=cut,values_from=price,values_fn=mean)
 ```
 :::
@@ -786,7 +804,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .pivot(index='clarity',values='price',columns='cut',aggregate_fn='mean')
 ).to_pandas()
 ```
@@ -802,7 +820,7 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>%
+diamonds %>%
   mutate(cut_word=str_split(cut," ")) %>%
   unnest(cut_word)
 ```
@@ -812,7 +830,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .with_columns([
     pl.col('cut').cast(pl.Utf8).str.split(' ').alias('cut_word'),
   ])
@@ -825,13 +843,41 @@ DIAMONDSr %>%
 
 
 
+###### Group by a variable and tally others in a nested field
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% 
+  group_by(cut) %>%
+  summarize(clarity_table=list(table(clarity)),
+            .groups="drop")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .groupby('cut')
+  .agg([
+    pl.col('clarity').value_counts().alias('clarity_counts')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
 
 ###### Move columns into single nested column, then unnest to individual columns again.
 
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>%
+diamonds %>%
   nest(col_color_clarity=c(cut,color,clarity)) %>%
   unnest(col_color_clarity)
 ```
@@ -841,7 +887,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .with_columns([
     pl.struct(pl.col(['cut','color','clarity'])).alias('cut_color_clarity')
   ])
@@ -862,7 +908,7 @@ DIAMONDSr %>%
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-DIAMONDSr %>%
+diamonds %>%
   group_by(color) %>%
   nest(group_info=-color) %>%
   ungroup()
@@ -873,7 +919,7 @@ DIAMONDSr %>%
 :::
 ::: {.column width="49%"}
 ```{python}
-(DIAMONDSp
+(diamonds_polars
   .groupby('color')
   .agg([
     pl.struct(pl.all().exclude('color')).alias('group_info')
@@ -892,7 +938,7 @@ DIAMONDSr %>%
 <!-- :::::::::::::: {.columns} -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{r} -->
-<!-- DIAMONDSr     # r code -->
+<!-- diamonds     # r code -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- ::: {.column width="2%"} -->
@@ -900,7 +946,7 @@ DIAMONDSr %>%
 <!-- ::: -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{python} -->
-<!-- DIAMONDSp.to_pandas()    # python -->
+<!-- diamonds_polars.to_pandas()    # python -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- :::::::::::::: -->
@@ -913,7 +959,7 @@ DIAMONDSr %>%
 <!-- :::::::::::::: {.columns} -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{r} -->
-<!-- DIAMONDSr     # r code -->
+<!-- diamonds     # r code -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- ::: {.column width="2%"} -->
@@ -921,7 +967,7 @@ DIAMONDSr %>%
 <!-- ::: -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{python} -->
-<!-- DIAMONDSp.to_pandas()    # python -->
+<!-- diamonds_polars.to_pandas()    # python -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- :::::::::::::: -->
@@ -936,7 +982,7 @@ DIAMONDSr %>%
 <!-- :::::::::::::: {.columns} -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{r} -->
-<!-- DIAMONDSr     # r code -->
+<!-- diamonds     # r code -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- ::: {.column width="2%"} -->
@@ -944,7 +990,7 @@ DIAMONDSr %>%
 <!-- ::: -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{python} -->
-<!-- DIAMONDSp.to_pandas()    # python -->
+<!-- diamonds_polars.to_pandas()    # python -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- :::::::::::::: -->
@@ -957,7 +1003,7 @@ DIAMONDSr %>%
 <!-- :::::::::::::: {.columns} -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{r} -->
-<!-- DIAMONDSr     # r code -->
+<!-- diamonds     # r code -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- ::: {.column width="2%"} -->
@@ -965,7 +1011,7 @@ DIAMONDSr %>%
 <!-- ::: -->
 <!-- ::: {.column width="49%"} -->
 <!-- ```{python} -->
-<!-- DIAMONDSp.to_pandas()    # python -->
+<!-- diamonds_polars.to_pandas()    # python -->
 <!-- ``` -->
 <!-- ::: -->
 <!-- :::::::::::::: -->

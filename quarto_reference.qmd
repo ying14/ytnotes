@@ -13,11 +13,13 @@ editor_options:
 
 ###### Formatted text:
 
-*italics*\
-**bold**\
-*asdf*\
-`verbatim code`\
-inline math: $E = mc^{2}$ <https://quarto.org>\
+*italics*
+**bold**
+*asdf*
+<span style="color:blue">some *blue* text</span>
+
+`verbatim code`
+inline math: $E = mc^{2}$ <https://quarto.org>
 [link to Quarto](https://quarto.org)
 
 Bullet List
@@ -57,23 +59,19 @@ flowchart LR
 
 ![](unnamed.jpg){width="255"}
 
-Here is a footnote reference,[^aa] and another.[^longnote] You can also reference inline!^[Hello. I am an inline footnote.]
+Here is a footnote reference,[^1] and another.[^2] You can also reference inline![^3]
 
-<!-- These footnote definitions can go anywhere make sure there is blank line before/after -->
+[^1]: Here is the footnote.
 
-[^aa]: Here is the footnote.
-
-[^longnote]: Here's one with multiple blocks.
-  Subsequent paragraphs are indented to show that they
-belong to the previous footnote.
+[^2]: Here's one with multiple blocks. Subsequent paragraphs are indented to show that they belong to the previous footnote.
 
         { some.code }
 
-  The whole paragraph can be indented, or just the first
-  line.  In this way, multi-paragraph footnotes work like
-  multi-paragraph list items.
+[^3]: Hello. I am an inline footnote.
 
+<!-- These footnote definitions can go anywhere make sure there is blank line before/after -->
 
+The whole paragraph can be indented, or just the first line. In this way, multi-paragraph footnotes work like multi-paragraph list items.
 
 ------------------------------------------------------------------------
 
