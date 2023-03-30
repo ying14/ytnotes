@@ -65,17 +65,19 @@ WHERE
 ::::::::::::::
 
 
-### aggregration
+### Summarize by group
 
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
 diamonds %>%
-  group_by(cut) %>%
-  summarize(min.price=min(price),
-            max.price=max(price),
-            n=n(),
-            .groups="drop")
+  group_by(cut,color) %>% 
+  summarize(n=n(),
+            min_price=min(price),
+            max_price=max(price),
+            mean_price=mean(price),
+            n_distinct_price=n_distinct(price),
+            .groups="drop") 
 ```
 :::
 ::: {.column width="2%"}
@@ -84,10 +86,12 @@ diamonds %>%
 #| echo: false
 ######work
 diamonds2 %>%
-  group_by(cut) %>%
-  summarize(min_price=min(price),
+  group_by(cut,color) %>% 
+  summarize(n=n(),
+            min_price=min(price),
             max_price=max(price),
-            n=n(),
+            mean_price=mean(price),
+            n_distinct_price=n_distinct(price),
             .groups="drop") %>% 
   sql_render() %>% as.character() %>% gsub("`","",.) %>% cat()
 ```
@@ -97,14 +101,22 @@ diamonds2 %>%
 ```{sql, connection=con}
 SELECT
   cut,
+  color,
+  COUNT(*) AS n,
   MIN(price) AS min_price,
   MAX(price) AS max_price,
-  COUNT(*) AS n
+  AVG(price) AS mean_price,
+  COUNT(DISTINCT price) AS n_distinct_price
 FROM diamonds
-GROUP BY cut
+GROUP BY cut, color
 ```
 :::
 ::::::::::::::
+
+
+
+
+
 
 
 
@@ -115,11 +127,14 @@ GROUP BY cut
 ::: {.column width="49%"}
 ```{r}
 diamonds %>%
+  select(cut,price) %>% 
+  mutate(rownumber=row_number(),
+         price_rank=row_number(price),
+         total_rows=n()) %>%
   group_by(cut) %>%
-  mutate(n=n(),
-         mean_price=mean(price),
-         rank_price=rank(price),
-         price_above_mean=price>mean(price)) %>%
+  mutate(total_rows_in_group=n(),
+         rownumber_in_group=row_number(),
+         price_rank_in_group=row_number(price)) %>%
   ungroup()
 
 ```
@@ -130,11 +145,14 @@ diamonds %>%
 #| echo: false
 ######work
 diamonds2 %>%
+  select(cut,price) %>% 
+  mutate(rownumber=row_number(),
+         price_rank=row_number(price),
+         total_rows=n()) %>%
   group_by(cut) %>%
-  mutate(n=n(),
-         mean_price=mean(price),
-         rank_price=rank(price),
-         price_above_mean=price>mean(price)) %>%
+  mutate(total_rows_in_group=n(),
+         rownumber_in_group=row_number(),
+         price_rank_in_group=row_number(price)) %>%
   ungroup() %>% 
   sql_render() %>% as.character() %>% gsub("`","",.) %>% cat()
 ```
@@ -143,13 +161,15 @@ diamonds2 %>%
 ::: {.column width="49%"}
 ```{sql, connection=con}
 SELECT
-  *,
-  COUNT(*) OVER win1 AS n,
-  AVG(price) OVER win1 AS mean_price,
-  RANK() OVER (PARTITION BY cut ORDER BY price) AS rank_price,
-  price > AVG(price) OVER win1 AS price_above_mean
+  cut,
+  price,
+  ROW_NUMBER() OVER () AS rownumber,
+  ROW_NUMBER() OVER (ORDER BY price) AS price_rank,
+  COUNT(*) OVER () AS total_rows,
+  ROW_NUMBER() OVER (PARTITION BY cut) AS rownumber_in_group,
+  ROW_NUMBER() OVER (PARTITION BY cut ORDER BY price) AS price_rank_in_group,
+  COUNT(*) OVER (PARTITION BY cut) AS total_rows_in_group
 FROM diamonds
-WINDOW win1 AS (PARTITION BY cut)
 ```
 :::
 ::::::::::::::
@@ -157,6 +177,40 @@ WINDOW win1 AS (PARTITION BY cut)
 
 
 
+
+
+
+<!-- ### xxxxxxxxxxxxxxxxxxxxxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: false -->
+<!-- ######work -->
+<!-- diamonds2 %>%  -->
+<!--   ################### -->
+<!--   sql_render() %>% as.character() %>% gsub("`","",.) %>% cat() -->
+<!-- ``` -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{sql, connection=con} -->
+<!-- SELECT * -->
+<!-- FROM diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+
 <!-- ### xxxxxxxxxxxxxxxxxxxxxxx -->
 
 <!-- :::::::::::::: {.columns} -->
@@ -213,6 +267,9 @@ WINDOW win1 AS (PARTITION BY cut)
 <!-- ``` -->
 <!-- ::: -->
 <!-- :::::::::::::: -->
+
+
+
 
 
 
