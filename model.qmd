@@ -1,0 +1,103 @@
+---
+title: "Modelling"
+format: html
+editor: source
+toc: true
+toc-depth: 6
+toc-location: right
+fontsize: medium #small, medium, large, 1.2em, 12px, ...
+execute:
+  echo: true #whether to include code block
+  eval: true #whether to run code
+  warning: false #include warnings
+  error: false #include errors
+  output: true #include output
+---
+
+```{r}
+library(tidyverse)
+library(yingtools2)
+library(broom)
+library(modelr)
+mt <- mtcars %>% mutate(cyl=factor(cyl))
+```
+
+
+## Linear Regression (single var)
+
+```{r}
+model <- lm(mpg ~ hp,data=mt)
+mt$yhat <- predict(model)
+tidy(model)
+ggplot(mt) +
+  geom_point(aes(x=hp,y=mpg)) +
+  geom_line(aes(x=hp,y=yhat),color="red")
+```
+
+
+## Linear Regression (multiple vars)
+
+```{r}
+model <- lm(mpg ~ hp + cyl, data=mt)
+tidy(model)
+pdata <- tibble(hp=seq_range(mt$hp,n=200)) %>%
+  expand_grid(cyl=mt$cyl)
+pdata$yhat <- predict(model,newdata=pdata)
+ggplot() +
+  geom_point(data=mt, aes(x=hp,y=mpg,color=cyl)) +
+  geom_line(data=pdata, aes(x=hp,y=yhat,color=cyl))
+```
+
+
+
+## Linear Regression (multiple vars, with interaction)
+
+```{r}
+model <- lm(mpg ~ hp + cyl + hp*cyl, data=mt)
+tidy(model)
+pdata <- tibble(hp=seq_range(mt$hp,n=200)) %>%
+  expand_grid(cyl=mt$cyl)
+pdata$yhat <- predict(model,newdata=pdata)
+ggplot() +
+  geom_point(data=mt, aes(x=hp,y=mpg,color=cyl)) +
+  geom_line(data=pdata, aes(x=hp,y=yhat,color=cyl))
+```
+
+
+
+
+## Nonlinear Regression
+
+Package `minpack.lm` uses Levenberg-Marquardt algorithm, which seems to be more forgiving compared with `nls`.
+```{r}
+library(minpack.lm)
+model <- nlsLM(conc ~ a * exp(-b*time), start=list(a=1,b=1), data=Indometh)
+tidy(model)
+pdata <- tibble(time=seq_range(Indometh$time,n=200))
+pdata$yhat <- predict(model,newdata=pdata)
+ggplot() +
+  geom_point(data=Indometh, aes(x=time,y=conc)) +
+  geom_line(data=pdata, aes(x=time,y=yhat),color="red")
+
+```
+
+## Logistic Regression
+```{r}
+mt <- mtcars %>% mutate(gas.guzzler=as.numeric(mpg<22.5))
+model <- glm(gas.guzzler ~ disp + am, data=mt,family="binomial")
+tidy(model, exponentiate = TRUE)
+pdata <- crossing(disp=seq_range(mt$disp,n=200),
+                  am=mt$am)
+pdata$yhat <- predict(model,newdata=pdata,type="response")
+ggplot() + 
+  geom_point(data=mt,aes(x=disp,y=gas.guzzler,color=factor(am))) +
+  geom_line(data=pdata, aes(x=disp,y=yhat,color=factor(am)))
+```
+
+
+
+
+
+
+
+

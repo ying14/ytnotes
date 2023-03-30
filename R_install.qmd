@@ -1,7 +1,7 @@
 ---
 title: "R install notes"
 format: html
-editor: visual
+editor: source
 ---
 
 ```{r, include=FALSE, eval=FALSE}
@@ -25,7 +25,7 @@ editor: visual
 
 ## R installation
 
-Windows: install: R, Rtools, RStudio, Git for Windows 
+Windows: install: R, Rtools, RStudio, Git for Windows, Java JDK 32/64 bit.
 
 Ubuntu: install R (r-base, r-base-dev), Rstudio, default-jre, default-jdk, libcurl4-openssl-dev, git
 
@@ -50,8 +50,6 @@ sudo apt install --no-install-recommends r-base r-base-dev
 sudo apt install default-jre default-jdk libcurl4-openssl-dev git
 
 ```
-
-
 
 ```{r}
 #| eval: false
