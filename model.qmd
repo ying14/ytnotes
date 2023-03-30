@@ -35,6 +35,24 @@ ggplot(mt) +
 ```
 
 
+## Linear Regression, show confidence and prediction (single var)
+
+```{r}
+model <- lm(mpg ~ hp,data=mt)
+ci <- predict(model,interval="confidence") %>% cbind(mt)
+pi <- predict(model,interval="prediction") %>% cbind(mt)
+tidy(model)
+ggplot(mt) +
+  geom_point(aes(x=hp,y=mpg)) +
+  geom_line(data=pi,aes(x=hp,y=fit,color="predicted")) + 
+  geom_ribbon(data=pi,aes(x=hp,ymin=lwr,ymax=upr,fill="predicted"),alpha=0.35,show.legend=FALSE) +
+  geom_line(data=ci,aes(x=hp,y=fit,color="confidence")) + 
+  geom_ribbon(data=ci,aes(x=hp,ymin=lwr,ymax=upr,fill="confidence"),alpha=0.35,show.legend=FALSE)
+```
+
+
+
+
 ## Linear Regression (multiple vars)
 
 ```{r}

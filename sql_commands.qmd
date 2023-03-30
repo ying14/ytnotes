@@ -2,19 +2,237 @@
 title: "SQL Commands"
 format: html
 editor: source
+fontsize: small #small, medium, large, 1.2em, 12px, ...
+execute:
+  echo: true #whether to include code block
+  eval: false #whether to run code
+  warning: false #include warnings
+  error: false #include errors
+  output: false #include output  
 ---
+
+Create a SQL object in R
+
+```{r}
+#| eval: true
+#| output: true
+library(tidyverse)
+library(dbplyr)
+con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+copy_to(con, diamonds)
+diamonds2 <- tbl(con, "diamonds")
+diamonds2
+```
+
+
+
+
+### Filter by column criteria
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% 
+  filter(clarity=="VVS1",
+         price>2000,
+         grepl("good",cut,ignore.case=TRUE))
+```
+:::
+::: {.column width="2%"}
+```{r}
+#| eval: false
+#| echo: false
+######work
+diamonds2 %>% 
+  filter(clarity=="VVS1",
+         price>2000,
+         tolower(cut) %like% "%good%") %>%
+  sql_render() %>% as.character() %>% gsub("`","",.) %>% cat()
+```
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{sql, connection=con}
+SELECT *
+FROM diamonds
+WHERE
+  clarity = 'VVS1' AND
+  price > 2000 AND
+  LOWER(cut) like '%good%'
+
+```
+:::
+::::::::::::::
+
+
+### aggregration
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  group_by(cut) %>%
+  summarize(min.price=min(price),
+            max.price=max(price),
+            n=n(),
+            .groups="drop")
+```
+:::
+::: {.column width="2%"}
+```{r}
+#| eval: false
+#| echo: false
+######work
+diamonds2 %>%
+  group_by(cut) %>%
+  summarize(min_price=min(price),
+            max_price=max(price),
+            n=n(),
+            .groups="drop") %>% 
+  sql_render() %>% as.character() %>% gsub("`","",.) %>% cat()
+```
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{sql, connection=con}
+SELECT
+  cut,
+  MIN(price) AS min_price,
+  MAX(price) AS max_price,
+  COUNT(*) AS n
+FROM diamonds
+GROUP BY cut
+```
+:::
+::::::::::::::
+
+
+
+
+### calculations by window
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  group_by(cut) %>%
+  mutate(n=n(),
+         mean_price=mean(price),
+         rank_price=rank(price),
+         price_above_mean=price>mean(price)) %>%
+  ungroup()
+
+```
+:::
+::: {.column width="2%"}
+```{r}
+#| eval: false
+#| echo: false
+######work
+diamonds2 %>%
+  group_by(cut) %>%
+  mutate(n=n(),
+         mean_price=mean(price),
+         rank_price=rank(price),
+         price_above_mean=price>mean(price)) %>%
+  ungroup() %>% 
+  sql_render() %>% as.character() %>% gsub("`","",.) %>% cat()
+```
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{sql, connection=con}
+SELECT
+  *,
+  COUNT(*) OVER win1 AS n,
+  AVG(price) OVER win1 AS mean_price,
+  RANK() OVER (PARTITION BY cut ORDER BY price) AS rank_price,
+  price > AVG(price) OVER win1 AS price_above_mean
+FROM diamonds
+WINDOW win1 AS (PARTITION BY cut)
+```
+:::
+::::::::::::::
+
+
+
+
+<!-- ### xxxxxxxxxxxxxxxxxxxxxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: false -->
+<!-- ######work -->
+<!-- diamonds2 %>%  -->
+<!--   ################### -->
+<!--   sql_render() %>% as.character() %>% gsub("`","",.) %>% cat() -->
+<!-- ``` -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{sql, connection=con} -->
+<!-- SELECT * -->
+<!-- FROM diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+<!-- ### xxxxxxxxxxxxxxxxxxxxxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: false -->
+<!-- ######work -->
+<!-- diamonds2 %>%  -->
+<!--   ################### -->
+<!--   sql_render() %>% as.character() %>% gsub("`","",.) %>% cat() -->
+<!-- ``` -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{sql, connection=con} -->
+<!-- SELECT * -->
+<!-- FROM diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
 
 Check if `B` is a subset of `A`:
 
-``` sql
-SELECT *
-FROM   B
-WHERE  NOT EXISTS (SELECT 1 
+```sql
+SELECT * 
+FROM B
+WHERE NOT EXISTS (SELECT 1 
                    FROM   A 
                    WHERE  A.ID = B.ID)
 ```
 
-``` sql
+
+
+
+
+
+
+```sql
 with
 w (mrn, ord_id, test_date) as
 ( select distinct LR_MRN, LR_ORD_ID, LR_PERFORMED_DTE from
@@ -54,3 +272,6 @@ WHERE y.cnt = y.cnt_max)
 select * from idb.LAB_RESULTS left join z
 on LR_RESULT_GUID=KEY
 ```
+
+
+

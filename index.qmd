@@ -24,6 +24,8 @@ tbl <- tibble(link=html.files) %>%
          md=str_glue("[{label}]({link})")) %>%
   filter(link!="index.html")
 
+tbl
+
 toc <- paste(tbl$md,collapse="\n\n")
 
 ```
