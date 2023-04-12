@@ -15,15 +15,18 @@ execute:
 ---
 
 ```{r}
-library(tidyverse)
+
 library(yingtools2)
 library(broom)
 library(modelr)
+library(tidyverse)
 mt <- mtcars %>% mutate(cyl=factor(cyl))
 ```
 
 
-## Linear Regression (single var)
+## Linear Regression
+
+### Linear Regression (single var)
 
 ```{r}
 model <- lm(mpg ~ hp,data=mt)
@@ -35,7 +38,7 @@ ggplot(mt) +
 ```
 
 
-## Linear Regression, show confidence and prediction (single var)
+### Linear Regression, show confidence and prediction (single var)
 
 ```{r}
 model <- lm(mpg ~ hp,data=mt)
@@ -53,7 +56,7 @@ ggplot(mt) +
 
 
 
-## Linear Regression (multiple vars)
+### Linear Regression (multiple vars)
 
 ```{r}
 model <- lm(mpg ~ hp + cyl, data=mt)
@@ -68,7 +71,7 @@ ggplot() +
 
 
 
-## Linear Regression (multiple vars, with interaction)
+### Linear Regression (multiple vars, with interaction)
 
 ```{r}
 model <- lm(mpg ~ hp + cyl + hp*cyl, data=mt)
@@ -99,7 +102,10 @@ ggplot() +
 
 ```
 
+
 ## Logistic Regression
+
+
 ```{r}
 mt <- mtcars %>% mutate(gas.guzzler=as.numeric(mpg<22.5))
 model <- glm(gas.guzzler ~ disp + am, data=mt,family="binomial")
@@ -113,9 +119,108 @@ ggplot() +
 ```
 
 
+## Penalized Regression
+
+### Ridge Regression
+
+Use ridge regression (a.k.a. L2 regularization) to fit a model in order to deal with multicollinearity and overfitting. 
+A penalty factor $\lambda$ is used to minimize high coefficients. 
+$\lambda$ = 0 is equivalent to ordinary least squares, and higher values means higher penalty.
+Using the `glmnet` package, set `alpha = 0` for ridge regression.
+
+Determine best $\lambda$ (produces lowest mean squared error) using k-fold cross-validation, `cv.glmnet()`.
+Note that predictors are standardized by default.
+
+```{r}
+library(glmnet)
+y <- mtcars$hp
+x <- mtcars %>% dplyr::select(mpg, wt, drat, qsec) %>% as.matrix()
+
+#find optimal lambda value that minimizes test MSE
+cv_model <- cv.glmnet(x, y, alpha = 0)
+best_lambda <- cv_model$lambda.min
+
+model <- glmnet(x, y, alpha = 0, lambda = best_lambda)
+coef(model)
+
+#calculate R-squared
+y_predicted <- predict(model, s = best_lambda, newx = x)
+sst <- sum((y - mean(y))^2)
+sse <- sum((y_predicted - y)^2)
+#find R-Squared
+rsq <- 1 - sse/sst
+rsq
+
+```
+
+
+### Lasso Regression
+
+Lasso regression is similar but penalty is based on sum of absolute values coefficients.
+Setting `alpha = 1` will perform Lasso (Elastic net is intermediate values for alpha).
+Note that Lasso can shrink coefficients down to zero.
+
+```{r}
+y <- mtcars$hp
+x <- mtcars %>% select(mpg, wt, drat, qsec) %>% as.matrix()
+model <- glmnet(x, y, alpha = 1)
+
+#find optimal lambda value that minimizes test MSE
+cv_model <- cv.glmnet(x, y, alpha = 1)
+best_lambda <- cv_model$lambda.min
+
+model <- glmnet(x, y, alpha = 1, lambda = best_lambda)
+coef(model)
+
+#calculate R-squared
+y_predicted <- predict(model, s = best_lambda, newx = x)
+sst <- sum((y - mean(y))^2)
+sse <- sum((y_predicted - y)^2)
+#find R-Squared
+rsq <- 1 - sse/sst
+rsq
+
+```
 
 
 
+## Mixed Effects 
+
+```{r}
+library(lme4)
+library(nlme)
+
+view.predict <- function(fit) {
+  data1 %>% mutate(pred_dist = fitted(fit)) %>%
+    ggplot(aes(x=age, y=pred_dist, group=Subject, color=Subject)) + theme_classic() +
+    geom_line(size=1)
+}
+
+data1 <- Orthodont %>% mutate(Subject=factor(Subject,ordered=FALSE))
+data1 %>%
+    ggplot(aes(x=age, y=distance, group=Subject, color=Subject, linetype=Sex)) +
+    geom_line(size=1) + theme_classic()
 
 
+# null model
+mod1 <- lmer(distance ~ (1|Subject), data=data1, REML=F)
+summary(mod1)
+view.predict(mod1)
+
+# Random intercept model
+mod2 <- lmer(distance ~ age + (1|Subject), data=data1, REML=F)
+summary(mod2)
+view.predict(mod2)
+
+# Random intercept and random slope (independent)
+mod3 <- lmer(distance ~ age + (1|Subject) + (0+age|Subject), data=data1, REML=F)
+summary(mod3)
+view.predict(mod3)
+
+# Random intercept and random slope (correlated)
+mod4 <- lmer(distance ~ age + (1+age|Subject), data=data1, REML=F)
+summary(mod4)
+view.predict(mod4)
+
+```
 

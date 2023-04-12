@@ -97,6 +97,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="model_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="model_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -108,11 +109,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#linear-regression-single-var" id="toc-linear-regression-single-var" class="nav-link active" data-scroll-target="#linear-regression-single-var">Linear Regression (single var)</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link active" data-scroll-target="#linear-regression">Linear Regression</a>
+  <ul>
+  <li><a href="#linear-regression-single-var" id="toc-linear-regression-single-var" class="nav-link" data-scroll-target="#linear-regression-single-var">Linear Regression (single var)</a></li>
+  <li><a href="#linear-regression-show-confidence-and-prediction-single-var" id="toc-linear-regression-show-confidence-and-prediction-single-var" class="nav-link" data-scroll-target="#linear-regression-show-confidence-and-prediction-single-var">Linear Regression, show confidence and prediction (single var)</a></li>
   <li><a href="#linear-regression-multiple-vars" id="toc-linear-regression-multiple-vars" class="nav-link" data-scroll-target="#linear-regression-multiple-vars">Linear Regression (multiple vars)</a></li>
   <li><a href="#linear-regression-multiple-vars-with-interaction" id="toc-linear-regression-multiple-vars-with-interaction" class="nav-link" data-scroll-target="#linear-regression-multiple-vars-with-interaction">Linear Regression (multiple vars, with interaction)</a></li>
+  </ul></li>
   <li><a href="#nonlinear-regression" id="toc-nonlinear-regression" class="nav-link" data-scroll-target="#nonlinear-regression">Nonlinear Regression</a></li>
   <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic Regression</a></li>
+  <li><a href="#penalized-regression" id="toc-penalized-regression" class="nav-link" data-scroll-target="#penalized-regression">Penalized Regression</a>
+  <ul>
+  <li><a href="#ridge-regression" id="toc-ridge-regression" class="nav-link" data-scroll-target="#ridge-regression">Ridge Regression</a></li>
+  <li><a href="#lasso-regression" id="toc-lasso-regression" class="nav-link" data-scroll-target="#lasso-regression">Lasso Regression</a></li>
+  <li><a href="#mixed-effects" id="toc-mixed-effects" class="nav-link" data-scroll-target="#mixed-effects">Mixed Effects</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -136,14 +147,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yingtools2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yingtools2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>mt <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">cyl=</span><span class="fu">factor</span>(cyl))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="linear-regression-single-var" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression-single-var">Linear Regression (single var)</h2>
+<section id="linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression">Linear Regression</h2>
+<section id="linear-regression-single-var" class="level3">
+<h3 class="anchored" data-anchor-id="linear-regression-single-var">Linear Regression (single var)</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp,<span class="at">data=</span>mt)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mt<span class="sc">$</span>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model)</span>
@@ -163,11 +176,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="linear-regression-multiple-vars" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression-multiple-vars">Linear Regression (multiple vars)</h2>
+<section id="linear-regression-show-confidence-and-prediction-single-var" class="level3">
+<h3 class="anchored" data-anchor-id="linear-regression-show-confidence-and-prediction-single-var">Linear Regression, show confidence and prediction (single var)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl, <span class="at">data=</span>mt)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp,<span class="at">data=</span>mt)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">predict</span>(model,<span class="at">interval=</span><span class="st">"confidence"</span>) <span class="sc">%&gt;%</span> <span class="fu">cbind</span>(mt)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pi <span class="ot">&lt;-</span> <span class="fu">predict</span>(model,<span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span> <span class="fu">cbind</span>(mt)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  30.1       1.63       18.4  6.64e-18
+2 hp           -0.0682    0.0101     -6.74 1.79e- 7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mt) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>hp,<span class="at">y=</span>mpg)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>pi,<span class="fu">aes</span>(<span class="at">x=</span>hp,<span class="at">y=</span>fit,<span class="at">color=</span><span class="st">"predicted"</span>)) <span class="sc">+</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>pi,<span class="fu">aes</span>(<span class="at">x=</span>hp,<span class="at">ymin=</span>lwr,<span class="at">ymax=</span>upr,<span class="at">fill=</span><span class="st">"predicted"</span>),<span class="at">alpha=</span><span class="fl">0.35</span>,<span class="at">show.legend=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>ci,<span class="fu">aes</span>(<span class="at">x=</span>hp,<span class="at">y=</span>fit,<span class="at">color=</span><span class="st">"confidence"</span>)) <span class="sc">+</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>ci,<span class="fu">aes</span>(<span class="at">x=</span>hp,<span class="at">ymin=</span>lwr,<span class="at">ymax=</span>upr,<span class="at">fill=</span><span class="st">"confidence"</span>),<span class="at">alpha=</span><span class="fl">0.35</span>,<span class="at">show.legend=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="linear-regression-multiple-vars" class="level3">
+<h3 class="anchored" data-anchor-id="linear-regression-multiple-vars">Linear Regression (multiple vars)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl, <span class="at">data=</span>mt)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   term        estimate std.error statistic  p.value
@@ -176,33 +214,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 2 hp           -0.0240    0.0154     -1.56 1.30e- 1
 3 cyl6         -5.97      1.64       -3.64 1.09e- 3
 4 cyl8         -8.52      2.33       -3.66 1.03e- 3</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">hp=</span><span class="fu">seq_range</span>(mt<span class="sc">$</span>hp,<span class="at">n=</span><span class="dv">200</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="at">cyl=</span>mt<span class="sc">$</span>cyl)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pdata<span class="sc">$</span>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model,<span class="at">newdata=</span>pdata)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mt, <span class="fu">aes</span>(<span class="at">x=</span>hp,<span class="at">y=</span>mpg,<span class="at">color=</span>cyl)) <span class="sc">+</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>pdata, <span class="fu">aes</span>(<span class="at">x=</span>hp,<span class="at">y=</span>yhat,<span class="at">color=</span>cyl))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="model_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="linear-regression-multiple-vars-with-interaction" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression-multiple-vars-with-interaction">Linear Regression (multiple vars, with interaction)</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl <span class="sc">+</span> hp<span class="sc">*</span>cyl, <span class="at">data=</span>mt)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 5
-  term        estimate std.error statistic       p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
-1 (Intercept)  36.0       3.89        9.25 0.00000000104
-2 hp           -0.113     0.0457     -2.47 0.0206       
-3 cyl6        -15.3       7.43       -2.06 0.0496       
-4 cyl8        -17.9       5.26       -3.40 0.00216      
-5 hp:cyl6       0.105     0.0685      1.54 0.137        
-6 hp:cyl8       0.0985    0.0486      2.03 0.0531       </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">hp=</span><span class="fu">seq_range</span>(mt<span class="sc">$</span>hp,<span class="at">n=</span><span class="dv">200</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="at">cyl=</span>mt<span class="sc">$</span>cyl)</span>
@@ -215,13 +226,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
+<section id="linear-regression-multiple-vars-with-interaction" class="level3">
+<h3 class="anchored" data-anchor-id="linear-regression-multiple-vars-with-interaction">Linear Regression (multiple vars, with interaction)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl <span class="sc">+</span> hp<span class="sc">*</span>cyl, <span class="at">data=</span>mt)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  term        estimate std.error statistic       p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+1 (Intercept)  36.0       3.89        9.25 0.00000000104
+2 hp           -0.113     0.0457     -2.47 0.0206       
+3 cyl6        -15.3       7.43       -2.06 0.0496       
+4 cyl8        -17.9       5.26       -3.40 0.00216      
+5 hp:cyl6       0.105     0.0685      1.54 0.137        
+6 hp:cyl8       0.0985    0.0486      2.03 0.0531       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">hp=</span><span class="fu">seq_range</span>(mt<span class="sc">$</span>hp,<span class="at">n=</span><span class="dv">200</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="at">cyl=</span>mt<span class="sc">$</span>cyl)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>pdata<span class="sc">$</span>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model,<span class="at">newdata=</span>pdata)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mt, <span class="fu">aes</span>(<span class="at">x=</span>hp,<span class="at">y=</span>mpg,<span class="at">color=</span>cyl)) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>pdata, <span class="fu">aes</span>(<span class="at">x=</span>hp,<span class="at">y=</span>yhat,<span class="at">color=</span>cyl))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
 <section id="nonlinear-regression" class="level2">
 <h2 class="anchored" data-anchor-id="nonlinear-regression">Nonlinear Regression</h2>
 <p>Package <code>minpack.lm</code> uses Levenberg-Marquardt algorithm, which seems to be more forgiving compared with <code>nls</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(minpack.lm)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">nlsLM</span>(conc <span class="sc">~</span> a <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>b<span class="sc">*</span>time), <span class="at">start=</span><span class="fu">list</span>(<span class="at">a=</span><span class="dv">1</span>,<span class="at">b=</span><span class="dv">1</span>), <span class="at">data=</span>Indometh)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(minpack.lm)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">nlsLM</span>(conc <span class="sc">~</span> a <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>b<span class="sc">*</span>time), <span class="at">start=</span><span class="fu">list</span>(<span class="at">a=</span><span class="dv">1</span>,<span class="at">b=</span><span class="dv">1</span>), <span class="at">data=</span>Indometh)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term  estimate std.error statistic  p.value
@@ -229,22 +268,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 1 a         2.78    0.154       18.1 8.24e-27
 2 b         1.35    0.0994      13.6 1.58e-20</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">time=</span><span class="fu">seq_range</span>(Indometh<span class="sc">$</span>time,<span class="at">n=</span><span class="dv">200</span>))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pdata<span class="sc">$</span>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model,<span class="at">newdata=</span>pdata)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>Indometh, <span class="fu">aes</span>(<span class="at">x=</span>time,<span class="at">y=</span>conc)) <span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>pdata, <span class="fu">aes</span>(<span class="at">x=</span>time,<span class="at">y=</span>yhat),<span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">time=</span><span class="fu">seq_range</span>(Indometh<span class="sc">$</span>time,<span class="at">n=</span><span class="dv">200</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>pdata<span class="sc">$</span>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model,<span class="at">newdata=</span>pdata)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>Indometh, <span class="fu">aes</span>(<span class="at">x=</span>time,<span class="at">y=</span>conc)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>pdata, <span class="fu">aes</span>(<span class="at">x=</span>time,<span class="at">y=</span>yhat),<span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="model_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="model_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="logistic-regression" class="level2">
 <h2 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mt <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">gas.guzzler=</span><span class="fu">as.numeric</span>(mpg<span class="sc">&lt;</span><span class="fl">22.5</span>))</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(gas.guzzler <span class="sc">~</span> disp <span class="sc">+</span> am, <span class="at">data=</span>mt,<span class="at">family=</span><span class="st">"binomial"</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mt <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">gas.guzzler=</span><span class="fu">as.numeric</span>(mpg<span class="sc">&lt;</span><span class="fl">22.5</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(gas.guzzler <span class="sc">~</span> disp <span class="sc">+</span> am, <span class="at">data=</span>mt,<span class="at">family=</span><span class="st">"binomial"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term          estimate std.error statistic p.value
@@ -253,16 +292,244 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 2 disp        1.09          0.0405     2.07   0.0389
 3 am          4.56          1.83       0.830  0.406 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">crossing</span>(<span class="at">disp=</span><span class="fu">seq_range</span>(mt<span class="sc">$</span>disp,<span class="at">n=</span><span class="dv">200</span>),</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">am=</span>mt<span class="sc">$</span>am)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>pdata<span class="sc">$</span>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model,<span class="at">newdata=</span>pdata,<span class="at">type=</span><span class="st">"response"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mt,<span class="fu">aes</span>(<span class="at">x=</span>disp,<span class="at">y=</span>gas.guzzler,<span class="at">color=</span><span class="fu">factor</span>(am))) <span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>pdata, <span class="fu">aes</span>(<span class="at">x=</span>disp,<span class="at">y=</span>yhat,<span class="at">color=</span><span class="fu">factor</span>(am)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">crossing</span>(<span class="at">disp=</span><span class="fu">seq_range</span>(mt<span class="sc">$</span>disp,<span class="at">n=</span><span class="dv">200</span>),</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">am=</span>mt<span class="sc">$</span>am)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>pdata<span class="sc">$</span>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model,<span class="at">newdata=</span>pdata,<span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mt,<span class="fu">aes</span>(<span class="at">x=</span>disp,<span class="at">y=</span>gas.guzzler,<span class="at">color=</span><span class="fu">factor</span>(am))) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>pdata, <span class="fu">aes</span>(<span class="at">x=</span>disp,<span class="at">y=</span>yhat,<span class="at">color=</span><span class="fu">factor</span>(am)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="model_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="model_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="penalized-regression" class="level2">
+<h2 class="anchored" data-anchor-id="penalized-regression">Penalized Regression</h2>
+<section id="ridge-regression" class="level3">
+<h3 class="anchored" data-anchor-id="ridge-regression">Ridge Regression</h3>
+<p>Use ridge regression (a.k.a. L2 regularization) to fit a model in order to deal with multicollinearity and overfitting. A penalty factor <span class="math inline">\(\lambda\)</span> is used to minimize high coefficients. <span class="math inline">\(\lambda\)</span> = 0 is equivalent to ordinary least squares, and higher values means higher penalty. Using the <code>glmnet</code> package, set <code>alpha = 0</code> for ridge regression.</p>
+<p>Determine best <span class="math inline">\(\lambda\)</span> (produces lowest mean squared error) using k-fold cross-validation, <code>cv.glmnet()</code>. Note that predictors are standardized by default.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>hp</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(mpg, wt, drat, qsec) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#find optimal lambda value that minimizes test MSE</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>cv_model <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>best_lambda <span class="ot">&lt;-</span> cv_model<span class="sc">$</span>lambda.min</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">lambda =</span> best_lambda)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5 x 1 sparse Matrix of class "dgCMatrix"
+                     s0
+(Intercept) 478.8764904
+mpg          -3.2811601
+wt           20.8962259
+drat          0.5685862
+qsec        -18.7991749</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate R-squared</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>y_predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">s =</span> best_lambda, <span class="at">newx =</span> x)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> <span class="fu">mean</span>(y))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>sse <span class="ot">&lt;-</span> <span class="fu">sum</span>((y_predicted <span class="sc">-</span> y)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#find R-Squared</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>rsq <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> sse<span class="sc">/</span>sst</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>rsq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.803823</code></pre>
+</div>
+</div>
+</section>
+<section id="lasso-regression" class="level3">
+<h3 class="anchored" data-anchor-id="lasso-regression">Lasso Regression</h3>
+<p>Lasso regression is similar but penalty is based on sum of absolute values coefficients. Setting <code>alpha = 1</code> will perform Lasso (Elastic net is intermediate values for alpha). Note that Lasso can shrink coefficients down to zero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>hp</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> <span class="fu">select</span>(mpg, wt, drat, qsec) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#find optimal lambda value that minimizes test MSE</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>cv_model <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>best_lambda <span class="ot">&lt;-</span> cv_model<span class="sc">$</span>lambda.min</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> best_lambda)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5 x 1 sparse Matrix of class "dgCMatrix"
+                    s0
+(Intercept) 485.152675
+mpg          -2.936266
+wt           21.698919
+drat          .       
+qsec        -19.569135</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate R-squared</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>y_predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">s =</span> best_lambda, <span class="at">newx =</span> x)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> <span class="fu">mean</span>(y))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>sse <span class="ot">&lt;-</span> <span class="fu">sum</span>((y_predicted <span class="sc">-</span> y)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">#find R-Squared</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>rsq <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> sse<span class="sc">/</span>sst</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>rsq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8043193</code></pre>
+</div>
+</div>
+</section>
+<section id="mixed-effects" class="level3">
+<h3 class="anchored" data-anchor-id="mixed-effects">Mixed Effects</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>view.predict <span class="ot">&lt;-</span> <span class="cf">function</span>(fit) {</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  data1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pred_dist =</span> <span class="fu">fitted</span>(fit)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>pred_dist, <span class="at">group=</span>Subject, <span class="at">color=</span>Subject)) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> Orthodont <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Subject=</span><span class="fu">factor</span>(Subject,<span class="at">ordered=</span><span class="cn">FALSE</span>))</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>data1 <span class="sc">%&gt;%</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>distance, <span class="at">group=</span>Subject, <span class="at">color=</span>Subject, <span class="at">linetype=</span>Sex)) <span class="sc">+</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># null model</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(distance <span class="sc">~</span> (<span class="dv">1</span><span class="sc">|</span>Subject), <span class="at">data=</span>data1, <span class="at">REML=</span>F)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: distance ~ (1 | Subject)
+   Data: data1
+
+     AIC      BIC   logLik deviance df.resid 
+   521.5    529.5   -257.7    515.5      105 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.2391 -0.5248 -0.1103  0.4827  2.7734 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Subject  (Intercept) 3.567    1.889   
+ Residual             4.930    2.220   
+Number of obs: 108, groups:  Subject, 27
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)  24.0231     0.4216   56.98</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">view.predict</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random intercept model</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(distance <span class="sc">~</span> age <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Subject), <span class="at">data=</span>data1, <span class="at">REML=</span>F)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: distance ~ age + (1 | Subject)
+   Data: data1
+
+     AIC      BIC   logLik deviance df.resid 
+   451.4    462.1   -221.7    443.4      104 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.6870 -0.5386 -0.0123  0.4910  3.7470 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Subject  (Intercept) 4.294    2.072   
+ Residual             2.024    1.423   
+Number of obs: 108, groups:  Subject, 27
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) 16.76111    0.79456   21.09
+age          0.66019    0.06122   10.78
+
+Correlation of Fixed Effects:
+    (Intr)
+age -0.848</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">view.predict</span>(mod2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random intercept and random slope (independent)</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(distance <span class="sc">~</span> age <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Subject) <span class="sc">+</span> (<span class="dv">0</span><span class="sc">+</span>age<span class="sc">|</span>Subject), <span class="at">data=</span>data1, <span class="at">REML=</span>F)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: distance ~ age + (1 | Subject) + (0 + age | Subject)
+   Data: data1
+
+     AIC      BIC   logLik deviance df.resid 
+   449.7    463.1   -219.9    439.7      103 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.7542 -0.5056  0.0181  0.5216  3.8017 
+
+Random effects:
+ Groups    Name        Variance Std.Dev.
+ Subject   (Intercept) 1.82570  1.3512  
+ Subject.1 age         0.02141  0.1463  
+ Residual              1.85944  1.3636  
+Number of obs: 108, groups:  Subject, 27
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) 16.76111    0.70816   23.67
+age          0.66019    0.06509   10.14
+
+Correlation of Fixed Effects:
+    (Intr)
+age -0.822</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">view.predict</span>(mod3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-10-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random intercept and random slope (correlated)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>mod4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(distance <span class="sc">~</span> age <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>age<span class="sc">|</span>Subject), <span class="at">data=</span>data1, <span class="at">REML=</span>F)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: distance ~ age + (1 + age | Subject)
+   Data: data1
+
+     AIC      BIC   logLik deviance df.resid 
+   451.2    467.3   -219.6    439.2      102 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.3060 -0.4874  0.0076  0.4822  3.9228 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr 
+ Subject  (Intercept) 4.81397  2.1941        
+          age         0.04619  0.2149   -0.58
+ Residual             1.71623  1.3100        
+Number of obs: 108, groups:  Subject, 27
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) 16.76111    0.76076  22.032
+age          0.66019    0.06992   9.442
+
+Correlation of Fixed Effects:
+    (Intr)
+age -0.848</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">view.predict</span>(mod4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-10-5.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
 </section>
 
 </main>
