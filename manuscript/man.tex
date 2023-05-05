@@ -4,6 +4,7 @@
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
+  9pt,
   letterpaper,
   DIV=11,
   numbers=noendperiod]{scrartcl}
@@ -38,6 +39,7 @@
 \makeatother
 \usepackage{fancyvrb}
 \usepackage{xcolor}
+\usepackage[margin=.5in]{geometry}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
@@ -99,6 +101,29 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\newfontfamily\sectionfont{Arial}[Color=2052b0]         %define H1 font
+\newfontfamily\subsectionfont{Arial}[Color=Blue]        %define H2 font
+\newfontfamily\subsubsectionfont{Arial}[Color=Black]    %define H3 font
+\addtokomafont{section}{\sectionfont}                   %set H1 font
+\addtokomafont{subsection}{\subsectionfont}             %set H2 font
+\addtokomafont{subsubsection}{\subsubsectionfont}       %set H3 font
+\setlength{\intextsep}{10pt}                            %set wrapfig margin
+\setlength{\columnsep}{10pt}                            %set wrapfig margin
+\usepackage[font=small,justification=raggedright]{caption}  %set caption size: scriptsize, footnotesize, small, normalsize, large, Large
 \KOMAoption{captions}{tablesignature}
 \usepackage{lineno}
 \linenumbers
@@ -177,7 +202,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, breakable, enhanced, sharp corners, interior hidden, frame hidden, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, breakable, enhanced, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt, interior hidden]}{\end{tcolorbox}}\fi
 
 \hypertarget{sec-introduction}{%
 \subsection{Introduction}\label{sec-introduction}}
@@ -215,44 +240,28 @@ commonly options:
   \mathrm r \mathrm C 
 }\label{eq-black-scholes}\end{equation}
 
-\newpage{}
-
-\hypertarget{other-materials}{%
-\subsection{Other materials}\label{other-materials}}
-
-The birch canoe slid on the smooth planks. Glue the sheet to the dark
-blue background. It's easy to tell the depth of a well. These days a
-chicken leg is a rare dish. Rice is often served in round bowls. The
-juice of lemons makes fine punch. The box was thrown beside the parked
-truck. The hogs were fed chopped corn and garbage. Four hours of steady
-work faced us. Large size in stockings is hard to sell. Check out
-Section~\ref{sec-introduction} for additional content. The boy was there
-when the sun rose.
+The box was thrown beside the parked truck. The hogs were fed chopped
+corn and garbage. Four hours of steady work faced us. Large size in
+stockings is hard to sell. Check out Section~\ref{sec-introduction} for
+additional content. The boy was there when the sun rose.
 \includegraphics[width=\textwidth,height=1em]{stamp1a.jpg} A rod is used
 to catch pink salmon. The source of the huge river is the clear spring.
 Kick the ball straight and follow through. Help the woman get back to
-her feet. A pot of tea helps to pass the evening. Smoky fires lack flame
-and heat. The soft cushion broke the man's fall. The salt breeze came
-across from the sea. The girl at the booth sold fifty bonds. The small
-pup gnawed a hole in the sock. The fish twisted and turned on the bent
-hook. Press the pants and sew a button on the vest. The swan dive was
-far short of perfect.
+her feet. A pot of tea helps to pass the evening.
 
-\begin{figure}
+\newpage{}
 
-\hfill{} \includegraphics{man_files/figure-pdf/unnamed-chunk-2-1.pdf}
+\hypertarget{bitamp-figure}{%
+\subsection{Bitamp figure}\label{bitamp-figure}}
 
-\caption{Important scatterplot}
-
-\end{figure}
-
-The beauty of the view stunned the young boy. Two blue fish swam in the
-tank. Her purse was full of useless trash. The colt reared and threw the
-tall rider. It snowed, rained, and hailed the same morning. Read verse
-out loud for pleasure. Hoist the load to your left shoulder. Take the
-winding path to reach the lake. Note closely the size of the gas tank.
-Wipe the grease off his dirty face. See Figure~\ref{fig-stamp1a} to see
-the stamp I'm talking about.
+Egestas sed, suspendisse non egestas inceptos fames ut blandit
+vestibulum condimentum neque ac tincidunt, tempor. Porttitor dolor
+nullam in vel aenean dui. Amet accumsan sed commodo purus duis,
+hendrerit class. Etiam finibus dui lorem elit, torquent. Inceptos in
+feugiat phasellus ipsum. Sapien odio, in porttitor nec. Elit magnis
+egestas eu est varius, ut. Maximus eu porta aptent sodales dictum. Nibh
+semper dictum tristique duis himenaeos! Nam at vel a ultricies. See
+Figure~\ref{fig-stamp1a} to see the stamp I'm talking about.
 
 \begin{figure}
 
@@ -260,45 +269,26 @@ the stamp I'm talking about.
 
 }
 
-\caption{\label{fig-stamp1a}stamp A}
+\caption{\label{fig-stamp1a}Single bitmap}
 
 \end{figure}
 
-Mend the coat before you go out. The wrist was badly strained and hung
-limp. The stray cat gave birth to kittens. The young girl gave no clear
-response. The meal was cooked before the bell rang. What joy there is in
-living. A king ruled the state in the early days. The ship was torn
-apart on the sharp reef. Sickness kept him home the third week. The wide
-road shimmered in the hot sun. The lazy cow lay in the cool grass. Lift
-the square stone over the fence. The rope will bind the seven books at
-once. Hop over the fence and plunge in. The friendly gang left the drug
-store. Mesh mire keeps chicks inside. The frosty air passed through the
-coat. The crooked maze failed to fool the mouse. Adding fast leads to
-wrong sums. The show was a flop from the very start. A saw is a tool
-used for making boards. The wagon moved on well oiled wheels. March the
-soldiers past the next hill. A cup of sugar makes sweet fudge. Place a
-rosebush near the porch steps. Both lost their lives in the raging
-storm. We talked of the slide show in the circus. Use a pencil to write
-the first draft. He ran half way to the hardware store. The clock struck
-to mark the third period. A small creek cut across the field. Cars and
-busses stalled in snow drifts. The set of china hit, the floor with a
-crash. This is a grand season for hikes on the road. The dune rose from
-the edge of the water. Those words were the cue for the actor to leave.
-A yacht slid around the point into the bay. The two met while playing on
-the sand. The ink stain dried on the finished page. The walled town was
-seized without a fight. The lease ran out in sixteen weeks. A tame
-squirrel makes a nice pet. The horn of the car woke the sleeping cop.
-The heart beat strongly and with firm strokes. The pearl was worn in a
-thin silver ring. The fruit peel was cut in thick slices. The Navy
-attacked the big task force. See the cat glaring at the scared mouse.
-There are more than two factors here. The hat brim was wide and too
-droopy. The lawyer tried to lose his case. The grass curled around the
-fence post. Now look at Figure~\ref{fig-combined}, and notice how
+Justo eget donec elementum in eget et nullam. Felis maecenas mauris dis
+dolor semper risus. Mauris sem nostra facilisis facilisis vitae semper.
+Vestibulum ornare primis class, elit eu eu. In, augue lobortis, aliquam
+mus primis libero eget sed. Ut dis in sit aliquam lacus vestibulum, a
+euismod convallis sem. Ac eu iaculis lacinia eget conubia posuere
+imperdiet et arcu. Cras purus, ut suscipit tempus molestie in tortor sed
+varius. Facilisis litora diam, turpis mi massa malesuada. Cum urna lorem
+lorem lorem feugiat primis sollicitudin at. Nibh eu turpis a eu tempus
+laoreet.
+
+Now look at Figure~\ref{fig-combined}, and notice how
 Figure~\ref{fig-stamp1b} and Figure~\ref{fig-stamp1-again} differ.
 
 \begin{figure}
 
-\begin{minipage}[t]{\linewidth}
+\begin{minipage}[t]{0.50\linewidth}
 
 {\centering 
 
@@ -312,8 +302,8 @@ Figure~\ref{fig-stamp1b} and Figure~\ref{fig-stamp1-again} differ.
 
 \subcaption{\label{fig-stamp1b}stamp B}
 \end{minipage}%
-\newline
-\begin{minipage}[t]{\linewidth}
+%
+\begin{minipage}[t]{0.50\linewidth}
 
 {\centering 
 
@@ -334,35 +324,28 @@ Figure~\ref{fig-stamp1-again} in red.}
 
 \end{figure}
 
-The birch canoe slid on the smooth planks. Glue the sheet to the dark
-blue background. It's easy to tell the depth of a well. These days a
-chicken leg is a rare dish. Rice is often served in round bowls. The
-juice of lemons makes fine punch. The box was thrown beside the parked
-truck. The hogs were fed chopped corn and garbage. Four hours of steady
-work faced us. Large size in stockings is hard to sell. Mend the coat
-before you go out. The wrist was badly strained and hung limp. The stray
-cat gave birth to kittens. The young girl gave no clear response. The
-meal was cooked before the bell rang. What joy there is in living. A
-king ruled the state in the early days. The ship was torn apart on the
-sharp reef. Sickness kept him home the third week. The wide road
-shimmered in the hot sun. The lazy cow lay in the cool grass. Lift the
-square stone over the fence. The rope will bind the seven books at once.
-Hop over the fence and plunge in. The friendly gang left the drug store.
-Mesh mire keeps chicks inside. The frosty air passed through the coat.
-The crooked maze failed to fool the mouse. Adding fast leads to wrong
-sums. The boy was there when the sun rose. A rod is used to catch pink
-salmon. The source of the huge river is the clear spring. Kick the ball
-straight and follow through. Help the woman get back to her feet. A pot
-of tea helps to pass the evening. Smoky fires lack flame and heat. The
-soft cushion broke the man's fall. The salt breeze came across from the
-sea. The girl at the booth sold fifty bonds. The small pup gnawed a hole
-in the sock. The fish twisted and turned on the bent hook. Press the
-pants and sew a button on the vest. The swan dive was far short of
-perfect. The beauty of the view stunned the young boy. Two blue fish
-swam in the tank. Her purse was full of useless trash. The colt reared
-and threw the tall rider. It snowed, rained, and hailed the same
-morning. Read verse out loud for pleasure. Hoist the load to your left
-shoulder. See Figure~\ref{fig-diamonds}.
+Nostra ultrices, non a tortor metus maximus vulputate sit et inceptos
+tristique. Et quis, efficitur urna ullamcorper ut per bibendum, interdum
+nulla commodo in. Ac, sociosqu purus sed a nunc amet et scelerisque.
+Elit id neque, nec nec parturient eget ut. In arcu nascetur vitae eu
+turpis luctus vitae dolor. Vitae accumsan dolor vestibulum, eu fames.
+Aliquam mauris donec, tincidunt a. Sed quisque euismod ut. Sed amet ex
+vel semper lorem commodo venenatis lorem nisl in eleifend. Efficitur
+arcu. Quam non, maximus faucibus vel sed. Interdum elit sed. Magna orci
+ligula ridiculus at conubia.
+
+\newpage{}
+
+Integer feugiat aliquam sem conubia. Nulla quis dignissim iaculis vitae
+a duis non parturient nisl, dui sed nec vehicula. Nostra facilisis vel
+et nisi eu non aptent bibendum dignissim in. Ante, sit arcu molestie
+quisque, faucibus volutpat mollis. A vestibulum amet feugiat gravida nec
+habitasse, ipsum sapien fermentum. Tincidunt mollis sed non blandit nec.
+Et in pulvinar non quis, efficitur quam sit primis. Eu sed dictum
+pulvinar, nibh pellentesque nullam urna tortor. Et sed quis metus
+blandit viverra amet purus sit potenti. Et at consequat ipsum torquent
+pretium. Sed sit ante conubia erat ipsum interdum donec urna. Nulla
+mattis tristique duis magnis ante sed id. See Figure~\ref{fig-diamonds}.
 
 \begin{figure}
 
@@ -374,278 +357,678 @@ shoulder. See Figure~\ref{fig-diamonds}.
 
 \end{figure}
 
-Take the winding path to reach the lake. Note closely the size of the
-gas tank. Wipe the grease off his dirty face. Mend the coat before you
-go out. The wrist was badly strained and hung limp. The stray cat gave
-birth to kittens. The young girl gave no clear response. The meal was
-cooked before the bell rang. What joy there is in living. A king ruled
-the state in the early days. The ship was torn apart on the sharp reef.
-Sickness kept him home the third week. The wide road shimmered in the
-hot sun. The lazy cow lay in the cool grass. Lift the square stone over
-the fence. The rope will bind the seven books at once. Hop over the
-fence and plunge in. The friendly gang left the drug store. Mesh mire
-keeps chicks inside. The frosty air passed through the coat. The crooked
-maze failed to fool the mouse. Adding fast leads to wrong sums. The show
-was a flop from the very start. A saw is a tool used for making boards.
-The wagon moved on well oiled wheels. March the soldiers past the next
-hill. See Table~\ref{tbl-mtcars}.
+Sollicitudin, aliquam convallis sodales commodo. Nulla in, vitae nisl ut
+a tortor habitant ac proin. Quam nec sodales tempus. Ac orci consequat
+porta ad, ligula tincidunt. Non cubilia nascetur ut eu ante at lacus
+purus. Ipsum etiam mi, in vitae nunc dignissim nisl ipsum odio.
+Facilisis et tincidunt. Porttitor, felis vitae purus suscipit vitae
+interdum erat. Cum inceptos arcu eu pharetra iaculis ultricies
+vestibulum. Amet suspendisse diam, sed aptent amet curabitur taciti,
+maecenas dis ante velit dui. Tortor, gravida aliquam sit urna id et
+accumsan. Non mauris pellentesque sed fames a gravida sed in. Ad aenean
+aenean vitae magna sed egestas nibh. See Table~\ref{tbl-mtcars}.
 
 \hypertarget{tbl-mtcars}{}
-\begin{longtable}[]{@{}lrrrrrrrrr@{}}
-\toprule()
-& mpg & cyl & disp & hp & drat & wt & qsec & vs & am \\
-\midrule()
-\endfirsthead
-\toprule()
-& mpg & cyl & disp & hp & drat & wt & qsec & vs & am \\
-\midrule()
-\endhead
-Mazda RX4 & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1 \\
-Mazda RX4 Wag & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1 \\
-Datsun 710 & 22.8 & 4 & 108.0 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1 \\
-Hornet 4 Drive & 21.4 & 6 & 258.0 & 110 & 3.08 & 3.215 & 19.44 & 1 &
-0 \\
-Hornet Sportabout & 18.7 & 8 & 360.0 & 175 & 3.15 & 3.440 & 17.02 & 0 &
-0 \\
-Valiant & 18.1 & 6 & 225.0 & 105 & 2.76 & 3.460 & 20.22 & 1 & 0 \\
-Duster 360 & 14.3 & 8 & 360.0 & 245 & 3.21 & 3.570 & 15.84 & 0 & 0 \\
-Merc 240D & 24.4 & 4 & 146.7 & 62 & 3.69 & 3.190 & 20.00 & 1 & 0 \\
-Merc 230 & 22.8 & 4 & 140.8 & 95 & 3.92 & 3.150 & 22.90 & 1 & 0 \\
-Merc 280 & 19.2 & 6 & 167.6 & 123 & 3.92 & 3.440 & 18.30 & 1 & 0 \\
-\bottomrule()
-\caption{\label{tbl-mtcars}Table of Mtcars}\tabularnewline
-\end{longtable}
+\begin{table}
+\caption{\label{tbl-mtcars}Table of Mtcars }\tabularnewline
 
-A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
-Both lost their lives in the raging storm. We talked of the slide show
-in the circus. Use a pencil to write the first draft. He ran half way to
-the hardware store. The clock struck to mark the third period. A small
-creek cut across the field. Cars and busses stalled in snow drifts. The
-set of china hit, the floor with a crash. This is a grand season for
-hikes on the road. The dune rose from the edge of the water. Those words
-were the cue for the actor to leave. A yacht slid around the point into
-the bay. The two met while playing on the sand. The ink stain dried on
-the finished page. The walled town was seized without a fight. The lease
-ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of
-the car woke the sleeping cop. The heart beat strongly and with firm
-strokes. The pearl was worn in a thin silver ring. The fruit peel was
-cut in thick slices. The Navy attacked the big task force. See the cat
-glaring at the scared mouse. There are more than two factors here. The
-hat brim was wide and too droopy. The lawyer tried to lose his case. The
-grass curled around the fence post. Anyway here is
-Figure~\ref{fig-stamp3-again}
+\centering
+\begin{tabular}{l|r|r|r|r|r|r|r|r|r}
+\hline
+  & mpg & cyl & disp & hp & drat & wt & qsec & vs & am\\
+\hline
+Mazda RX4 & 21.0 & 6 & 160 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1\\
+\hline
+Mazda RX4 Wag & 21.0 & 6 & 160 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1\\
+\hline
+Datsun 710 & 22.8 & 4 & 108 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1\\
+\hline
+Hornet 4 Drive & 21.4 & 6 & 258 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0\\
+\hline
+Hornet Sportabout & 18.7 & 8 & 360 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0\\
+\hline
+Valiant & 18.1 & 6 & 225 & 105 & 2.76 & 3.460 & 20.22 & 1 & 0\\
+\hline
+Duster 360 & 14.3 & 8 & 360 & 245 & 3.21 & 3.570 & 15.84 & 0 & 0\\
+\hline
+\end{tabular}
+\end{table}
 
-\begin{figure}
+Aenean nam sit eros, dui. Senectus urna est diam velit neque, tincidunt
+mattis fames efficitur sit molestie lobortis. Senectus, tortor sed
+tellus sed hendrerit et nisl fringilla vitae. Natoque vel scelerisque
+sit mauris integer vulputate diam sapien ut faucibus. Et in eros
+convallis a eu etiam facilisis bibendum interdum. Nullam vitae ut
+dignissim et ut cursus ac quam, sit auctor torquent. Nam feugiat, donec,
+in metus, vehicula tortor dictumst vel. Sed dolor. Nostra turpis amet
+quam porttitor. In parturient rutrum nisl quam! Aliquam conubia
+pellentesque nec parturient habitasse ligula lacus. Senectus class vel
+est phasellus feugiat, neque rhoncus ligula a! Sem in rhoncus cursus ut,
+facilisi. Condimentum potenti nec sed turpis tincidunt. Sodales sem
+pellentesque lobortis, neque in ut, nunc id a et scelerisque. Orci est
+in.
 
-{\centering \includegraphics{stamp1a.jpg}
+\newpage{}
 
-}
+Sit ut tincidunt pretium sed dui. Penatibus quis maecenas eu aenean erat
+euismod. Erat ipsum, facilisi eros ornare, nec non luctus nisl id.
+Aliquet nibh, ornare turpis pellentesque sed sociosqu tincidunt! Eros
+semper velit. Cursus pulvinar tempor sed semper cursus maximus. At donec
+blandit ut tristique fermentum fusce tincidunt venenatis ultrices. Amet
+vehicula consectetur gravida tellus habitant quam quam, platea. Aliquet
+tempus. Nulla nam ligula. Fusce euismod ante a, pulvinar convallis,
+curae vel. Nisl faucibus nisl nam penatibus sagittis venenatis praesent
+fringilla sapien ac ante ac vitae. See Figure~\ref{fig-diamonds2}.
 
-\caption{\label{fig-stamp3-again}stamp AA again}
+\begin{figure}[t]
+
+\includegraphics[width=1\textwidth,height=\textheight]{man_files/figure-pdf/fig-diamonds2-1.pdf} \hfill{}
+
+\caption{\label{fig-diamonds2}Plot of Diamonds}
 
 \end{figure}
 
-A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
-Both lost their lives in the raging storm. We talked of the slide show
-in the circus. Use a pencil to write the first draft. He ran half way to
-the hardware store. The clock struck to mark the third period. A small
-creek cut across the field. Cars and busses stalled in snow drifts. The
-set of china hit, the floor with a crash. This is a grand season for
-hikes on the road. The dune rose from the edge of the water. Those words
-were the cue for the actor to leave. A yacht slid around the point into
-the bay. The two met while playing on the sand. The ink stain dried on
-the finished page. The walled town was seized without a fight. The lease
-ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of
-the car woke the sleeping cop. The heart beat strongly and with firm
-strokes. The pearl was worn in a thin silver ring. The fruit peel was
-cut in thick slices. The Navy attacked the big task force. See the cat
-glaring at the scared mouse. There are more than two factors here. The
-hat brim was wide and too droopy. The lawyer tried to lose his case. The
-grass curled around the fence post. A cup of sugar makes sweet fudge.
-Place a rosebush near the porch steps. Both lost their lives in the
-raging storm. We talked of the slide show in the circus. Use a pencil to
-write the first draft. He ran half way to the hardware store. The clock
-struck to mark the third period. A small creek cut across the field.
-Cars and busses stalled in snow drifts. The set of china hit, the floor
-with a crash. This is a grand season for hikes on the road. The dune
-rose from the edge of the water. Those words were the cue for the actor
-to leave. A yacht slid around the point into the bay. The two met while
-playing on the sand. The ink stain dried on the finished page. The
-walled town was seized without a fight. The lease ran out in sixteen
-weeks. A tame squirrel makes a nice pet. The horn of the car woke the
-sleeping cop. The heart beat strongly and with firm strokes. The pearl
-was worn in a thin silver ring. The fruit peel was cut in thick slices.
-The Navy attacked the big task force. See the cat glaring at the scared
-mouse. There are more than two factors here. The hat brim was wide and
-too droopy. The lawyer tried to lose his case. The grass curled around
-the fence post. You can see a wrapped text thing at Figure
-\ref{fig-wrap}.
+Potenti sit litora mi, fringilla, convallis. Nunc sed taciti sit sed ut
+maximus conubia donec nisi mauris tincidunt lectus aliquam. Sed
+pulvinar, risus vel tempor maecenas enim fames. Lectus suscipit
+dignissim, ac dictumst malesuada, nibh ad vitae. Nunc mi nullam aenean.
+Ipsum nec ac curabitur nibh ut id. Elit porttitor eu dictum fames
+inceptos ut phasellus odio maecenas. Tincidunt duis in, ut in ut mauris.
+Vel urna bibendum ultrices id, congue aliquam sit. Lacinia aliquam.
+Tristique inceptos nibh posuere.
 
-\begin{wrapfigure}{0}{0.4\linewidth}
-\centering
-\includegraphics[width=0.7\linewidth]{stamp1b.jpg}
-\caption{\label{fig-wrap}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
-\vspace{-3pt}
-\end{wrapfigure}
+Et dictum imperdiet ligula, nec ex at urna. Volutpat sed, condimentum.
+Sit, posuere in cum fames sodales velit. Ac class cras in, vestibulum
+penatibus in, varius ut, vel. Purus hac nunc tristique. Volutpat in eu
+vitae, ac curae ipsum justo quam purus. Non, ultricies, ac, ipsum
+aliquam sed et. Risus sodales ultricies vehicula. Maecenas, mus urna sed
+duis ad, tempus. Dictumst mus ut magnis conubia amet. Aptent vel, est
+sed. Dui blandit justo aenean convallis a rhoncus sed. See
+Table~\ref{tbl-mtcars2}.
 
-A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
-Both lost their lives in the raging storm. We talked of the slide show
-in the circus. Use a pencil to write the first draft. He ran half way to
-the hardware store. The clock struck to mark the third period. A small
-creek cut across the field. Cars and busses stalled in snow drifts. The
-set of china hit, the floor with a crash. This is a grand season for
-hikes on the road. The dune rose from the edge of the water. Those words
-were the cue for the actor to leave. A yacht slid around the point into
-the bay. The two met while playing on the sand. The ink stain dried on
-the finished page. The walled town was seized without a fight. The lease
-ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of
-the car woke the sleeping cop. The heart beat strongly and with firm
-strokes. The pearl was worn in a thin silver ring. The fruit peel was
-cut in thick slices. The Navy attacked the big task force. See the cat
-glaring at the scared mouse. You can see a wrapped text thing at Figure
-\ref{fig-wrap2}.
+\hypertarget{tbl-mtcars2}{}
+\begin{table}
+\caption{\label{tbl-mtcars2}Table of Mtcars }\tabularnewline
 
-\begin{wrapfigure}{l}{0.4\linewidth}
-  \centering
-  \includegraphics[width=0.7\linewidth]{stamp1a.jpg}
-  \caption{\label{fig-wrap2}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
-  \vspace{-3pt}
-\end{wrapfigure}
+\centering\begingroup\fontsize{7}{9}\selectfont
 
-A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
-Both lost their lives in the raging storm. We talked of the slide show
-in the circus. Use a pencil to write the first draft. He ran half way to
-the hardware store. The clock struck to mark the third period. A small
-creek cut across the field. Cars and busses stalled in snow drifts. The
-set of china hit, the floor with a crash. This is a grand season for
-hikes on the road. The dune rose from the edge of the water. Those words
-were the cue for the actor to leave. A yacht slid around the point into
-the bay. The two met while playing on the sand. The ink stain dried on
-the finished page. The walled town was seized without a fight. The lease
-ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of
-the car woke the sleeping cop. The heart beat strongly and with firm
-strokes. The pearl was worn in a thin silver ring. The fruit peel was
-cut in thick slices. The Navy attacked the big task force. See the cat
-glaring at the scared mouse. There are more than two factors here. The
-hat brim was wide and too droopy. The lawyer tried to lose his case. The
-grass curled around the fence post. A cup of sugar makes sweet fudge.
-Place a rosebush near the porch steps. Both lost their lives in the
-raging storm. We talked of the slide show in the circus. Use a pencil to
-write the first draft. He ran half way to the hardware store. The clock
-struck to mark the third period. A small creek cut across the field.
-Cars and busses stalled in snow drifts. The set of china hit, the floor
-with a crash. This is a grand season for hikes on the road. The dune
-rose from the edge of the water. Those words were the cue for the actor
-to leave. A yacht slid around the point into the bay. The two met while
-playing on the sand. The ink stain dried on the finished page. The
-walled town was seized without a fight. The lease ran out in sixteen
-weeks. A tame squirrel makes a nice pet. The horn of the car woke the
-sleeping cop. The heart beat strongly and with firm strokes. The pearl
-was worn in a thin silver ring. The fruit peel was cut in thick slices.
-The Navy attacked the big task force. See the cat glaring at the scared
-mouse. There are more than two factors here. The hat brim was wide and
-too droopy. The lawyer tried to lose his case. The grass curled around
-the fence post. See Table \ref{tbl-mtsmall}.
-
-\begin{wrapfigure}{l}{0.4\linewidth}
-  \centering
-::: {.cell}
-::: {.cell-output .cell-output-stdout}
-```
-
-% latex table generated in R 4.2.1 by xtable 1.8-4 package
-% Thu Nov 17 09:38:46 2022
-\begin{tabular}{rrr}
-  \hline
- & Sepal.Length & Sepal.Width \\ 
-  \hline
-1 & 5.10 & 3.50 \\ 
-  2 & 4.90 & 3.00 \\ 
-  3 & 4.70 & 3.20 \\ 
-  4 & 4.60 & 3.10 \\ 
-  5 & 5.00 & 3.60 \\ 
-  6 & 5.40 & 3.90 \\ 
-   \hline
+\begin{tabular}{l|r|r|r|r|r|r|r|r|r}
+\hline
+  & mpg & cyl & disp & hp & drat & wt & qsec & vs & am\\
+\hline
+Mazda RX4 & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1\\
+\hline
+Mazda RX4 Wag & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1\\
+\hline
+Datsun 710 & 22.8 & 4 & 108.0 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1\\
+\hline
+Hornet 4 Drive & 21.4 & 6 & 258.0 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0\\
+\hline
+Hornet Sportabout & 18.7 & 8 & 360.0 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0\\
+\hline
+Valiant & 18.1 & 6 & 225.0 & 105 & 2.76 & 3.460 & 20.22 & 1 & 0\\
+\hline
+Duster 360 & 14.3 & 8 & 360.0 & 245 & 3.21 & 3.570 & 15.84 & 0 & 0\\
+\hline
+Merc 240D & 24.4 & 4 & 146.7 & 62 & 3.69 & 3.190 & 20.00 & 1 & 0\\
+\hline
+Merc 230 & 22.8 & 4 & 140.8 & 95 & 3.92 & 3.150 & 22.90 & 1 & 0\\
+\hline
+Merc 280 & 19.2 & 6 & 167.6 & 123 & 3.92 & 3.440 & 18.30 & 1 & 0\\
+\hline
 \end{tabular}
-```
-:::
-:::
+\endgroup{}
+\end{table}
 
-  \caption{\label{tbl-mtsmall}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
+\newpage{}
+
+\hypertarget{wrapfig-bitmap-via-manual-tex}{%
+\subsection{Wrapfig: bitmap via
+manual-TEX}\label{wrapfig-bitmap-via-manual-tex}}
+
+Nec mattis, interdum turpis ligula a senectus. Magna pulvinar turpis
+quam quis mi nascetur rutrum. Leo neque nam a. Dui himenaeos. Ex
+placerat torquent ex. Efficitur elementum purus faucibus. Sed, amet
+lacus nec mus primis sed ac, per, lorem sed, amet tincidunt. Nunc per ut
+eu donec maecenas cursus posuere sed faucibus ut.
+
+Quis nisl vehicula lacus ipsum turpis tempus tempus! Nulla id ridiculus
+lectus sapien, tristique. Rhoncus mauris in nisl arcu sit sagittis dui.
+Efficitur euismod magna et cubilia, nascetur. Euismod mi erat platea eu
+tortor donec ipsum eros. Non finibus, sodales tortor eget sapien lacinia
+laoreet. Hac maecenas nisi nisi vel vitae, vehicula vitae. Ac integer
+non dapibus aliquet ac. Id egestas aenean eget sed dictumst augue nostra
+ante. Pulvinar morbi nullam nibh nec eu. At sapien class hac, mauris
+quam, dui at. You can see a wrapped text thing at Figure \ref{fig-wrap}.
+
+% \begin{wrapfigure}[lineheight]{position}{width}
+% \begin{wrapfigure}{0}{0.4\linewidth}{0.5\textwidth}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+  \centering
+  \includegraphics[width=0.35\textwidth]{stamp1b.jpg}
+  \caption{\label{fig-wrap}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
   \vspace{-3pt}
 \end{wrapfigure}
 
-A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
-Both lost their lives in the raging storm. We talked of the slide show
-in the circus. Use a pencil to write the first draft. He ran half way to
-the hardware store. The clock struck to mark the third period. A small
-creek cut across the field. Cars and busses stalled in snow drifts. The
-set of china hit, the floor with a crash. This is a grand season for
-hikes on the road. The dune rose from the edge of the water. Those words
-were the cue for the actor to leave. A yacht slid around the point into
-the bay. The two met while playing on the sand. The ink stain dried on
-the finished page. The walled town was seized without a fight. The lease
-ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of
-the car woke the sleeping cop. The heart beat strongly and with firm
-strokes. The pearl was worn in a thin silver ring. The fruit peel was
-cut in thick slices. The Navy attacked the big task force. See the cat
-glaring at the scared mouse. There are more than two factors here. The
-hat brim was wide and too droopy. The lawyer tried to lose his case. The
-grass curled around the fence post. A cup of sugar makes sweet fudge.
-Place a rosebush near the porch steps. Both lost their lives in the
-raging storm. We talked of the slide show in the circus. Use a pencil to
-write the first draft. He ran half way to the hardware store. The clock
-struck to mark the third period. A small creek cut across the field.
-Cars and busses stalled in snow drifts. The set of china hit, the floor
-with a crash. This is a grand season for hikes on the road. The dune
-rose from the edge of the water. Those words were the cue for the actor
-to leave. A yacht slid around the point into the bay. The two met while
-playing on the sand. The ink stain dried on the finished page. The
-walled town was seized without a fight. The lease ran out in sixteen
-weeks. A tame squirrel makes a nice pet. The horn of the car woke the
-sleeping cop. The heart beat strongly and with firm strokes. The pearl
-was worn in a thin silver ring. The fruit peel was cut in thick slices.
-The Navy attacked the big task force. See the cat glaring at the scared
-mouse. There are more than two factors here. The hat brim was wide and
-too droopy. The lawyer tried to lose his case. The grass curled around
-the fence post. See Table Figure \ref{fig-diamonds-small}.
+Felis, sapien dolor vestibulum velit tellus justo vivamus vestibulum vel
+in a? Feugiat tincidunt eget sed nulla imperdiet non at commodo
+fermentum, proin, pretium, eu. Rutrum mauris efficitur mauris habitant
+leo. Eget turpis ullamcorper efficitur placerat nam eleifend arcu lectus
+pellentesque. Ut finibus nulla lacus litora condimentum sagittis dictum
+platea augue nunc nulla. Himenaeos tellus cursus quisque facilisi in non
+adipiscing. Hendrerit id tempus hac turpis vel per quis ac orci amet.
+Sed amet magnis curae accumsan ipsum. Mattis, ligula ornare dis elit.
+Fermentum dapibus non vel mauris. Ullamcorper pulvinar vitae vestibulum
+interdum mi tempor sem. Sapien natoque dapibus fames convallis lacinia
+etiam.
 
-\includegraphics{man_files/figure-pdf/unnamed-chunk-7-1.pdf}
+Eu, sem porta. Massa elit erat tempor sodales quisque ut sociosqu. Non
+consequat penatibus tincidunt, et lobortis, ornare neque, nibh,
+tincidunt erat, interdum tincidunt velit? Pharetra ullamcorper eu
+taciti, non sociis tellus nibh elementum. Et sit ut maecenas condimentum
+aliquam sed arcu justo conubia felis et. Senectus sed ornare non, mauris
+luctus quis vel justo, odio dapibus. Varius at sollicitudin ac platea.
+Ad augue nascetur urna ante. Quam in iaculis ligula id feugiat euismod
+sed venenatis per. Sed tristique ut tincidunt congue ac augue lacus sed
+dis et cubilia. Id pellentesque sed sed congue. Class eu felis fusce
+volutpat eu ipsum.
 
-A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.
-Both lost their lives in the raging storm. We talked of the slide show
-in the circus. Use a pencil to write the first draft. He ran half way to
-the hardware store. The clock struck to mark the third period. A small
-creek cut across the field. Cars and busses stalled in snow drifts. The
-set of china hit, the floor with a crash. This is a grand season for
-hikes on the road. The dune rose from the edge of the water. Those words
-were the cue for the actor to leave. A yacht slid around the point into
-the bay. The two met while playing on the sand. The ink stain dried on
-the finished page. The walled town was seized without a fight. The lease
-ran out in sixteen weeks. A tame squirrel makes a nice pet. The horn of
-the car woke the sleeping cop. The heart beat strongly and with firm
-strokes. The pearl was worn in a thin silver ring. The fruit peel was
-cut in thick slices. The Navy attacked the big task force. See the cat
-glaring at the scared mouse. There are more than two factors here. The
-hat brim was wide and too droopy. The lawyer tried to lose his case. The
-grass curled around the fence post. A cup of sugar makes sweet fudge.
-Place a rosebush near the porch steps. Both lost their lives in the
-raging storm. We talked of the slide show in the circus. Use a pencil to
-write the first draft. He ran half way to the hardware store. The clock
-struck to mark the third period. A small creek cut across the field.
-Cars and busses stalled in snow drifts. The set of china hit, the floor
-with a crash. This is a grand season for hikes on the road. The dune
-rose from the edge of the water. Those words were the cue for the actor
-to leave. A yacht slid around the point into the bay. The two met while
-playing on the sand. The ink stain dried on the finished page. The
-walled town was seized without a fight. The lease ran out in sixteen
-weeks. A tame squirrel makes a nice pet. The horn of the car woke the
-sleeping cop. The heart beat strongly and with firm strokes. The pearl
-was worn in a thin silver ring. The fruit peel was cut in thick slices.
-The Navy attacked the big task force. See the cat glaring at the scared
-mouse. There are more than two factors here. The hat brim was wide and
-too droopy. The lawyer tried to lose his case. The grass curled around
-the fence post.
+Sed mollis sociis ac, sed ligula amet sit lacinia. Ridiculus ipsum
+aliquet sem in lectus. Etiam eros accumsan sem sed curabitur. Quam
+mauris et sit, turpis tincidunt mus, porta ac et. Velit quis taciti, et.
+Ridiculus tempor amet justo pretium pellentesque in et dui potenti. Amet
+suscipit interdum, dignissim semper nunc maecenas etiam, mauris potenti
+a. Neque neque amet nulla nullam. Eleifend urna pellentesque massa sit
+auctor eget. You can see a wrapped text thing at Figure \ref{fig-wrap2}.
+
+\begin{wrapfigure}{l}{0\textwidth}
+  \centering
+  \includegraphics[width=0.3\textwidth,height=0.3\textwidth]{stamp1a.jpg}
+  \caption{\label{fig-wrap2}caption here. A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.}
+  \vspace{-6pt}
+\end{wrapfigure}
+
+Fusce et feugiat eu hac, nec sagittis porta posuere pulvinar iaculis
+maximus. A metus fermentum, elit auctor. Sociis non vel fringilla magna,
+eu et id interdum luctus cras ullamcorper turpis proin dui facilisis.
+Non netus vel eu, potenti sociosqu nunc. Consectetur vel sit sociosqu
+non eleifend curabitur eget mauris sociosqu. Metus suscipit nec, a eu
+nec suspendisse orci. Lacinia nisi velit.
+
+Vitae nostra gravida in id vivamus. Mattis ante et integer ex, amet ac
+leo volutpat praesent. Ad in, sed arcu finibus elementum arcu. Netus in
+ante massa ut proin platea nulla, non curabitur, et mattis. Pharetra non
+lacus, penatibus et condimentum felis non, blandit. At varius metus ut
+mauris varius, nulla enim. Molestie augue, egestas ex quisque risus et
+auctor. Himenaeos ante velit, sem auctor sed varius dapibus. Sit, arcu,
+sed eget laoreet montes sed a, ligula, erat. Hendrerit sed torquent eget
+quam. Non sit tempor sit lectus! Lectus suspendisse nisl eu ligula
+condimentum, mattis donec porta molestie magnis. Purus, felis non in
+faucibus magna. Integer nisl et et mauris aliquet porttitor. Aenean, in
+sapien nisi, leo ut aptent imperdiet consectetur velit. Vehicula nam
+massa, efficitur. Ullamcorper vel, iaculis sed sed vitae, tempor ac per.
+
+Mollis tincidunt et in at velit a. Consequat mi, nec neque lacus etiam
+turpis molestie malesuada turpis. Mus enim condimentum dictum augue quam
+sollicitudin malesuada rutrum. Et proin eu, euismod sapien etiam rutrum,
+sapien. Integer mauris dolor mauris amet, et tristique, consectetur. In
+eu dictum, lobortis. Ac pharetra, vivamus, ornare nec sed elit, tortor
+aliquam vestibulum. Suscipit ut aptent ipsum, posuere. Nibh rutrum
+blandit leo.
+
+Donec mauris ante scelerisque posuere augue. Non non magna non iaculis
+viverra fringilla. Varius, nec pulvinar adipiscing egestas adipiscing
+nec commodo. Sed dapibus, non quisque nec lacinia sed, sed vel,
+elementum ligula. Lacus, quis, tempor metus class eget leo ut at.
+Interdum ipsum tincidunt, tempor auctor facilisi. Sed, non ultricies
+non. Efficitur ac lorem vestibulum a velit dignissim mauris et nec,
+etiam blandit. Elementum ligula sit fermentum sit luctus a. Quis ac in
+vitae ac ac lacus nec sapien magnis vel montes. Eu placerat nisl, tempus
+ligula, torquent nunc tortor vehicula vitae, blandit. Aptent taciti sed
+taciti quam lobortis. Sed pulvinar. Vulputate erat sit eu. Turpis nisl
+in in curae mauris. Maximus maecenas vestibulum non purus quis id
+ultricies egestas pellentesque. Vitae ut sed ultrices, platea nulla.
+Tristique sed ac sed sit ultrices, facilisi sed ultrices fames non.
+
+\newpage{}
+
+\hypertarget{wrapfig-bitmap-via-pandoc-filter}{%
+\subsection{Wrapfig: bitmap via
+pandoc-filter}\label{wrapfig-bitmap-via-pandoc-filter}}
+
+Malesuada lacus euismod, integer placerat non cursus. Eros laoreet
+natoque mollis platea vestibulum, augue in. Ac erat leo egestas a velit.
+In nec pellentesque, feugiat nisl tortor eu. Adipiscing in leo lobortis,
+ligula lorem id nec arcu. Nunc non amet sit ac tincidunt nec, est eget
+iaculis vel class varius? Sodales sed quisque consequat quis nostra nisi
+augue ridiculus a. Dignissim urna eros a nibh venenatis at parturient in
+maximus.
+
+Interdum sagittis vitae aliquam netus. Placerat vel posuere augue
+egestas maximus convallis. Ac magna velit cum, metus risus cras integer.
+At habitasse hac maximus consectetur auctor tincidunt dignissim
+pellentesque. Vitae lobortis ligula mi non sit facilisis maximus ac a. A
+nulla neque, luctus nullam id odio fusce orci pellentesque interdum per.
+Lacinia, turpis felis. Sit ac ad velit. Fames, erat ac habitasse finibus
+accumsan tellus eu. Enim potenti orci sed integer ex rhoncus. Sem neque
+class dolor risus ac ac interdum porta nunc arcu pellentesque. Non id
+sed eleifend magnis, eget dolor et sapien vel. You can see a wrapped
+text thing at Figure \ref{fig-wrap-filter}.
+
+\begin{wrapfigure}{r}{3in}\centering\includegraphics{stamp1b.jpg}\caption{\label{fig-wrap-filter}
+A cup of sugar makes sweet fudge. Place a rosebush near the porch
+steps.}\end{wrapfigure}
+
+Phasellus ad ut iaculis accumsan id tortor nunc in. Tristique hac est
+pellentesque, ut commodo dui dapibus augue dui. Turpis, mauris aliquet
+nostra metus pretium scelerisque, nascetur sed. Conubia adipiscing,
+rutrum venenatis, libero penatibus interdum blandit, litora tempus nunc,
+libero, mi. Ipsum ut, hac mi eros. Nunc eu scelerisque justo
+pellentesque ultrices dictumst arcu et lectus. Felis sed egestas, massa
+sociosqu, nibh nec. At sollicitudin urna tortor nec, urna et suscipit
+sed. Aptent nec luctus massa penatibus gravida efficitur lectus. Cursus
+imperdiet porttitor eget himenaeos vehicula nulla magna morbi. Magna, ut
+metus senectus mauris sit donec.
+
+Sed ac varius faucibus sed. In lorem bibendum sit quam diam enim vitae.
+Vel nunc consectetur suspendisse aliquet nam. Auctor eros torquent massa
+ante consequat ut aliquam tellus. Ut scelerisque phasellus eu porttitor
+enim ornare nisi iaculis. Viverra quis gravida maecenas at vel. Nascetur
+magna, auctor risus ac eu enim. Blandit vestibulum, curae vel, ac, eros
+eget dapibus sed elit. Venenatis non augue at ac ante nec, lorem tortor.
+Nullam nunc consectetur diam nec turpis felis sociosqu, curae quis in.
+Et vestibulum posuere non. At in, netus commodo lorem et elit mattis est
+quam sed aliquam dictumst. Nullam in rutrum velit enim. Nisl maximus
+quis sem tempor leo ex ligula turpis habitasse porttitor pellentesque.
+
+Eleifend, ultricies justo aliquet faucibus mi vitae, sed non neque
+maximus vestibulum ligula urna neque. Nam pulvinar luctus sed, ut aenean
+nostra per ut amet sit. Sed vestibulum ut nec dui netus bibendum ac.
+Malesuada ligula dui lobortis habitant turpis quis. Quisque, quam montes
+placerat integer sed. At vel at ut libero suspendisse in congue. Vitae
+eget non quam volutpat pulvinar. Tempor volutpat pellentesque dictum.
+You can see a wrapped text thing at \textbf{?@fig-wrap-filter2}
+
+\begin{wrapfigure}[18]{l}{3in}\centering\includegraphics{stamp1a.jpg}\caption{\label{fig-wrap-filter2}
+A cup of sugar makes sweet fudge. Place a rosebush near the porch
+steps.}\end{wrapfigure}
+
+Congue turpis rhoncus. Porttitor at penatibus sed ex tempor. Nulla ac
+nulla mollis nulla ac montes aliquet, vitae sed purus. Aliquam felis
+conubia ac curabitur in sit iaculis at. Urna lobortis accumsan pulvinar
+justo sapien sit suscipit. Sed massa ex maximus ac erat a. Elit in netus
+et dui senectus aptent ullamcorper vehicula diam donec eros. Nunc neque
+erat ante. Elementum vestibulum ad. Sit sed arcu sit, eget a quisque,
+cras class sem odio tempor in. Urna tempor egestas velit nulla elit.
+Lacinia pretium nec a integer a.
+
+Ex, erat lacus pulvinar habitasse elit scelerisque elit molestie, purus
+elit fusce. Nisi aliquam lobortis, vel venenatis pellentesque. Vel lacus
+sapien. Porta varius sit. At sed at vel. Tempus lobortis lectus a.
+Lobortis quis nunc auctor, risus in, pretium. Malesuada in in laoreet
+sollicitudin leo fusce in aliquam. Praesent egestas sed ac sem non amet.
+Eleifend fames vel vel vehicula ac sit maximus vel vestibulum
+ullamcorper. Aliquam lectus tellus adipiscing vel laoreet iaculis
+blandit nunc integer netus nulla orci. Lectus eu ut erat pharetra
+platea, eleifend sapien. Tempor faucibus vulputate metus et sed.
+Lobortis pellentesque in est erat placerat eu ipsum id mus, dapibus,
+phasellus, orci.
+
+Netus efficitur ac cum posuere congue egestas velit a primis. Tincidunt
+cursus odio pulvinar ipsum. Aliquam congue erat habitant nibh
+adipiscing, sed vel mi lacus. Ullamcorper posuere quam sed suscipit
+ligula donec. Nisl facilisi mauris ad molestie, lacus ut in amet neque.
+Finibus, netus consequat ante nulla, sapien nec nisl fames est. Sed
+sociis dignissim risus enim, finibus at felis. Litora erat maximus ac,
+aliquam in et. Felis vitae pretium, viverra feugiat, nibh faucibus.
+Tempor in urna, arcu ad non ligula laoreet. Sit sit nulla at. Vel
+sollicitudin lacus sed aliquam ut metus vitae.
+
+Amet sed libero lorem natoque ac vestibulum lectus, nec mus. Velit
+aliquet, vel pulvinar eu sed maecenas. Scelerisque feugiat justo neque
+ad semper tempor netus ut, dui. Dictum rhoncus in ligula libero,
+habitant parturient eros libero. Metus justo magna praesent turpis nibh
+vestibulum potenti mi. Nunc sed nec mattis turpis non laoreet et ut
+sollicitudin mattis non. Sed nulla vel platea aliquam ut eu consequat,
+nam vitae. Felis, quisque risus class. Tellus, ut ornare. Vulputate sed,
+massa ipsum non, eleifend consectetur convallis in sapien sem, ac.
+Sapien ut litora! Feugiat fringilla sagittis senectus nec. Dolor ut et
+vel vel morbi auctor.
+
+\newpage{}
+
+\hypertarget{wrapfig-ggplot-pdf-via-manual-tex}{%
+\subsection{Wrapfig: ggplot-pdf via manual
+TEX}\label{wrapfig-ggplot-pdf-via-manual-tex}}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+  \centering
+  \includegraphics{mtcars.pdf}
+  \caption{\label{fig-mtcars-wrapfig-0}Create ggplot pdf, then add as TEX.}
+\end{wrapfigure}
+
+Sagittis, inceptos convallis magnis, sit. Mauris eu ut nec erat.
+Nascetur vel et, nulla iaculis ac a vulputate elementum eleifend in
+class taciti curae ante quis nascetur pharetra. Ante elit non dictumst
+habitasse molestie mollis quis tincidunt in non egestas sit. Rutrum in
+in metus nulla aliquet, interdum potenti neque. Et aenean. Duis mauris
+amet sollicitudin faucibus non dolor nam lobortis sollicitudin libero
+malesuada. Turpis ultricies orci sollicitudin, volutpat leo faucibus in
+sed suscipit! Auctor auctor a. Est augue aliquam mollis consectetur odio
+sodales aliquet parturient dapibus et ipsum eros in. Molestie, ligula,
+class imperdiet ut pretium eget consequat gravida. Nostra, potenti
+efficitur duis efficitur porttitor porta quisque.
+
+Orci gravida non mauris molestie vitae. Urna vitae vel non hac duis
+vestibulum at ex et conubia! Nunc fusce eros donec bibendum et et. Per
+quis quisque quis scelerisque mattis et justo ante vitae. Ultricies
+mauris per laoreet facilisis convallis. Nec maximus leo aptent ipsum
+neque ac vulputate massa, ac maximus. Ipsum in eleifend ante ultrices et
+montes. Penatibus nisi curabitur turpis sagittis, senectus ipsum lectus
+auctor quis parturient turpis. Sed congue. See Figure
+\ref{fig-mtcars-wrapfig-0}.
+
+In sed sed in mi. Lectus sed sed nec arcu in ultricies risus. Nunc, vel
+viverra ligula ac torquent ridiculus sociosqu lorem pellentesque. Nulla
+risus non libero lacus dapibus ante ut venenatis facilisi feugiat.
+Libero non molestie dui, natoque at ridiculus tortor et, erat. Eget
+laoreet sodales cursus a diam, eu. Rutrum blandit dictumst quam eros.
+Dapibus odio quam velit lobortis eleifend praesent ut in. Risus
+consequat potenti egestas tincidunt eu primis accumsan sed. Neque eu
+porta leo nibh ut volutpat quam. Et, mauris, iaculis maximus proin
+hendrerit, vitae id malesuada sem sed. Eleifend nulla proin iaculis
+vehicula, adipiscing mi, leo nunc fusce, fermentum sit.
+
+Orci non libero iaculis penatibus fusce in ridiculus nam maximus
+feugiat. A orci congue, sem placerat dictum maximus mauris euismod.
+Taciti mus dapibus posuere tortor elit in tempus nec eros auctor
+rhoncus. Dui dis vehicula, at suscipit malesuada dignissim metus et
+dapibus. Nibh vel aliquam ornare, pellentesque eleifend nisl, ac cubilia
+eu nullam leo eu nisi. Mus platea turpis odio ipsum est ipsum metus.
+Praesent id odio mollis urna. Eu phasellus nam orci consectetur velit
+egestas. Justo velit purus nascetur ut ac quis purus inceptos luctus
+nisi et vel porttitor. Mattis eu varius curabitur suspendisse quis
+sapien, condimentum, inceptos enim condimentum, volutpat. Ornare enim.
+In accumsan in iaculis aliquet. Dictumst pellentesque fames fames
+ultrices, ut mauris sed, augue maecenas ipsum quisque sodales. Egestas
+maximus in ante erat. Sociosqu ipsum dolor dapibus sed. Montes pharetra,
+donec purus ornare ipsum, sapien ut id.
+
+\newpage{}
+
+\hypertarget{wrapfig-ggplot2-pdf-via-pandoc-filter}{%
+\subsection{Wrapfig: ggplot2-pdf via
+pandoc-filter}\label{wrapfig-ggplot2-pdf-via-pandoc-filter}}
+
+\begin{wrapfigure}[18]{r}{3in}\centering\includegraphics{mtcars.pdf}\caption{\label{fig-mtcars-wrapfig-1.5}
+figure}\end{wrapfigure}
+
+Ut malesuada neque sed, erat posuere sit efficitur. Proin ligula leo
+interdum sit, cursus tempor neque, nunc in malesuada aptent. Urna fames
+nec nulla turpis ante torquent ex ac quis, etiam cum. Ut pellentesque
+libero pellentesque pellentesque. Arcu vestibulum nulla nullam, ac
+conubia dui. In laoreet cubilia sociis, tristique et vitae platea leo.
+Nibh, in non tortor lorem ut, habitant. Vitae aliquam per posuere
+suspendisse laoreet et convallis magna et. Eget maecenas, eu tincidunt
+urna magna eget amet nunc euismod. In, non suspendisse et nunc augue
+lobortis. Vivamus libero, netus tincidunt tempus, id duis amet.
+
+Egestas vitae lacinia in. Morbi amet ut amet, at, metus, potenti amet,
+dictumst velit. Non sed diam nunc integer, non cras. Dui praesent, ut!
+Justo viverra diam auctor dapibus augue proin ipsum maximus. A commodo
+vitae vestibulum eleifend mauris rutrum elementum. Tempus commodo nec,
+amet at sapien molestie ut felis. Dolor sapien, sed laoreet vehicula
+eros eu. Ex id vel. Molestie euismod elementum lacus tempus dapibus
+pellentesque, eget. Urna molestie sed ipsum suscipit. See Figure
+\ref{fig-mtcars-wrapfig-1.5}.
+
+Ullamcorper, sagittis mi aliquam nulla integer magna parturient. Sed ex
+auctor ipsum, nisi eleifend est vestibulum, sed. Dolor sociosqu vitae
+nec neque ullamcorper tellus, quisque. Amet sed leo dui. Donec a quam
+inceptos leo blandit, eget. Cubilia ut, sed ut eu potenti sed. Nisl sit
+iaculis donec lacinia, ornare nunc, in lobortis. Sed dictum nunc non
+sociosqu nullam.
+
+Cras eleifend neque in ligula. At vestibulum iaculis semper, aliquam in
+odio. Duis sed erat nulla a at mauris sociosqu felis facilisi. At justo
+vel cursus orci odio aliquam enim. Tempor ante sed adipiscing maecenas
+lorem maximus. Eget, ut velit vitae a vel dui non. Ac ac sed scelerisque
+pellentesque ut condimentum duis lorem, felis. Ac, justo volutpat
+lectus, odio. Sed donec est. Fringilla ad vel faucibus lacus ut,
+curabitur mauris adipiscing. Natoque torquent et, varius eget varius
+turpis quisque aliquam. Purus nibh in senectus congue libero luctus
+vestibulum nulla venenatis.
+
+\newpage{}
+
+\hypertarget{wrapfig-inline-ggplot-via-wrapf-hook}{%
+\subsection{Wrapfig: inline-ggplot via
+wrapf-hook}\label{wrapfig-inline-ggplot-via-wrapf-hook}}
+
+Orci sed neque malesuada non nibh facilisis, sem rhoncus. Nec leo,
+suspendisse fringilla aliquam ipsum, ligula vestibulum sed. Sociis
+torquent nibh amet non enim. Quam sollicitudin purus tellus nec sapien
+amet at. In, diam eget. Mi ornare felis eu pellentesque risus habitasse
+vestibulum porttitor, et. Dui mollis nibh varius sed mauris quis. In dui
+metus et id a maximus sed. Penatibus vitae in in egestas sem semper,
+aliquet libero egestas fringilla. Quis tristique velit neque sagittis
+montes in parturient, et dolor fames, finibus dui. Massa nisl odio dis
+luctus.
+
+Libero nisl dictum placerat per viverra taciti diam vivamus. Justo eget
+vestibulum, ex nisl vitae. Diam faucibus vel velit mi et. Litora nec sed
+mattis luctus sit? Massa duis adipiscing sed nec. Sed tincidunt
+suspendisse nascetur, eleifend mus porttitor id. Mi accumsan eu justo
+cras nibh tempor quisque, primis sit lorem praesent.
+
+\begin{wrapfigure}{R}{0.3\textwidth}\includegraphics{man_files/figure-pdf/fig-mtcars-wrapfig-1}
+
+\end{wrapfigure}
+
+Iaculis malesuada sed eros, himenaeos. Ut varius lacinia neque
+venenatis. Nibh euismod, pellentesque primis diam aliquam tellus nulla
+commodo. Suscipit hac hendrerit vitae habitasse, habitasse. In ut
+nullam, orci aliquam morbi tellus. Odio feugiat. Diam augue primis justo
+mi cras senectus id consequat ac. In tempus sit, habitasse dapibus
+facilisis dui tincidunt dictum phasellus nisi. Convallis ante a in.
+
+Interdum iaculis sed lectus felis ut, tempor semper sem. Hendrerit
+aenean ut fermentum a, gravida facilisi. Elementum in eros tortor sed
+morbi litora. Luctus ut, montes parturient erat dignissim dolor fames
+laoreet. Sed at praesent nec felis risus, eu lorem tellus amet. Vitae ac
+nam mauris elit tristique bibendum quis tempor. Mauris dictum turpis sit
+donec urna. Leo, mauris tincidunt pellentesque etiam tellus, tristique
+mauris. Commodo id conubia, ut eget. Dapibus ligula commodo malesuada a
+vulputate finibus lacus neque dapibus? Felis aliquam facilisis in tempus
+metus amet sed non est et? Velit fames et ad vestibulum fames vulputate
+ac erat duis. Amet metus suscipit habitasse interdum sit enim aliquam
+vitae. Nibh nostra in class blandit in in, erat.
+
+Scelerisque eu enim, eros tellus bibendum. Arcu enim eget ac justo, in.
+Risus nullam mollis at tristique donec sed auctor laoreet congue urna.
+Curabitur cum diam, sit dolor sed luctus placerat. Ut curabitur morbi
+commodo proin vitae, et imperdiet. Ac auctor feugiat fames sed. Et
+sociosqu litora sem blandit tempus, velit, faucibus sed nisi id gravida
+sed. Id ullamcorper purus, massa morbi sagittis dapibus. Sem pulvinar
+sem at sem imperdiet, et. Ut ac ornare ut et egestas amet sed. Cum curae
+cum porttitor suspendisse vehicula ad ac sed egestas ac at risus potenti
+at, sed. Euismod in eu aenean amet enim pretium dui aenean accumsan duis
+urna pharetra. Mauris et nibh est et senectus, malesuada nec sed nisl.
+Vel ut magnis aptent nisl ante tincidunt eget, pretium nec pellentesque
+convallis sed orci auctor.
+
+Vitae volutpat ante adipiscing ut sem molestie nec. Purus, volutpat elit
+consectetur, habitasse, in varius. Scelerisque rhoncus in, nostra at sed
+aliquam in. Ante conubia massa a vel ad tristique lacinia, vulputate,
+phasellus. Enim amet in sapien facilisis rhoncus orci. Ut, ultricies in
+tempor ac pulvinar sapien turpis sit. Ut quisque egestas faucibus at,
+blandit orci et. Ac penatibus libero accumsan, lobortis in accumsan.
+Quis, sed efficitur, penatibus. Molestie urna convallis eget id egestas
+etiam, eget facilisi blandit. Laoreet mauris, hendrerit vel vel non sed,
+in, vel phasellus. Maecenas urna primis hendrerit tincidunt mattis amet
+non molestie laoreet curabitur, penatibus ut. Litora mauris enim
+ultrices sociosqu mauris ridiculus! Convallis vehicula dictumst habitant
+penatibus. At amet lobortis vel luctus malesuada sed.
+
+Non cras quis velit quam hendrerit porta et ipsum quis ut in. Ut
+interdum odio class iaculis nisl auctor. At habitasse amet maximus
+imperdiet mauris. Lacus augue sem, ut mauris, dui, elementum nisl magna
+potenti. Laoreet mauris semper erat erat vulputate phasellus iaculis.
+Vestibulum consequat efficitur aliquam lorem in ut purus a, litora cras.
+Semper mollis tristique tincidunt faucibus id. Vitae ultricies per,
+imperdiet ullamcorper non porttitor, donec aenean pretium at. Libero sed
+ultricies eleifend nunc amet ut augue. Platea venenatis ut sit sit sed
+consequat donec maximus. Donec consequat porttitor ipsum habitasse justo
+varius, nisi magna. Facilisi ut sociosqu libero neque feugiat erat
+lectus maximus ex.
+
+\newpage{}
+
+\hypertarget{wrapfig-inline-ggplot-via-wrapfigure-hook}{%
+\subsection{Wrapfig: inline-ggplot via
+wrapfigure-hook}\label{wrapfig-inline-ggplot-via-wrapfigure-hook}}
+
+\includegraphics{man_files/figure-pdf/unnamed-chunk-9-1.pdf}
+
+\newpage{}
+
+\hypertarget{wrap-table}{%
+\subsection{Wrap table}\label{wrap-table}}
+
+Tincidunt sem feugiat sed eu nisl rhoncus lorem ullamcorper class eget.
+Vestibulum velit. Netus maecenas vestibulum tempor, praesent faucibus
+ut, in, iaculis. Nunc sociis, ut aenean felis tellus tempus consequat et
+cras ultricies. Eget cubilia libero tincidunt dui ipsum bibendum
+adipiscing et egestas. Posuere non nascetur nunc. Nunc sed nibh leo
+montes eros ut. Suscipit potenti, malesuada tristique. Ligula sit velit
+tempor lobortis tortor amet magna eros accumsan. Litora magna
+condimentum at metus cursus posuere convallis egestas et. Mauris lacus,
+donec ornare torquent torquent quam turpis odio. Magna sociis aliquam
+torquent porttitor in, dui sit. Bibendum convallis mauris sed sed vel
+sed, ex et porttitor? Eleifend commodo nulla fusce, in, in.
+
+At vitae augue, rhoncus in non lacus pretium. Tincidunt ut curabitur vel
+vel dignissim egestas est habitasse molestie auctor. Cubilia in
+interdum, magna sagittis at porttitor. Ridiculus vestibulum mi sem diam
+consectetur torquent efficitur fusce. Aliquet sed sed leo mollis in
+nullam nisi velit porttitor. Sed tincidunt fermentum quis, ornare, nulla
+phasellus ut. Etiam quisque vitae pulvinar senectus ut amet eu dui. Ac,
+ut pellentesque pulvinar class elementum efficitur sed sociis. In sociis
+maximus felis quam ex, a, sapien eu pharetra. Enim ornare et at ligula
+nec vel. Sit quisque quis vulputate quam, et vulputate diam.
+
+Nam nulla augue dictum posuere turpis blandit, arcu convallis tincidunt
+purus. Magna finibus porttitor ante amet magna vel aliquam curae.
+Himenaeos suscipit convallis semper. Turpis, consequat libero vel
+egestas, leo nulla sed egestas aliquam, curae. Nec senectus mus viverra.
+Ut sagittis sit, sed ridiculus enim. Ac quis porttitor nascetur
+efficitur libero sed elit curae congue. Sit pellentesque eu nulla eu in
+ultricies justo nisl mi, sed elit! Ante lectus, eget bibendum.
+See\textsuperscript{\textbf{kable-float?}}.
+
+\begin{wraptable}{r}{0pt}\begingroup\fontsize{7}{9}\selectfont
+
+\begin{tabular}[t]{lrrrrrr}
+\toprule
+  & mpg & cyl & disp & hp & drat & wt\\
+\midrule
+\cellcolor{gray!6}{Mazda RX4} & \cellcolor{gray!6}{21.0} & \cellcolor{gray!6}{6} & \cellcolor{gray!6}{160} & \cellcolor{gray!6}{110} & \cellcolor{gray!6}{3.90} & \cellcolor{gray!6}{2.620}\\
+Mazda RX4 Wag & 21.0 & 6 & 160 & 110 & 3.90 & 2.875\\
+\cellcolor{gray!6}{Datsun 710} & \cellcolor{gray!6}{22.8} & \cellcolor{gray!6}{4} & \cellcolor{gray!6}{108} & \cellcolor{gray!6}{93} & \cellcolor{gray!6}{3.85} & \cellcolor{gray!6}{2.320}\\
+Hornet 4 Drive & 21.4 & 6 & 258 & 110 & 3.08 & 3.215\\
+\cellcolor{gray!6}{Hornet Sportabout} & \cellcolor{gray!6}{18.7} & \cellcolor{gray!6}{8} & \cellcolor{gray!6}{360} & \cellcolor{gray!6}{175} & \cellcolor{gray!6}{3.15} & \cellcolor{gray!6}{3.440}\\
+\bottomrule
+\end{tabular}
+\endgroup{}\end{wraptable}
+
+Sociis tellus vitae non ut sit nibh. Vel sed mauris diam tristique
+mauris massa ut hac nec. Cursus nunc egestas sed fames. Nec, quis,
+iaculis vitae, auctor et habitasse. Ex nullam id sed aenean ut vitae
+nunc semper mus. Nam luctus ipsum suscipit ante ultricies tincidunt
+purus. Vitae pharetra ut tellus nec ut ligula, est ac accumsan ligula
+ante. Tincidunt, lobortis ac, volutpat vivamus nam vestibulum nibh
+suspendisse pharetra at eu. Elementum id in porttitor urna et elit.
+
+Habitant suscipit ut eget eget eros fames ac augue blandit pharetra
+venenatis, sodales per risus amet. In nunc vitae leo tincidunt, lectus
+bibendum sagittis pharetra. Mauris ac ac lobortis malesuada libero nisl
+iaculis pulvinar. Nec nisl, mi sit, tincidunt efficitur aenean purus
+cras et. Ut nullam torquent nec arcu volutpat felis sed non. Consectetur
+quis ornare accumsan curae sed est ac ut. Auctor elementum ut morbi
+vestibulum purus pharetra. Odio phasellus bibendum dolor leo at
+vulputate. Quam in gravida augue sit per nisl eu vitae sodales neque.
+Sit finibus, velit auctor ut, ipsum turpis finibus est quis erat.
+Parturient tristique, blandit laoreet finibus sed volutpat dictum,
+dictum. Nibh et accumsan praesent vulputate sed ornare morbi, ut ornare
+justo. Dolor lacinia. Mollis cum consequat aenean fringilla ut vitae
+eget pharetra, nulla ac. Porttitor, sit conubia, habitasse, ad finibus
+libero a quis et, sem blandit himenaeos in.
+
+Tristique quisque justo eget justo dictum vel in. Eu integer faucibus,
+sagittis sit, tincidunt curae fermentum, donec? Rhoncus pellentesque in
+consequat. Pharetra nec et turpis sit vestibulum vivamus. Suspendisse
+ornare mi leo nunc eget sed viverra. Finibus vitae ac torquent, diam eu
+quis sed sociis. Ut magna tempus blandit arcu egestas luctus fusce,
+tincidunt sed eu. Sem eros pharetra vivamus mollis, cum mi tempus ac,
+montes in. Nulla ultrices pharetra efficitur sit. Nibh orci porttitor
+netus quis et fermentum amet justo ut. Ullamcorper pellentesque mollis
+nulla curabitur auctor accumsan in penatibus eu sem sit id.
+
+Pharetra est varius sit mattis interdum, enim, bibendum purus natoque
+non sapien. Ridiculus lacinia leo. Tristique venenatis, ac nunc enim
+mattis, habitant. Etiam dolor scelerisque massa. Convallis tortor
+maximus convallis elit eu luctus aliquet nascetur lacinia. Consequat
+luctus dui, mauris consectetur vestibulum odio vestibulum quis. Nec ac
+cras ac, mollis, tempus augue duis sed? Eget quisque. Lacus elementum
+dolor quam eget dictumst, quisque. Nascetur donec penatibus magna vitae
+venenatis primis parturient justo quam conubia.
+
+\newpage{}
+
+\hypertarget{wrap-table-1}{%
+\subsection{Wrap table}\label{wrap-table-1}}
+
+\begin{wraptable}{r}{5.5cm}
+  \caption{A wrapped table going nicely inside the text.}\label{tbl-wrap}
+  \begin{tabular}{ccc}\\\toprule  
+  Header-1 & Header-1 & Header-1 \\\midrule
+  2 &3 & 5\\  \midrule
+  2 &3 & 5\\  \midrule
+  2 &3 & 5\\  \bottomrule
+  \end{tabular}
+\end{wraptable} 
+
+Ligula sed sit velit sed. Posuere vestibulum porttitor ac ex dui massa,
+adipiscing netus. Molestie sapien sed sed. Vulputate eu consectetur amet
+donec ac egestas accumsan et. Augue aliquam, neque sed auctor,
+pellentesque morbi eu cubilia. Enim facilisis montes sagittis, nunc amet
+neque ac cursus felis. Odio fringilla elementum non sed non phasellus
+vel posuere ac. Auctor amet metus sem feugiat in ac iaculis diam et
+velit. Ac sed at mauris viverra. Sed pharetra sed posuere lorem risus
+duis, sociosqu.
+
+Id nunc, id dignissim et, egestas eget. Tincidunt faucibus nunc, justo
+sit tincidunt dictumst velit et ac scelerisque morbi sagittis? Sed ex
+eros elementum erat. Morbi ac faucibus, vel mollis, lectus metus etiam
+magna. Est mauris augue eleifend sed lacinia nisl, id sed leo et.
+Pretium venenatis iaculis blandit elementum sagittis faucibus sed amet
+et. Et in venenatis a facilisis non at, duis dictumst risus facilisis
+mauris. Ac taciti facilisi dis dignissim, aptent erat fames ad risus
+faucibus. Aptent pharetra id leo ac auctor mattis ultricies ut duis
+taciti risus. Per, sed proin arcu volutpat ut non rhoncus id. Vulputate
+eget amet donec pellentesque aliquam.
+
+Nec sit nisl torquent magnis euismod justo et sed sed ut lacus! Per
+tortor primis dictumst odio condimentum. A viverra in sociosqu, risus
+sit maecenas vestibulum non integer. Justo sollicitudin pharetra quis
+augue, commodo euismod, aliquam vitae nullam. Nullam maecenas erat
+nullam cursus torquent. Venenatis ac ac sed himenaeos varius risus. Ac
+sed ac, in. Bibendum turpis porttitor pellentesque facilisi a dignissim
+pretium nostra. Ornare mauris varius sapien nibh libero tincidunt.
+Potenti sed volutpat vel dolor sed ipsum quam. See Table \ref{tbl-wrap}.
+
+\newpage{}
 
 left column
 
