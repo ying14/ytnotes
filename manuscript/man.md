@@ -1,8 +1,8 @@
 ---
 title: "Ying's Manuscript"
 # format: html
-# format: pdf
-format: native
+format: pdf
+# format: native
 prefer-html: true
 keep-md: true
 keep-tex: true
@@ -25,17 +25,46 @@ geometry: margin=.5in
   # - textwidth=4.5in
   # - marginparsep=.25in
   # - marginparwidth=.25in
-include-in-header:     #tex files, unless it says text : |
+include-in-header:
   text: |
-    \newfontfamily\sectionfont{Arial}[Color=2052b0]         %define H1 font
-    \newfontfamily\subsectionfont{Arial}[Color=Blue]        %define H2 font
-    \newfontfamily\subsubsectionfont{Arial}[Color=Black]    %define H3 font
-    \addtokomafont{section}{\sectionfont}                   %set H1 font
-    \addtokomafont{subsection}{\subsectionfont}             %set H2 font
-    \addtokomafont{subsubsection}{\subsubsectionfont}       %set H3 font
-    \setlength{\intextsep}{10pt}                            %set wrapfig margin
-    \setlength{\columnsep}{10pt}                            %set wrapfig margin
-    \usepackage[font=small,justification=raggedright]{caption}  %set caption size: scriptsize, footnotesize, small, normalsize, large, Large
+    %%%%%%%%%%% header fonts %%%%%%%%%%%%%%%%%%
+    % https://tex.stackexchange.com/questions/40034/giving-headlines-a-background-color-spanning-across-the-entire-typearea
+    \newcommand{\mysection}[1]{                  %set H1 font 
+      \Large\sf\bf
+      \setlength{\fboxsep}{0cm}                  %already boxed
+      \colorbox{orange!80}{                      %
+          \begin{minipage}{\linewidth}           %
+              \vspace*{2pt}                      %Space before
+              #1
+              \vspace*{2pt}                     %Space after
+          \end{minipage}                        
+      }}   
+    \setkomafont{section}{\mysection}
+    %\addtokomafont{subsection}{\colorbox{lightgray}}                    %set H2 font
+    \makeatletter
+      \setkomafont{subsection}{\color{white}%
+        \bfseries\Large
+        \begin{tikzpicture}[overlay]
+          \draw[fill=blue] (0,-2pt) rectangle
+          (\linewidth,16.4pt);
+        \end{tikzpicture}}    
+    %\newfontfamily\subsubsectionfont{Arial}[Color=Black]    %define H3 font
+    %\addtokomafont{subsubsection}{\subsubsectionfont}
+    \newfontfamily\paragraphfont{Arial}[Color=2052b0]          %define H4 font
+    \addtokomafont{paragraph}{\paragraphfont}
+    \addtokomafont{subparagraph}{\colorbox{lightgray}}    %define H5 font
+    %%%%%%%%%%% figure/table margins %%%%%%%%%%%%%%%%%%
+    \setlength{\intextsep}{0pt}                            %set wrapfig margin above/below
+    \setlength{\columnsep}{0pt}                            %set wrapfig margin
+    \setlength{\abovecaptionskip}{0pt}                    % spacing above caption, default 10pt
+    \setlength{\belowcaptionskip}{0pt}                     % spacing below caption, default 0pt
+    %%%%%%%%%%%% caption settings %%%%%%%%%%%%%%%%%%%%%
+    % caption size: scriptsize|footnotesize|small|normalsize|large|Large
+    \definecolor{captioncolor}{HTML}{37658c}
+    %\usepackage[labelfont={bf},font={footnotesize,color=captioncolor},justification=RaggedRight]{caption}  
+    \usepackage[labelfont={bf},font={footnotesize,color=captioncolor},justification=raggedright,format=plain]{caption}  
+    %%%%%%%%%%%% hyperref settings %%%%%%%%%%%%%%%%%%%%%
+    \usepackage[draft]{hyperref}                         % turns off all hyperlinks  
 editor: source
 # latex-tinytex: false
 execute: 
@@ -59,7 +88,6 @@ filters:
   - pandoc-wrapfig-mod.py      # https://github.com/scotthartley/pandoc-wrapfig
 #   - spellcheck.lua
 # cap-location: top
-
 ---
 
 
@@ -70,6 +98,15 @@ filters:
 ::: {.cell}
 
 :::
+
+
+
+# Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
 
 
 ## Introduction {#sec-introduction}
@@ -116,12 +153,12 @@ The box was thrown beside the parked truck. The hogs were fed chopped corn and g
 
 ## Bitamp figure
 
-Orci per aliquam facilisis, justo, turpis purus phasellus justo ut a nibh pharetra. Dignissim aliquam libero massa suspendisse molestie morbi, nisl et lacinia, convallis! Vel nunc lacus vulputate, accumsan a donec sociis. Sollicitudin placerat aliquam a eget tincidunt orci. Penatibus et amet augue massa eget duis. Ante, lorem velit ac. Mi elementum eget sodales ex quisque eleifend id. Eget eu vestibulum cum, est. Suspendisse nascetur maximus egestas convallis nec. Ut, eu scelerisque vivamus auctor et interdum hendrerit faucibus, massa dapibus. In ac tellus ac tortor auctor. Ut eu amet sed magna est, mollis dictum justo. Vulputate id facilisi non curae phasellus, sit faucibus sed ligula.
+Est, tortor primis ad nullam finibus metus, suscipit. Et quis, non et sed mi nec egestas. Habitasse scelerisque sapien, sit aliquam habitant faucibus. Parturient viverra fames vitae, vulputate sagittis finibus non finibus molestie cubilia id in viverra. Litora et in iaculis volutpat in velit massa euismod. Lacus quam facilisi nullam, pellentesque eu risus, conubia. Cubilia tincidunt bibendum dui bibendum sed. Amet diam, dis scelerisque quam, non tellus. Tincidunt eget a elementum malesuada sit vitae accumsan.
 See @fig-stamp1a to see the stamp I'm talking about.
 
 ![Single bitmap](stamp1a.jpg){#fig-stamp1a}
 
-Auctor vitae nec amet, dictum potenti in non a. Condimentum ut tellus tincidunt eleifend ac. Et, eleifend porttitor sollicitudin nisl volutpat, vitae. Sit vestibulum a ultricies mauris quam amet arcu. Augue tincidunt at ridiculus, egestas mus sed. Integer, viverra fusce ut. Lacus turpis faucibus. At nibh vehicula vulputate, blandit, in, vel sociosqu praesent non volutpat, sem egestas platea imperdiet. Justo ac in vitae lectus lectus sit. Et ut nisl in quis dignissim nulla. Nec auctor parturient orci! Viverra phasellus primis magnis eros tincidunt. Sed at sit libero cursus, sollicitudin in. Lorem aliquam, vel erat euismod dui litora, cum. Tempor proin pharetra nullam nulla nisi. Ex eros placerat elit, nisl tempus non diam penatibus justo mus. Lacus pellentesque lorem bibendum ac.
+Feugiat, nibh cum aenean elementum sem, varius risus. Fusce parturient a sem at bibendum montes in sed lobortis. Elit orci ac, arcu auctor, dapibus et mollis turpis ac. Inceptos justo, turpis ut ultricies interdum. Risus vel accumsan tempus, inceptos, non. Non et ac ornare non varius, auctor sit sociosqu litora. Mattis aptent parturient tempus ligula arcu sapien. At ipsum lorem euismod litora, massa morbi ac habitasse, mauris. Id eu mattis primis quisque hendrerit eget in, nec inceptos tempus. Ex dis magna eu, nec vel, in ridiculus ligula. Nam ut, morbi at amet nullam dolor.
 
 
 Now look at @fig-combined, and notice how @fig-stamp1b and @fig-stamp1-again differ.
@@ -134,7 +171,7 @@ Now look at @fig-combined, and notice how @fig-stamp1b and @fig-stamp1-again dif
 Combined stamps. Show again are several stamps. @fig-stamp1b shows in blue, and @fig-stamp1-again in red.
 :::
 
-Finibus quam malesuada leo, non. Vitae pellentesque amet mollis, ligula magna. Vitae elit leo curabitur eleifend, auctor nec, ac ipsum congue imperdiet massa. Ut felis pretium pretium parturient nostra massa imperdiet eget sed. Sed sed morbi bibendum, ex lorem sed, et ligula. Euismod et. Sociis litora eu eu tellus porttitor ac donec amet, lacinia. Ut justo phasellus tincidunt enim sed aliquam sed ligula parturient non mauris. Suscipit pharetra ut sollicitudin interdum himenaeos nibh potenti tempus vestibulum vulputate mauris. Tristique lobortis non in, duis sit. Eros, est cursus ac ex nullam. Sapien phasellus volutpat turpis in accumsan nisl vitae vulputate. Tristique velit, tortor nullam sed non justo nunc vestibulum vestibulum volutpat conubia pretium ex! Non aenean ut in ac purus scelerisque.
+Ac ac nunc et sapien. Urna neque, finibus aliquam vulputate. Libero aliquam quam nunc rhoncus platea, accumsan lobortis, ut. Sagittis, sed et amet habitant sed non nulla nisl. Sociosqu nunc amet lorem venenatis eleifend pulvinar libero. Posuere imperdiet suscipit ipsum et porta. Praesent, nostra turpis nam quam sed maximus vehicula sed velit. Facilisis cras ad leo, congue mi non auctor, sed in class rhoncus consectetur. Tempor etiam conubia molestie mattis egestas magna conubia ad lacus, donec vehicula. In libero ut mus feugiat eleifend mi justo.
 
 
 
@@ -145,135 +182,47 @@ Finibus quam malesuada leo, non. Vitae pellentesque amet mollis, ligula magna. V
 
 
 
-Felis, purus, fames sit vivamus lobortis bibendum lorem nec auctor, consectetur amet, egestas faucibus sodales pretium vestibulum. Magna nec tincidunt risus in primis. Mauris vitae ipsum potenti quam ultrices nec. Hac augue turpis, id ullamcorper sed class, a. Lorem velit curae neque sodales. Sociis egestas suspendisse porta euismod, eget ut. Hendrerit, inceptos sed. Malesuada nulla mus mauris nulla congue hac ligula et nibh turpis dictumst. Justo sem dictumst vel nunc lorem eu cras sed porttitor. Lacinia eu purus nullam, nullam. Interdum efficitur molestie, nec nec donec tincidunt nec sed eu lacus elit porttitor vel. Vel fermentum, maecenas fermentum maximus, interdum, dolor eget eros commodo sit in enim.
+Aenean, vel odio sit nullam commodo sed. Sociosqu nulla nam primis eu porttitor eros facilisi sollicitudin. Posuere purus vivamus, nec est, class. Ac et congue per eu malesuada luctus. Eu aliquam lorem vitae tincidunt suspendisse neque felis. Sed in odio, malesuada viverra, eros ut odio hendrerit. Est lacus tempor ac. Amet condimentum suspendisse sem mi arcu urna ullamcorper blandit, urna. In penatibus ornare nec, felis lacus. Et, lacinia malesuada, fringilla, senectus sed ipsum eget lectus. Finibus congue non, sit ante donec facilisis. Lacinia et vestibulum velit sed.
 See @fig-diamonds.
 
 
 ::: {.cell}
 ::: {.cell-output-display}
-![Plot of Diamonds](man_files/figure-native/fig-diamonds-1.png){#fig-diamonds width=50%}
+![Plot of Diamonds](man_files/figure-pdf/fig-diamonds-1.pdf){#fig-diamonds width=50%}
 :::
 :::
 
 
-Lorem ut eros fusce mi torquent metus facilisis ac euismod class ut. Metus mauris rhoncus, mi ante malesuada sem venenatis sed. A sem penatibus a interdum mi sed nisl venenatis magna vitae curae. Pharetra accumsan id, non, sed. Venenatis rutrum sed ac, eu massa eros. Ullamcorper sed iaculis erat blandit et suscipit enim maximus eu sed. Mus sit eu sit nam blandit vestibulum sapien. Vestibulum magna, metus ullamcorper ligula, consectetur, vitae lacus fringilla est eu. Ullamcorper proin ornare turpis metus magna quam diam. Cras himenaeos sed nulla ex senectus, eget quis. Ante sed rhoncus nunc sed libero nibh.
+Praesent pellentesque, mattis tempus et, a sociis. Lacus platea mauris habitasse, amet magna lobortis est magna amet. Finibus porttitor eu pulvinar platea a ut luctus, feugiat nisl. Sapien magna diam ac litora ullamcorper ipsum taciti. Himenaeos ac donec quis aliquam natoque. Ac tincidunt blandit vestibulum quam laoreet elementum rutrum nam! Vivamus penatibus venenatis, sed, orci consectetur. Consectetur sed sed montes nisl blandit et velit. Quam nisl scelerisque amet bibendum dictum sit erat, potenti. Porttitor iaculis sed, posuere in viverra eu neque euismod congue nec.
 See @tbl-mtcars.
 
 
 ::: {#tbl-mtcars .cell tbl-cap='Table of Mtcars'}
 ::: {.cell-output-display}
-
-`````{=html}
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:right;"> mpg </th>
-   <th style="text-align:right;"> cyl </th>
-   <th style="text-align:right;"> disp </th>
-   <th style="text-align:right;"> hp </th>
-   <th style="text-align:right;"> drat </th>
-   <th style="text-align:right;"> wt </th>
-   <th style="text-align:right;"> qsec </th>
-   <th style="text-align:right;"> vs </th>
-   <th style="text-align:right;"> am </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Mazda RX4 </td>
-   <td style="text-align:right;"> 21.0 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 160 </td>
-   <td style="text-align:right;"> 110 </td>
-   <td style="text-align:right;"> 3.90 </td>
-   <td style="text-align:right;"> 2.620 </td>
-   <td style="text-align:right;"> 16.46 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Mazda RX4 Wag </td>
-   <td style="text-align:right;"> 21.0 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 160 </td>
-   <td style="text-align:right;"> 110 </td>
-   <td style="text-align:right;"> 3.90 </td>
-   <td style="text-align:right;"> 2.875 </td>
-   <td style="text-align:right;"> 17.02 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Datsun 710 </td>
-   <td style="text-align:right;"> 22.8 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 108 </td>
-   <td style="text-align:right;"> 93 </td>
-   <td style="text-align:right;"> 3.85 </td>
-   <td style="text-align:right;"> 2.320 </td>
-   <td style="text-align:right;"> 18.61 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Hornet 4 Drive </td>
-   <td style="text-align:right;"> 21.4 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 258 </td>
-   <td style="text-align:right;"> 110 </td>
-   <td style="text-align:right;"> 3.08 </td>
-   <td style="text-align:right;"> 3.215 </td>
-   <td style="text-align:right;"> 19.44 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Hornet Sportabout </td>
-   <td style="text-align:right;"> 18.7 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 360 </td>
-   <td style="text-align:right;"> 175 </td>
-   <td style="text-align:right;"> 3.15 </td>
-   <td style="text-align:right;"> 3.440 </td>
-   <td style="text-align:right;"> 17.02 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Valiant </td>
-   <td style="text-align:right;"> 18.1 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 225 </td>
-   <td style="text-align:right;"> 105 </td>
-   <td style="text-align:right;"> 2.76 </td>
-   <td style="text-align:right;"> 3.460 </td>
-   <td style="text-align:right;"> 20.22 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Duster 360 </td>
-   <td style="text-align:right;"> 14.3 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 360 </td>
-   <td style="text-align:right;"> 245 </td>
-   <td style="text-align:right;"> 3.21 </td>
-   <td style="text-align:right;"> 3.570 </td>
-   <td style="text-align:right;"> 15.84 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-</tbody>
-</table>
-
-`````
-
+\begin{tabular}{l|r|r|r|r|r|r|r|r|r}
+\hline
+  & mpg & cyl & disp & hp & drat & wt & qsec & vs & am\\
+\hline
+Mazda RX4 & 21.0 & 6 & 160 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1\\
+\hline
+Mazda RX4 Wag & 21.0 & 6 & 160 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1\\
+\hline
+Datsun 710 & 22.8 & 4 & 108 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1\\
+\hline
+Hornet 4 Drive & 21.4 & 6 & 258 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0\\
+\hline
+Hornet Sportabout & 18.7 & 8 & 360 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0\\
+\hline
+Valiant & 18.1 & 6 & 225 & 105 & 2.76 & 3.460 & 20.22 & 1 & 0\\
+\hline
+Duster 360 & 14.3 & 8 & 360 & 245 & 3.21 & 3.570 & 15.84 & 0 & 0\\
+\hline
+\end{tabular}
 :::
 :::
 
 
-At risus orci pellentesque sed mollis vestibulum inceptos. Nulla egestas arcu massa semper rutrum nunc facilisis et et commodo purus. In nulla nunc ut, phasellus orci interdum enim eget in. Mattis ligula, ipsum elit. Sagittis nec ullamcorper sed vivamus vel fermentum. Proin varius duis, quis purus curabitur, etiam fermentum felis, sit. Neque at in interdum elementum donec consequat congue cubilia sed feugiat leo tempus at! Euismod pellentesque leo nam non lobortis euismod vitae risus nulla morbi ut scelerisque.
+Nisi lectus auctor dui potenti parturient imperdiet adipiscing. Eu, sed, magna a sed. Rutrum ac mus eleifend, eu. Velit mus aliquet ac libero praesent, semper. Integer ultricies eu iaculis ultricies a purus efficitur. Nulla sociis sed, morbi lectus erat nulla tincidunt morbi imperdiet tempor. Taciti nec vestibulum nisl lacus eu aliquam volutpat, vehicula. Nisl vitae. Sit ac justo, amet non eleifend ante, suspendisse porttitor. Mi sapien urna urna volutpat porttitor. Velit fringilla tristique eget eu lectus pellentesque, nunc nunc vitae proin finibus, finibus.
 
 
 
@@ -284,168 +233,55 @@ At risus orci pellentesque sed mollis vestibulum inceptos. Nulla egestas arcu ma
 
 
 
-Facilisi duis in vitae in quam per a, in. Vel magna eu accumsan habitasse sollicitudin pretium sed. Ipsum eget magnis pellentesque ultrices maximus accumsan et in. In tempus lectus consequat vitae. Et sociis, turpis purus eleifend lobortis donec quam, nisl ac. Purus suscipit maximus magnis nulla taciti nostra blandit. Et sit ut nisi ut porta in arcu augue, lacinia. Nunc est in eu justo eu non fusce. Enim, in quis sed dapibus. Nunc imperdiet litora sed conubia parturient eu primis vel sit blandit eu tempor. Et dictum consectetur eu suspendisse sed at luctus fringilla, eu amet ultrices.
+Ullamcorper augue consequat curabitur. Placerat ultrices sapien etiam dolor, porttitor lacus viverra egestas ex. Nascetur montes vestibulum donec egestas nulla. Nibh vestibulum ante himenaeos leo auctor. Sed amet dui! Arcu sed conubia lacus eget sapien, nunc ligula ligula sociosqu torquent taciti. Eu senectus vestibulum nisl nunc. Elementum posuere velit sed sed vestibulum rutrum. Montes non in, feugiat, condimentum nec. Tellus enim maximus tempor interdum posuere, nibh libero. Pretium vel facilisis, sociis ut quam conubia aenean. Quis, in senectus lobortis sit at. Amet congue in eget blandit. Ut erat porttitor, curabitur, nullam malesuada mattis adipiscing vitae vivamus.
 See @fig-diamonds2.
 
 
 ::: {.cell layout-align="left"}
 ::: {.cell-output-display}
-![Plot of Diamonds](man_files/figure-native/fig-diamonds2-1.png){#fig-diamonds2 fig-align='left' fig-pos='t' width=100%}
+![Plot of Diamonds](man_files/figure-pdf/fig-diamonds2-1.pdf){#fig-diamonds2 fig-align='left' fig-pos='t' width=100%}
 :::
 :::
 
 
-Ipsum blandit nibh varius nulla eros sed at. Torquent non praesent a tincidunt. Donec, arcu hac eu maximus ac in felis tellus. Non, id a sit, eros consectetur et. Vestibulum integer nec leo sed ornare. Eget eu senectus, sed tempor tincidunt cubilia curae. Sed amet ac. Laoreet at et senectus. Nisi lobortis, platea cubilia magna inceptos quisque eros. Ac nec nunc cubilia ac dui cubilia. Et convallis, suscipit vestibulum, arcu.
+Amet amet dictum, in, faucibus nunc dolor. Porta fringilla sit eros sit at dictum neque eu blandit auctor volutpat posuere. Ut quis leo egestas non hac taciti, scelerisque a nisl. Diam senectus, ullamcorper et sapien, erat. Venenatis rutrum platea nisi eu nec velit vehicula? Diam augue velit vivamus mauris amet sit parturient diam eu nisi, egestas, taciti fames. Natoque nunc consequat donec quam ligula, proin nisl senectus scelerisque mollis. Enim tristique sed neque quis nibh lobortis platea vel.
 
-Netus nibh sit rhoncus tellus. Purus ex lectus vel augue cubilia venenatis gravida. Metus dictumst mattis sit dictum. Ligula ut ipsum et sem accumsan, donec mi non. Aliquet libero leo vel metus accumsan venenatis. Eget sapien sem dictum quis vitae condimentum ex varius imperdiet in sapien. Tincidunt suscipit turpis enim erat risus metus montes sodales ut sed gravida, ut, nec eleifend et. Diam semper, eu litora hac scelerisque turpis. Mauris nunc ut enim, eros auctor, vel et malesuada sociis, tempor. Augue, laoreet mi non. Maximus, ex sed dictumst quis nascetur sit tempus.
+Nulla phasellus ex enim sociosqu sollicitudin pulvinar ac. Mauris ut nostra eu hac efficitur orci hac. Aenean sed suspendisse. Sit nascetur varius sed elementum nostra congue. Rutrum at iaculis in libero. Mi mauris, sapien. Finibus orci pellentesque quisque fusce nec. Eget nec aenean cubilia parturient ligula tempor vel mi, ut suspendisse mattis ultricies primis.
 See @tbl-mtcars2.
 
 
 ::: {#tbl-mtcars2 .cell tbl-cap='Table of Mtcars'}
 ::: {.cell-output-display}
+\begin{table}
+\centering\begingroup\fontsize{7}{9}\selectfont
 
-`````{=html}
-<table class="table" style="font-size: 7px; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:right;"> mpg </th>
-   <th style="text-align:right;"> cyl </th>
-   <th style="text-align:right;"> disp </th>
-   <th style="text-align:right;"> hp </th>
-   <th style="text-align:right;"> drat </th>
-   <th style="text-align:right;"> wt </th>
-   <th style="text-align:right;"> qsec </th>
-   <th style="text-align:right;"> vs </th>
-   <th style="text-align:right;"> am </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Mazda RX4 </td>
-   <td style="text-align:right;"> 21.0 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 160.0 </td>
-   <td style="text-align:right;"> 110 </td>
-   <td style="text-align:right;"> 3.90 </td>
-   <td style="text-align:right;"> 2.620 </td>
-   <td style="text-align:right;"> 16.46 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Mazda RX4 Wag </td>
-   <td style="text-align:right;"> 21.0 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 160.0 </td>
-   <td style="text-align:right;"> 110 </td>
-   <td style="text-align:right;"> 3.90 </td>
-   <td style="text-align:right;"> 2.875 </td>
-   <td style="text-align:right;"> 17.02 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Datsun 710 </td>
-   <td style="text-align:right;"> 22.8 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 108.0 </td>
-   <td style="text-align:right;"> 93 </td>
-   <td style="text-align:right;"> 3.85 </td>
-   <td style="text-align:right;"> 2.320 </td>
-   <td style="text-align:right;"> 18.61 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Hornet 4 Drive </td>
-   <td style="text-align:right;"> 21.4 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 258.0 </td>
-   <td style="text-align:right;"> 110 </td>
-   <td style="text-align:right;"> 3.08 </td>
-   <td style="text-align:right;"> 3.215 </td>
-   <td style="text-align:right;"> 19.44 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Hornet Sportabout </td>
-   <td style="text-align:right;"> 18.7 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 360.0 </td>
-   <td style="text-align:right;"> 175 </td>
-   <td style="text-align:right;"> 3.15 </td>
-   <td style="text-align:right;"> 3.440 </td>
-   <td style="text-align:right;"> 17.02 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Valiant </td>
-   <td style="text-align:right;"> 18.1 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 225.0 </td>
-   <td style="text-align:right;"> 105 </td>
-   <td style="text-align:right;"> 2.76 </td>
-   <td style="text-align:right;"> 3.460 </td>
-   <td style="text-align:right;"> 20.22 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Duster 360 </td>
-   <td style="text-align:right;"> 14.3 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 360.0 </td>
-   <td style="text-align:right;"> 245 </td>
-   <td style="text-align:right;"> 3.21 </td>
-   <td style="text-align:right;"> 3.570 </td>
-   <td style="text-align:right;"> 15.84 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Merc 240D </td>
-   <td style="text-align:right;"> 24.4 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 146.7 </td>
-   <td style="text-align:right;"> 62 </td>
-   <td style="text-align:right;"> 3.69 </td>
-   <td style="text-align:right;"> 3.190 </td>
-   <td style="text-align:right;"> 20.00 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Merc 230 </td>
-   <td style="text-align:right;"> 22.8 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 140.8 </td>
-   <td style="text-align:right;"> 95 </td>
-   <td style="text-align:right;"> 3.92 </td>
-   <td style="text-align:right;"> 3.150 </td>
-   <td style="text-align:right;"> 22.90 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Merc 280 </td>
-   <td style="text-align:right;"> 19.2 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 167.6 </td>
-   <td style="text-align:right;"> 123 </td>
-   <td style="text-align:right;"> 3.92 </td>
-   <td style="text-align:right;"> 3.440 </td>
-   <td style="text-align:right;"> 18.30 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-</tbody>
-</table>
-
-`````
-
+\begin{tabular}{l|r|r|r|r|r|r|r|r|r}
+\hline
+  & mpg & cyl & disp & hp & drat & wt & qsec & vs & am\\
+\hline
+Mazda RX4 & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1\\
+\hline
+Mazda RX4 Wag & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1\\
+\hline
+Datsun 710 & 22.8 & 4 & 108.0 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1\\
+\hline
+Hornet 4 Drive & 21.4 & 6 & 258.0 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0\\
+\hline
+Hornet Sportabout & 18.7 & 8 & 360.0 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0\\
+\hline
+Valiant & 18.1 & 6 & 225.0 & 105 & 2.76 & 3.460 & 20.22 & 1 & 0\\
+\hline
+Duster 360 & 14.3 & 8 & 360.0 & 245 & 3.21 & 3.570 & 15.84 & 0 & 0\\
+\hline
+Merc 240D & 24.4 & 4 & 146.7 & 62 & 3.69 & 3.190 & 20.00 & 1 & 0\\
+\hline
+Merc 230 & 22.8 & 4 & 140.8 & 95 & 3.92 & 3.150 & 22.90 & 1 & 0\\
+\hline
+Merc 280 & 19.2 & 6 & 167.6 & 123 & 3.92 & 3.440 & 18.30 & 1 & 0\\
+\hline
+\end{tabular}
+\endgroup{}
+\end{table}
 :::
 :::
 
@@ -461,9 +297,9 @@ See @tbl-mtcars2.
 <!-- 1. cross-refs have to be done at TEX level -->
 <!-- 2. specifying 0 will automatically fit based on the image's size -->
 
-Ornare diam inceptos orci mus lectus etiam finibus. Cras scelerisque massa bibendum ornare morbi ac facilisi per. Dui ultrices egestas nec est eu. Vestibulum viverra sed imperdiet amet, nibh ipsum! Libero habitasse condimentum sed quam nec tristique. Leo ipsum curabitur convallis a elementum. Dapibus felis nisi nibh vulputate mauris proin eu. Blandit in molestie ut turpis lacus. Et imperdiet pharetra viverra donec sed elementum amet feugiat proin nec erat at. Et ullamcorper facilisi amet sapien lobortis interdum ac.
+Rutrum turpis lobortis sit nec odio class velit quisque, gravida malesuada bibendum. Ut quis scelerisque iaculis taciti nulla. Aenean sed, nulla etiam augue, vitae, ante posuere mus ullamcorper primis. Ante eros etiam vitae, habitasse. Ultricies enim tellus. Iaculis et conubia est feugiat vitae in. In semper amet arcu nostra imperdiet parturient. Senectus, ante porttitor class viverra quam adipiscing lacinia facilisis. Eget fusce enim quis sed ut, enim vestibulum convallis nec erat. Quisque non et a cum ut cursus mattis. Porta sed nisi sed cras. Commodo congue facilisi donec rutrum.
 
-Arcu duis porta bibendum cubilia est et. Praesent quis tortor, pulvinar penatibus blandit velit tristique. Nam, malesuada euismod dui facilisi ac pulvinar. Parturient nulla auctor pharetra mauris suscipit eu elementum porta, sed? Bibendum est vitae imperdiet proin enim accumsan, iaculis justo vulputate. Mi mi vitae nunc quis sed sed urna. Efficitur aliquam semper eu sed faucibus nec. Aliquam non pellentesque aliquet per quis diam rutrum elit mauris metus.
+Et at fusce morbi, sed rutrum semper faucibus finibus inceptos id. Non accumsan cursus orci, sed mus praesent fringilla cubilia. Accumsan sed suscipit et. Sed, sit eu. Ridiculus, mauris, torquent sed. Eros sed porttitor mauris hac dolor tortor nibh, nulla sit sociis libero? Quam non mauris leo amet aliquam. Blandit tempor semper ridiculus ipsum himenaeos phasellus suscipit porttitor. Ut class sociosqu lorem vitae lobortis, sed diam faucibus sed. Fringilla integer hac, ligula nascetur pulvinar ultrices ante nisl in magnis! Et aliquam faucibus nisi, augue, sed penatibus posuere ex laoreet. Volutpat in ligula ipsum aenean nec nec eu, semper egestas.
 You can see a wrapped text thing at Figure \ref{fig-wrap}.
 
 
@@ -481,11 +317,11 @@ You can see a wrapped text thing at Figure \ref{fig-wrap}.
 ```
 
 
-Est eros nascetur vestibulum at euismod vehicula in lobortis fermentum. Ultrices himenaeos suspendisse efficitur, egestas cubilia posuere adipiscing ut fermentum adipiscing. Amet ac sociis tincidunt eleifend feugiat erat fermentum amet magnis aenean sit inceptos. Purus nec vestibulum proin bibendum malesuada imperdiet. Rhoncus pellentesque lorem in sagittis dui lectus dictumst fermentum laoreet. Turpis imperdiet ante maximus lorem commodo, sed auctor vel. Ex, enim ex nullam sagittis neque dapibus sapien felis quam mattis per donec. Litora in nisl magna phasellus. Sem, lectus rutrum ut quis, ex in et, nostra. Nunc fermentum vestibulum purus ipsum malesuada sollicitudin. Arcu ipsum sem sed, et ultrices enim amet. Vitae ac turpis turpis nulla vel.
+Tristique sodales gravida egestas eleifend. Vel amet mauris integer mauris volutpat potenti. Eros sed ut, quis id, nostra, sed fames amet malesuada. Sit et vel, aptent iaculis magna risus velit nullam tincidunt. Ac turpis amet dui pellentesque urna habitasse magnis, congue placerat donec habitasse maximus sed. Commodo nibh sit purus rutrum leo. Orci leo lorem consequat, magnis ut sed ut parturient nulla urna. Arcu vitae torquent nunc, non, malesuada a nulla neque elementum netus. Nunc, tortor vivamus commodo justo malesuada a nulla ornare magnis. In ante vitae class cras senectus lectus inceptos adipiscing sociosqu amet euismod sed? Condimentum, diam, in et blandit risus et placerat.
 
-Vestibulum aliquam porta sapien potenti primis dis lorem vivamus hendrerit, aliquam. Donec ac per ornare suscipit risus, interdum. Parturient mauris non eu ex eu erat velit feugiat consectetur. Enim dignissim rutrum, sem morbi aliquet. Lacus ut litora molestie dis interdum ad sed. Erat, suspendisse convallis eleifend metus cras quis, sollicitudin ut a. Arcu in sed diam, velit vestibulum et nibh. Tempor blandit parturient iaculis aliquet ridiculus facilisis. Ultricies a. Quis iaculis vel felis, sed, facilisis, mauris eget. Eu adipiscing erat et scelerisque mauris lobortis quam ac dui commodo consequat. Ultrices, nec inceptos nisi consectetur ipsum ex mauris tempor morbi dui cursus eu. Nibh turpis sed malesuada mauris vitae lacinia et scelerisque in et? Fringilla id, in gravida vel natoque mi, arcu iaculis sapien. Ullamcorper in sapien aliquam a, nulla felis ut senectus gravida. Condimentum est netus risus primis in. Elementum potenti tellus sem tempor risus proin sit.
+Faucibus auctor interdum turpis himenaeos felis sit sed dapibus. Sed vestibulum sed ac amet fermentum vestibulum vestibulum dignissim ac. Odio nunc auctor nunc ac morbi. Nisi bibendum eget ut id in risus vel platea curae etiam. A ipsum velit augue, vitae, magna morbi elit dis, neque. Suscipit velit sapien eget amet, himenaeos. Dis hendrerit nisi nec vitae erat, ipsum pellentesque sed. A sollicitudin, mi fringilla quis. Sed cras, risus nunc. Convallis porta. Ut aliquet adipiscing mattis. Ac magnis varius eget ac purus convallis lectus pharetra mauris mi. Velit ridiculus et duis in, sed amet class.
 
-Justo leo dui vestibulum at leo varius aptent enim aliquet fames sit accumsan, in. Porta mauris aptent risus aliquam posuere morbi. Ut in ut dis suspendisse arcu pellentesque ridiculus mauris platea. Hac leo nisi tortor ex. Velit, justo in nullam condimentum, sit quisque eu proin. Luctus, at varius aliquam etiam mollis ac non. Diam lacus dignissim adipiscing turpis vivamus maximus. Massa, felis, phasellus, tincidunt ut? Erat malesuada vehicula ut ac ut tempor. Amet nunc blandit sapien ut id sit.
+Nam lobortis pretium a semper rutrum cubilia facilisis vel, convallis pretium. In dapibus quis urna vitae sollicitudin elementum dignissim sed justo arcu nunc sem. Sit dignissim amet class at. Nisl lorem maximus fermentum mauris gravida felis sapien. Torquent nec eu mollis ipsum in vel velit, amet. Blandit mollis aenean, massa congue mattis sed. Dictum maximus, aenean morbi purus torquent ornare ac felis nullam metus, condimentum tempus tempus. Dapibus risus curabitur sit non, parturient ut. Ultricies nec lacus justo sed ultrices ornare purus, libero.
 You can see a wrapped text thing at Figure \ref{fig-wrap2}.
 
 
@@ -500,13 +336,13 @@ You can see a wrapped text thing at Figure \ref{fig-wrap2}.
 ```
 
 
-Phasellus eu praesent, ornare. In ipsum eros ut ipsum urna eu dis, lobortis felis venenatis. Fames fringilla vitae nostra quis, eget pellentesque, ipsum phasellus dolor. Scelerisque vel fermentum tincidunt dictumst aenean ut nec eu sed, sed. Sit diam, lectus id nascetur id lacus interdum. Potenti vitae lacus praesent vitae felis congue, ac. Malesuada quis montes et sollicitudin potenti ullamcorper enim. Ante pulvinar ac a senectus senectus turpis sit, a amet, volutpat sapien. Netus litora quis ut ornare non id pharetra a. Magna malesuada in nec felis potenti. Ac rhoncus mauris vel ut enim natoque donec in.
+In viverra ligula habitasse vel ornare ac. Netus sem vitae in dui ullamcorper. At, luctus nascetur nisl, ut. Suscipit bibendum et turpis risus eu. Dolor, ipsum sit varius. Primis sociis et! Dui leo diam ullamcorper eget sed taciti. Ut accumsan hac luctus ut vestibulum ac ante nostra in elit vel. Cubilia scelerisque blandit sed vivamus sapien, ac, eget. Molestie volutpat at facilisis faucibus mauris? Ante erat suscipit tortor magna eros, vestibulum. Facilisi a arcu eu montes nam phasellus ut sit in ac. Fames a efficitur odio nunc vitae in augue nam class.
 
-Hendrerit, himenaeos proin iaculis nam sed. Amet, non penatibus ex mus curabitur tempus at vel. In at cum magnis, cras a platea proin posuere, egestas nibh. Pretium tincidunt diam ligula. Nec venenatis nisl aliquam sed vestibulum commodo eu pretium malesuada ac. Donec volutpat maecenas eu ad nascetur turpis lacus tincidunt cursus, sed hendrerit lorem. Ac in tellus nullam quam donec sociis convallis. Finibus, scelerisque magnis nostra nec auctor amet cras amet feugiat lobortis vel fringilla. Varius commodo in habitant metus et tellus eleifend potenti rutrum sed. Sit lacus facilisi donec nam ac, et. Cursus risus metus augue posuere.
+Amet, sollicitudin rhoncus eget mi amet lectus accumsan elit mattis porttitor pharetra molestie. Vel mattis feugiat. Egestas vel augue felis natoque suscipit magnis erat. Ut arcu mi eros eu. Aliquam blandit accumsan aliquam aliquam consectetur maecenas? Sit tempus sed pulvinar amet efficitur. Sociis lacinia ultrices sem senectus laoreet sociis est, non dapibus. Eros lectus nulla sed purus fringilla in in ligula blandit faucibus a sagittis inceptos. Tincidunt, habitasse leo, sed, in ligula, nisi dui enim velit. Cursus quam ante sagittis a pharetra eros in non eleifend. Tempus justo donec torquent sapien sed ipsum, justo sed. Phasellus nostra nec sit sed sollicitudin nam.
 
-Taciti imperdiet velit turpis volutpat enim sollicitudin. Id posuere enim curabitur blandit odio a amet. Platea vulputate sem inceptos ex, dapibus. Magna nec dictum. Amet, cum aenean leo varius amet viverra eget, dignissim penatibus lacus et at cras pharetra lectus. Mattis, magna non cubilia efficitur eget. Tempus laoreet iaculis sed bibendum. Nunc ac mauris eget venenatis lectus in sollicitudin. Justo, sem lacinia nec integer convallis maecenas lacus, pharetra. Aptent ipsum vulputate eget bibendum eu hendrerit. Pulvinar eu, etiam tempus mauris lorem maximus vitae. Cubilia donec sed congue maximus in id per velit id feugiat magnis. Nisi ante nisl lorem eget, a pellentesque eleifend magna.
+In nulla nunc suscipit auctor mattis. Interdum ut ultricies, vitae tempus feugiat. Ligula tincidunt imperdiet, aptent enim quis. Magna turpis torquent cursus egestas phasellus maximus sem quam, malesuada nam. Libero ullamcorper, ex, sed. Metus, justo at, bibendum maecenas non. Id odio mauris aliquam at interdum nunc primis. Euismod ut lorem fames velit et sagittis, magnis mattis. Amet nisl, litora donec et cubilia. In et nec pulvinar, quam sit torquent in hac enim, pellentesque est est tincidunt. Nunc aenean turpis sodales. Nostra fusce nullam arcu in ac eleifend. Ligula donec, fames interdum auctor nisl risus, nulla cubilia.
 
-Ipsum aliquam nunc, tellus feugiat id vel neque aenean velit. Ut etiam pharetra consequat libero at maecenas luctus. Risus, mus in nulla diam, rhoncus donec augue facilisi ultrices nisi interdum. Enim elit sodales id justo odio nunc vitae, praesent sed congue blandit. Facilisi scelerisque risus sed erat ante lobortis, enim lorem netus ante urna. Vestibulum vestibulum, imperdiet purus egestas non. Parturient et mi nec mi facilisis, lectus potenti. Dolor erat, vel in sapien nam conubia. Pellentesque eget sapien, in ante sapien venenatis sed duis tristique ut. Metus dictumst nullam aliquet sed inceptos morbi accumsan nec. Natoque congue primis ante at arcu interdum platea. Fermentum nulla vel ut ut posuere. Tincidunt, convallis mi at tempus platea.
+Placerat urna vitae dictumst, vitae metus, nulla. Sapien nec blandit rutrum lobortis sapien, efficitur ipsum. Laoreet ad ut a, ipsum ut. Fusce pellentesque, lobortis, leo eros sodales. Tellus lacinia in. Aliquam dignissim posuere cursus egestas mattis ac sed elit tempus. Leo orci diam consectetur pretium eu efficitur auctor est. Scelerisque, non fermentum vel dictum dignissim. Leo aliquam aenean ac in mauris parturient. Ultrices eget at aliquam sed sed, eu vestibulum.
 
 
 
@@ -537,20 +373,21 @@ Ipsum aliquam nunc, tellus feugiat id vel neque aenean velit. Ut etiam pharetra 
 <!-- 2. Unclear how to stretch figure to fit;  -->
 <!-- 3. width needs to be expressed in in/cm/pt -->
 
-Ac primis, nam elit risus sed. Ut vel dapibus in, sodales, tempus ut ultricies. Maecenas ac est netus a ut sollicitudin. Fermentum, aliquam inceptos, maecenas platea. Felis lorem, amet molestie, non sit eu in, conubia. Vel pellentesque eu, erat dui non metus senectus. At non mollis erat consequat lorem varius. Congue dis nam vel turpis, ridiculus sociosqu ipsum sit ac. Posuere rhoncus suscipit porttitor eu ut sed viverra felis.
+Lacus in consequat condimentum dolor senectus semper tempus nec nullam quam sed. Sem, eu eros curabitur, sem ut. Sed quis fermentum et tempor. Id ut amet sed vel nunc, efficitur risus duis ut, ex sociosqu. Magnis pellentesque duis pellentesque mauris aenean ac volutpat. Ante nibh et sit mauris curae parturient. Sapien at, eu sed sociosqu neque dis id nec. Conubia aliquam elementum class nisi senectus dolor non. Sed erat, sed congue velit. Euismod eros mauris amet sociosqu. Mauris feugiat himenaeos lectus ut, malesuada dolor et ultricies, senectus. Aliquam cubilia orci pellentesque ipsum urna. Duis lobortis, tincidunt ante vehicula odio ornare amet, proin amet. Eros egestas vulputate eget scelerisque donec urna efficitur vulputate.
 
-Et eros, tempor lorem hendrerit ut nibh, faucibus. Volutpat vestibulum lectus quisque quisque sed ante elit. Justo, integer in justo in tincidunt leo nibh in sem aptent. Arcu lacus arcu amet imperdiet rhoncus tincidunt elementum sit. Elementum ridiculus purus auctor lectus id risus augue dapibus. Erat dolor erat augue consequat magna per quam suscipit in vestibulum. Justo, class eu sapien, luctus convallis pulvinar. Nibh risus, auctor laoreet ut nec sagittis eu iaculis. Purus ut consectetur porta ac varius in rhoncus efficitur. Libero porta sit sed in euismod.
+Urna quis nec quis sed natoque erat maecenas eleifend senectus elementum tincidunt ut. Auctor montes rhoncus finibus dis nulla neque praesent in in neque massa cubilia, pellentesque ut himenaeos nascetur pellentesque non. Sollicitudin porttitor lobortis eros malesuada vel dolor ligula, commodo. Justo aenean eu sed vitae eleifend ex per. Leo quis quam ac ipsum per quam nunc dictum. Ut, vel nisi massa platea, dignissim odio, viverra. Malesuada nisl, laoreet in quisque sit fringilla. Praesent accumsan class phasellus eros, pellentesque arcu. Quis nunc in senectus egestas. Himenaeos per, bibendum dui eu libero bibendum eu. Litora aliquet pharetra sapien eleifend sed at eleifend sed ac.
 You can see a wrapped text thing at Figure \ref{fig-wrap-filter}.
  
 ![\label{fig-wrap-filter} A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. {r3in}](stamp1b.jpg){#fig-wrap-filter}
 
 
 
-Dapibus lacus, consequat nulla quis nisi sapien. Ipsum nullam, nec. Consequat, mauris tempor in vel tincidunt nullam. Venenatis parturient leo consectetur at mollis auctor purus turpis etiam aptent, suspendisse. Egestas justo in sapien et nibh cras, tristique erat vestibulum netus. In tincidunt odio vivamus. Egestas netus pretium enim inceptos mattis ligula. Quisque consectetur ut fringilla nulla. Luctus volutpat metus, dis ut at nulla nascetur aptent.
+Amet, aliquam, lorem augue consequat turpis tristique sit eu velit, at. Feugiat neque accumsan tellus nam sit. Urna dis, ridiculus hendrerit amet viverra id parturient cras, hendrerit, enim. Nec, ut cras lorem a ex fermentum, arcu ut finibus vel, augue magnis. Eu ornare senectus in purus id ex mauris consequat. Non per hendrerit fringilla imperdiet habitant maecenas molestie, cubilia. Feugiat senectus sed dictumst ut erat eu nulla metus massa. At, posuere, elit lobortis sit ante risus. Per nullam dolor dui massa metus luctus ultricies tempor ultrices. Mi dolor, platea in turpis varius. Ligula diam in nascetur est.
 
-Ut nisi magna et, varius aliquam. Urna taciti feugiat, aliquet at iaculis odio interdum. Montes id mauris non ipsum facilisis proin ex egestas eu vivamus. Scelerisque nec est faucibus et faucibus. Pharetra ad aliquam nibh justo. Odio et pulvinar fringilla fames lacus. Pellentesque duis feugiat maecenas ut urna ut eu convallis molestie, mollis. Ridiculus, purus nostra tellus vitae nec eget libero quis. Cubilia scelerisque senectus, pellentesque praesent lectus interdum ac ut quisque vulputate montes. In in, vel ridiculus turpis viverra pellentesque. Ut aenean nullam vel. Aliquam sit tellus et lobortis viverra parturient ante. Ipsum, dui nam libero vestibulum odio, eget mi odio ante.
+Porttitor quam ac aliquam, justo consequat. Ornare, eros habitant mi, diam curae convallis varius luctus. Dictumst dolor, mi dis, lacus tempus sed sed diam lacus aliquet commodo. Facilisi consectetur a vitae vel quis nam. Mi tempor porttitor per class sed elementum eget. In amet lobortis cubilia urna. Velit sociosqu sed enim non litora. Curabitur vivamus bibendum, amet viverra id, in. Odio lorem sodales neque taciti in. Quis, ut dui morbi amet quam tincidunt feugiat. Suspendisse volutpat lacinia amet lacinia, malesuada est facilisis. Amet sed eget, ut sit condimentum laoreet felis amet sem velit at. Varius tellus leo porta posuere tempor amet netus ultricies mauris. Dis cursus vitae amet, magna. Id parturient dis gravida lorem mauris sociosqu amet porta eleifend felis efficitur lorem tincidunt purus.
 
-Sollicitudin id quis sed nec facilisi turpis. Leo, proin mollis, elementum aliquam amet sed elementum sit habitant pharetra finibus ac. Nam tempor ipsum. Rutrum sapien leo in magnis. Imperdiet mollis, faucibus vestibulum! Vestibulum, potenti maximus, libero. Vitae pellentesque sagittis ut vel. Dolor enim habitant donec, in sodales nec ligula turpis. Sapien vel non scelerisque lacinia placerat dis ultricies duis metus diam metus. Tincidunt urna parturient a, nullam facilisi amet, in varius semper.
+Turpis nec, pharetra in proin morbi. Tempor in senectus diam natoque efficitur. Non adipiscing, non. In, purus conubia suscipit, at. Magnis enim neque aenean, sed, ipsum ut porta, ex consectetur donec. Class lorem sed augue diam varius. Odio, parturient mauris ultrices. Amet egestas ut taciti fermentum pellentesque leo. Sed eget torquent, dis vulputate sed nostra duis sed. Ultricies ligula aliquam nam at leo proin. Blandit sed varius montes, quis eu conubia ut conubia.
+You can see a wrapped text thing at Figure \ref{fig-wrap-filter2}
 You can see a wrapped text thing at @fig-wrap-filter2
 <!-- Figure \ref{fig-wrap-filter2}. -->
 
@@ -560,15 +397,26 @@ You can see a wrapped text thing at @fig-wrap-filter2
 <!-- A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.{l3in,18} -->
 <!-- ::: -->
 
-![\label{fig-wrap-filter2} A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. {l3in,18}](stamp1a.jpg)
 
-Purus nam nisl, faucibus quisque aliquam dictumst. Semper vitae nisl eleifend sapien nisi quam lacus lectus, efficitur, proin curabitur purus sit interdum eget tellus. Sed sed curabitur nisl et mi. Enim senectus metus nisi. Platea in nunc laoreet primis nascetur sit consectetur. Ex sit mauris augue eleifend eu in urna metus elementum. Arcu nunc eleifend, neque sociis mauris dui tellus sapien duis porta libero. Augue eros eu commodo ut torquent pellentesque accumsan ipsum.
+\begin{wrapfigure}{l}{0\textwidth}
+  \centering
+  \includegraphics[width=4in,height=0.3\textwidth]{stamp1a.jpg}
+  \caption{\label{fig-wrap-filter2}TITLE HERE}
+  \vspace{-6pt}
+\end{wrapfigure}
 
-Ac nulla a erat sed. In eleifend vivamus ac vel pulvinar luctus rhoncus. Semper parturient, purus dolor ut mi ultricies integer congue orci quisque. Aenean elementum sapien, augue sapien tempus curae mauris donec. In duis ornare posuere sit? Dui risus magna cursus at sociis tempus. Dis, magnis dignissim nascetur ultrices tortor sed nascetur sed metus. Eu et leo diam proin ac litora. Sit litora et feugiat donec ligula ut metus, sed. In turpis vel diam, adipiscing in elementum eleifend. Sit lacus consectetur, aliquet ut eget conubia ipsum in convallis netus. Duis, himenaeos ligula quis, tincidunt ligula urna, elementum sem ante.
 
-Vel, vestibulum odio in class habitant facilisis luctus. Litora, vestibulum, tellus nulla id. Velit pulvinar velit at, vel non ac sed ipsum, consectetur himenaeos. Eu eros mattis malesuada blandit. Fermentum ut proin, sed lacus. Et blandit maecenas justo. Amet, mi sed mollis efficitur varius volutpat. Sagittis imperdiet augue nec amet, quam. Habitant, erat conubia in. Condimentum sed, non felis, tincidunt ut vivamus, mauris ut at potenti tempor. Lectus donec donec nascetur natoque dolor scelerisque. Eu ut aliquam in eu consectetur maecenas quam interdum felis etiam aliquam. Parturient class nulla pulvinar nam, quisque consequat egestas. Tortor, congue duis, ac libero et laoreet vivamus justo. Ac interdum porta convallis facilisis facilisi sapien ac sit hendrerit parturient orci.
 
-Ac consectetur semper nec. Ut, non consectetur ad in eget. Dictum justo ad vivamus. Pulvinar malesuada nibh non tincidunt ut vel sit nunc, elementum. Vel dapibus sit ipsum convallis, id pellentesque enim posuere. Nulla vestibulum habitasse integer, etiam nulla rutrum sit proin. Et, mus, maecenas mollis rhoncus libero pulvinar sed tincidunt mollis sodales. Vitae, rhoncus molestie torquent id inceptos vel, interdum mi sed sapien consequat. Ultricies aliquam sociis accumsan diam orci sociis, cursus. Sed turpis, vel netus amet id. Nam, ac erat. Efficitur inceptos sagittis rhoncus lacus gravida.
+
+<!-- ![\label{fig-wrap-filter2} A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. {l3in,18}](stamp1a.jpg) -->
+
+Nullam nulla sed posuere et lectus? Integer at ac conubia, tristique. Pharetra metus venenatis diam magna venenatis proin quis. Sed libero sed metus ad ad. Ac, nullam, lacinia ac egestas velit ut neque augue turpis nullam libero et libero vel primis. Feugiat vestibulum nulla hac, est id, lacus. Interdum ut fringilla primis ligula lectus facilisis libero, morbi. Congue vel, finibus blandit vulputate duis sed nam felis! Imperdiet integer metus sit, amet montes ut lorem.
+
+Aenean tellus sit potenti, odio nunc quis in, mauris. Mauris augue taciti amet. Maximus, et sed a lectus blandit quis potenti, at nisi. Dapibus nibh, nullam justo gravida vel, cursus, id, congue. Sed aptent, ac mauris, efficitur ante vivamus purus felis nibh nunc metus. Sed molestie sapien ante in eget at maecenas lectus. Sagittis blandit class iaculis pellentesque. Ligula egestas dolor eros ultricies sed inceptos ac amet curabitur in cum. Semper vitae facilisis class justo ipsum ipsum nostra in. Nec a purus vulputate inceptos, fringilla. Tempus et et vel ac nibh hac varius efficitur, ultrices, parturient. At himenaeos quisque orci lobortis duis. Id sed, vestibulum euismod, auctor aliquam, torquent blandit est. Pellentesque sollicitudin placerat nec, eget commodo id sapien. Suscipit sed leo, hendrerit dui. Magna maecenas tortor ac enim. Duis dui nisl libero senectus erat amet habitant. Condimentum, purus nibh ex senectus dis dolor montes. Phasellus eget proin turpis lorem justo donec posuere.
+
+Feugiat luctus eleifend volutpat nam enim euismod, enim ornare sed, sit egestas nullam. Mollis duis lobortis, ornare finibus, potenti neque ac. Ligula vitae fringilla. Quam dolor, litora bibendum nulla per mattis morbi. Accumsan dui auctor mattis varius? Posuere eu vehicula fermentum vestibulum parturient tempor in netus curae purus habitant in, in. Natoque dui, a aenean quis, ut tempus vel consectetur. Quam nec netus amet magna. Egestas ac blandit nec felis sapien.
+
+Et augue nec accumsan etiam venenatis nunc maecenas. In justo, nascetur cras tempor, diam in eu. A orci mauris nibh urna felis quis consectetur. Proin lacus molestie nibh tellus quis auctor. Sapien diam ut. Pulvinar vitae amet lacus, at felis ligula mattis eu sapien dictum lacinia. Turpis turpis, non, dui ac vitae posuere vehicula. Integer nec dictum, ridiculus auctor sed. Tristique suspendisse eu felis faucibus dignissim odio. Aliquet eget tellus et consequat lectus sed, vivamus, amet varius.
 
 
 
@@ -613,14 +461,14 @@ Ac consectetur semper nec. Ut, non consectetur ad in eget. Dictum justo ad vivam
 
 <!-- \begin{wrapfigure}{l}{0\textwidth} -->
 
-Torquent in leo dui tempor finibus curabitur interdum mauris. Sed, lacus nunc sociosqu ac pretium iaculis. Senectus, et justo per. Suspendisse tellus, tincidunt cursus. At ligula potenti cubilia, urna. Eu, eleifend in sed, senectus. Imperdiet tincidunt volutpat molestie vitae ac potenti. Blandit himenaeos aliquam, mattis auctor sed eu nulla luctus. Cras duis urna suscipit tortor vitae varius eros lacinia. Mi tincidunt quam porttitor suspendisse congue. Pulvinar tortor donec finibus sit magna inceptos, in integer. Mus, lectus, turpis at eu sit adipiscing at tempor netus sed.
+Et turpis, aptent lorem nostra leo est. Eu, nostra finibus amet ac vestibulum. Commodo ex. Primis at ridiculus porta, non pellentesque amet, curabitur facilisis arcu porta. Ornare metus felis turpis magna risus. Ultricies libero eget convallis lacinia aliquam venenatis ut rhoncus duis. Class, sed sed. Vehicula eu, quis sagittis et. Rhoncus montes commodo sed, egestas, pellentesque, ultrices sed.
 
-Volutpat pellentesque urna auctor donec ligula mattis mollis nostra pharetra ligula. Sed fusce enim luctus nulla ante morbi senectus cum. Faucibus et etiam porttitor suspendisse lorem consectetur eu. Dictum sed dictum ac quisque, curae nisi ipsum magnis arcu tincidunt sed euismod lacinia sapien quis. Sed metus ut ligula inceptos justo, neque et blandit cras. Nibh egestas, eu habitant sed lobortis diam torquent egestas lacus sed nunc ac. Quis hendrerit amet hac porta nisi. Erat, ac condimentum vehicula ac.
+Quisque velit accumsan, efficitur tristique aliquet ante nisi. Vitae, sociosqu ultricies varius pellentesque in vehicula vehicula. Felis, platea et montes scelerisque ex efficitur ut id, cursus a. Ultrices nisi cursus nisl interdum eros consequat nibh velit in velit luctus lacinia. Taciti erat fames mauris diam, cursus congue eu. Dictumst sit. In nibh nullam eu tristique accumsan, vel lectus.
 See Figure \ref{fig-mtcars-wrapfig-0}.
 
-Est lacinia torquent interdum fames tempus. Hendrerit eleifend nostra mi sed natoque. Euismod elementum nulla turpis justo, in auctor auctor mauris. Quis dictumst ac penatibus maximus rutrum mus nunc varius venenatis. Imperdiet dapibus turpis curae orci et sit, sed nisi a turpis eget. Curabitur et mattis pretium, urna, velit eget ac. Turpis vestibulum risus metus. Donec dui ullamcorper, mollis nunc egestas in lorem metus maecenas. Sit gravida laoreet et potenti.
+Vitae imperdiet eu, ac nulla, sed volutpat eros mi. Sed auctor porta sociosqu, iaculis nibh, nibh varius, mus tellus, eu. Facilisis litora! Metus neque fames ut proin donec, himenaeos. Primis lacinia nibh sed. Cursus, luctus, phasellus nec dis arcu dui, sed gravida posuere. Lobortis sed commodo. At lacus eros finibus fusce lorem aenean nulla laoreet maximus sollicitudin, dolor. Justo etiam ac, vel fames sem congue mauris. Pharetra non ipsum tristique tempus. Mauris vehicula ac egestas scelerisque magnis eu mus diam.
 
-Dui libero enim nulla taciti. Nibh condimentum turpis ut aenean. Mi varius pretium sed, eros maecenas penatibus ullamcorper vel donec. Commodo sit varius. Lorem ligula id et velit id sapien, ut, eu. Nulla id at in? Felis aptent diam magna sed enim. Vel ridiculus habitasse venenatis sed aliquet in maecenas ad. Elit, sollicitudin euismod, habitasse mattis vel eu.
+Erat a ad dis vitae turpis ut, cras sed? Dictumst aliquam quis sed tincidunt iaculis sit. Vulputate tempus nisi accumsan dapibus, vitae, non in eu mi nec varius. Nec amet lobortis per venenatis condimentum vitae, finibus non, quis phasellus ac. Vehicula dui condimentum mi sed. Non blandit libero sem, ut volutpat, platea, pharetra, dapibus consequat. Justo ac ut nec eu primis turpis facilisis torquent, congue adipiscing eros, nisi. Eget felis sit sed porttitor vestibulum placerat ultrices nunc quis. At tempor vivamus. Eu at justo cras metus scelerisque facilisis non tellus. Ridiculus sagittis molestie. Montes vel tempus sed et. Tempus quisque vestibulum ullamcorper natoque ullamcorper vitae aliquam vel eu. Iaculis, nunc condimentum orci ornare sed scelerisque pharetra quis lacinia? Sollicitudin, et torquent nunc tristique mauris ultricies nibh ad habitant vestibulum eget. Posuere id at dis a, ac dui pulvinar convallis placerat fames. Risus maecenas congue, purus.
 
 
 
@@ -654,14 +502,14 @@ Dui libero enim nulla taciti. Nibh condimentum turpis ut aenean. Mi varius preti
 
 ![\label{fig-mtcars-wrapfig-1.5} figure here{r3in,18}](mtcars.pdf)
 
-Faucibus amet ut magnis in maximus malesuada. Lobortis placerat faucibus turpis curae nullam ut cras ac. Sed dolor per nec convallis ut. Maximus ac. Tellus, sem a arcu tincidunt lobortis, sed. Sagittis sapien sapien enim justo ut rhoncus. Vehicula eget nascetur congue nec aenean malesuada dictumst velit.
+Malesuada semper amet eu vitae in pulvinar. Nec laoreet litora. Ultricies sem porttitor venenatis sollicitudin nec. Nunc habitasse cras porttitor tempor lacus ut sed sagittis a nunc malesuada cras a. Id risus, velit rutrum in arcu congue lorem felis adipiscing sit. Praesent porttitor sodales vitae mauris eget purus justo. Sit ut sed amet nunc gravida ex arcu libero. Sociis in.
 
-Metus maecenas fringilla in non sed. Fames lorem diam. Fringilla faucibus at molestie ac vel fermentum tincidunt volutpat sed sapien nisl. Nulla, non, nostra consequat nulla. Et blandit ornare, augue vel imperdiet. Conubia ac eleifend nec feugiat. Imperdiet augue leo consectetur vehicula non, ultricies taciti, facilisis. Facilisis, ultricies felis. Vitae duis eu accumsan rhoncus laoreet aliquam, adipiscing. Magnis, in luctus, mi non consectetur tellus dolor.
+Id primis auctor ullamcorper mattis at mollis nibh habitasse lobortis congue nec leo lectus rhoncus turpis egestas ornare. Venenatis justo quis placerat habitasse odio vestibulum habitasse. Lorem, at faucibus sapien eros sed vel eu ad. Ipsum ac odio amet etiam, varius pharetra. Tristique bibendum class eu phasellus ac erat. Nulla, neque eget eget, vivamus in nullam lectus, convallis netus. Vitae fusce et dignissim interdum eu. Eros tempor leo libero et dui donec, nulla tortor.
 See Figure \ref{fig-mtcars-wrapfig-1.5}.
 
-Potenti volutpat fermentum ullamcorper. Augue habitant pellentesque aliquet suspendisse elit iaculis. Neque integer non ut nec. Praesent aliquet diam nascetur accumsan nascetur. Euismod odio cursus cursus sed. Ligula sed dictum dictumst ex et ad congue. Nisi vel, erat sed sed. Id habitasse ex viverra vestibulum. Lorem ligula consequat, dolor malesuada egestas sociis. Iaculis donec velit ac blandit velit justo odio. Sagittis orci felis lacus praesent vivamus, nulla vitae ut purus, eleifend et porttitor. Nullam augue ullamcorper mattis non enim nisl ut. Et tempor, dictum natoque dui eu sed pellentesque facilisis. Orci laoreet mollis in ad et, praesent ligula. Faucibus habitant non, elementum blandit aliquet non quam.
+Non sed pharetra pellentesque. Iaculis augue, venenatis, eu maximus litora, sit et. Amet facilisis nec litora odio fermentum torquent non ante. Amet ac risus blandit id odio! Finibus laoreet egestas elit at ullamcorper facilisis at. Fringilla nisi pharetra sed morbi, mollis semper posuere augue. Quam ullamcorper, tempor vulputate ut ridiculus leo. Ac consectetur dictumst sed eros, nam, orci. Facilisis nec luctus. Leo, eu non urna quis turpis sit sed volutpat libero nascetur. Et sed, primis nam phasellus odio ex a enim.
 
-Torquent hendrerit enim a vitae dui. Sit non proin ut posuere tellus. Erat ligula facilisi odio id massa nulla potenti et donec. Tempus curae fringilla arcu tempor id eros eu penatibus pharetra commodo sit sodales. Non fames est sociosqu, duis. Volutpat risus faucibus ridiculus erat magna lectus eleifend non ex feugiat. Volutpat nullam ante, sem consectetur viverra nunc, eu eros, suscipit vel vel. Gravida, tincidunt vulputate, ac sit gravida quis, nostra maecenas gravida.
+Suscipit eget et donec interdum urna in fermentum suspendisse sed, fames tempus lacus. In tempus, ipsum phasellus molestie semper commodo ac, massa. Non sociis sed adipiscing sagittis praesent. Dictum hac pellentesque rutrum lacus in tortor. Vel pretium, ligula a sit dictumst ac tempus ullamcorper, sem. Tellus convallis condimentum urna convallis nam tempor volutpat velit. Fames metus in consectetur mi eleifend class augue. Ullamcorper curae fames, platea placerat aliquam ac ut tempus. Enim quam tristique a nec eleifend lobortis facilisis tincidunt ut, sed. Metus magnis ultricies pellentesque amet nec varius et facilisis. Aliquet, fusce a tortor et sed.
 
 
 
@@ -690,27 +538,27 @@ Torquent hendrerit enim a vitae dui. Sit non proin ut posuere tellus. Erat ligul
 
 <!-- 1. cross-ref and fig-captions don't work! -->
 
-Congue urna sed sem, nibh eleifend sed id et amet. Habitant ut, lorem cras orci ac eros consequat condimentum. Ligula fermentum ut nostra mauris fermentum nullam ut, libero. Ac ut phasellus vel eu parturient maximus. Adipiscing sociosqu lorem risus, litora ac. Class nunc mauris metus vel ut penatibus et varius euismod. Augue a luctus vel sit felis ex sed nascetur posuere, quisque facilisis donec iaculis. Tortor nec ante, aenean quisque eu accumsan vel dis urna ac. Vel sollicitudin ut urna nascetur ultrices, tincidunt ornare praesent vehicula, facilisis. Penatibus, ornare tincidunt donec maximus facilisi sit proin montes. Ac lacinia phasellus.
+Efficitur hac ligula nullam nunc sed, sed mauris accumsan himenaeos, dictum. Sapien malesuada neque lacinia taciti porta, ultrices molestie maximus. Libero cum quisque hendrerit nec tortor. Auctor consequat risus porta et scelerisque, eget non amet sit volutpat eu consectetur dolor. Dolor gravida vehicula ligula, amet aenean bibendum tristique sed id felis. Turpis mauris sodales euismod etiam ornare neque, tortor vitae aliquam. Sodales ut ullamcorper habitasse id et at netus pellentesque. Augue consectetur montes penatibus parturient potenti. In dis sociosqu quam sed lectus iaculis fusce litora augue.
 
-Ut et amet mauris in dictumst sem sed phasellus pellentesque in. Dui sociosqu non lectus sit sagittis ac nec eros. Erat bibendum pellentesque vehicula. Convallis proin nam elit sed nam efficitur eu aenean nec. Ridiculus in feugiat donec vivamus, nibh orci sed vulputate. Tempus nullam platea, aenean eleifend vel sed, sapien maximus sed. Varius nec magnis sem tortor faucibus non. Pellentesque, sed sapien ut efficitur fames quis curabitur ante donec. Sed sit finibus eros nulla donec nec eget. Nec ex a sit donec sed at. Facilisis in. Natoque egestas non enim leo dictum nulla vulputate non. Lacus suscipit augue nulla, in commodo nulla in proin, sodales eros pharetra.
+Nunc dictumst ultrices torquent nascetur augue, sem nisl nec sociis laoreet hendrerit nulla bibendum porttitor turpis. Non etiam sed. Ligula urna tortor quam, luctus ipsum a ante suspendisse nibh convallis mauris consequat. Purus, taciti dignissim ipsum eu. Mi mi ridiculus ut. Et et amet sed. Nisi leo tempor morbi ultrices luctus ipsum. Lobortis tempor ipsum cras in. In dictumst, aliquam eget. Volutpat, ridiculus suscipit dui torquent nulla magna rhoncus ac neque phasellus tristique. Quis posuere euismod, vivamus cum sem pellentesque ut facilisi, ornare.
 
 
 ::: {.cell wrapf='true'}
-\begin{wrapfigure}{R}{0.3\textwidth}\includegraphics{man_files/figure-native/fig-mtcars-wrapfig-1}
+\begin{wrapfigure}{R}{0.3\textwidth}\includegraphics{man_files/figure-pdf/fig-mtcars-wrapfig-1}
 
 \end{wrapfigure}
 :::
 
 
-At orci tortor nec enim sed sed posuere. Rutrum eget, consectetur dolor pellentesque euismod finibus iaculis nullam porttitor per mauris. Amet, phasellus a potenti in elementum varius, ipsum dolor cum. Torquent mattis magna sed, augue, class feugiat maximus. Maximus diam ac nibh facilisis metus diam tempor arcu, sagittis litora eget tempor. Ultrices curae dolor at id augue nec congue non odio. Amet libero feugiat aliquet a et ipsum ac. Et vulputate hac at porta. Nec ultricies non eget sapien mus erat. Adipiscing sit vestibulum ornare id vivamus vulputate rutrum. Nunc in dignissim eu ut vitae quis. Commodo eu, laoreet netus eget vitae tincidunt.
+Leo arcu sed vel vitae. Faucibus justo, egestas id, erat pellentesque est, turpis nibh. Eget proin amet volutpat hendrerit nec sed magnis. Interdum consequat in integer suscipit erat lacus. Ultrices suspendisse quis egestas massa imperdiet. Maximus quam pellentesque sapien mauris quam vel aenean, ac, neque. Litora nunc taciti mauris eu scelerisque nibh turpis. Mus fringilla leo, erat vivamus lacus. Mauris amet blandit praesent vitae. Mauris eros et iaculis. Ante erat, dui libero pellentesque. Fringilla feugiat sed lectus ante tincidunt tempus nibh pretium ipsum sed urna. Sagittis interdum nisl sodales. Mauris eu aliquet arcu quam et convallis duis vel. Vitae ac nunc id vehicula eu egestas nec.
 
-Congue lacinia semper pretium ipsum lobortis at sapien, enim condimentum. Non eget lobortis dictum efficitur sed aenean eu, et sociis penatibus. Vel eros amet, aliquam, massa ac vel. Ac suscipit porttitor sed et fermentum a tortor efficitur id metus mi? Pulvinar in turpis leo libero luctus hac ad cursus et accumsan. Egestas amet sagittis nostra gravida diam nam est sed. Cursus turpis, ut, egestas elementum id augue ut adipiscing curabitur sed, ullamcorper pellentesque. Suspendisse phasellus malesuada molestie ut ut netus aliquam fermentum. Vitae in libero nulla habitasse arcu tincidunt, erat. Cum sapien ac vel diam dictum neque quis vehicula, quisque.
+Per massa mattis litora eget. Ac leo, ligula tempor adipiscing. Hendrerit cursus, in suscipit sed tellus parturient donec sed non. Non dignissim sed adipiscing iaculis! Luctus suspendisse lorem curabitur quam laoreet. Bibendum, nisi quis pulvinar sociis euismod. Et sapien, cubilia malesuada ut sit velit eget turpis. Aliquet pretium libero mollis proin. Litora integer lectus neque nunc ornare arcu semper euismod proin, tincidunt ac lacus tincidunt mi. Aenean sapien montes ante, et dapibus at.
 
-Mus eu est praesent odio tincidunt placerat felis. Praesent, egestas tellus erat facilisis lacus praesent non sem, nascetur. Leo litora at ultricies inceptos lorem, elementum metus. Felis in faucibus nisi ut bibendum eleifend iaculis et. A augue in, tortor in, egestas vestibulum sed. Sed, sed, urna ac pellentesque a faucibus mus felis facilisi. Ultricies, rutrum quisque venenatis massa egestas sit. Turpis nam velit blandit amet torquent sit eros. Consectetur nascetur primis, adipiscing maximus ex ac. Donec hendrerit odio lectus. Proin cum tempor vel in aliquam tempus a ac metus, nec aptent. Curae, hendrerit enim, metus malesuada donec finibus, ut purus gravida sodales. Fames gravida gravida ac porttitor eu massa rhoncus. Suscipit posuere, scelerisque elementum, nec at et ac dolor massa. Malesuada imperdiet tincidunt amet vulputate laoreet in fames phasellus fermentum sit faucibus lectus.
+Aptent condimentum platea maximus, mollis sem ex. Adipiscing et, congue dapibus viverra, convallis pretium pulvinar dictum cubilia et dictum? Magnis cras dolor leo class. Conubia interdum venenatis, orci ac suscipit amet penatibus nisi augue. Litora fringilla convallis maximus maximus. Suscipit venenatis pellentesque habitant sed at faucibus at risus consequat egestas lacinia. Aliquam maecenas volutpat eget ridiculus quis eu. Parturient vulputate tincidunt finibus. Malesuada convallis feugiat aliquam, at. Cum ante et nisl sed.
 
-Tincidunt tempus sodales convallis in a eu ut, ac. Justo consequat aliquam eu lorem quisque diam. Blandit pulvinar purus non habitasse venenatis congue pharetra purus tristique eros at. Magna bibendum sit ante rutrum tristique. In class et bibendum sagittis. Faucibus leo magna vel erat nulla et vel aptent neque sociosqu. Erat vestibulum feugiat et. At ex, metus consequat, ad nisl lacinia risus blandit sed ligula risus. Habitasse arcu, ut bibendum at hac orci.
+Maximus quis imperdiet ultricies aliquet aenean erat luctus dictumst, enim vestibulum. Quisque sed in pharetra. Diam lectus tempor parturient sem in aenean eleifend, mattis, eu felis quam consectetur, aenean tempor ipsum integer platea. Ac sed morbi varius amet fringilla dictumst. Class sit ac tincidunt ultricies netus velit. Praesent lorem turpis enim nibh, nunc urna sed erat. In nullam sapien sociosqu lacus purus dignissim ut parturient. Ac nascetur parturient ex aptent posuere, non sed nunc in urna. Convallis in blandit nullam ut. Nulla lobortis, quis, duis id sed, torquent. Malesuada quam. Finibus natoque vitae luctus vestibulum quam sed. Pulvinar ut ad sed ridiculus.
 
-Metus habitant dignissim integer gravida aliquam sodales, platea sit dis. Ut massa habitant egestas hendrerit eu vivamus nisl. Euismod sed vestibulum, et. Nostra, proin magna enim faucibus et ac, sed, viverra tincidunt. Varius viverra, posuere feugiat, sed ut ante sapien, nec. Interdum, in hac non dapibus, id curabitur natoque tincidunt penatibus, felis leo. Nec ullamcorper et euismod, ligula nisl sed ligula posuere mollis taciti. In non et dapibus ut aptent varius feugiat ac auctor. Vulputate sit in posuere dui sed in risus in nibh iaculis montes neque. Sollicitudin sagittis sapien vitae, nunc eget curae.
+Natoque sit auctor vehicula eu dignissim sodales cum eros lectus, enim. Tempor facilisis et ex praesent mi lacinia venenatis sed facilisis venenatis. Interdum natoque, purus ipsum rutrum nec. Vivamus, inceptos ut nunc, in sed. Ipsum potenti, donec interdum. Dictum, auctor ut urna quisque maximus nunc nisl felis, tincidunt nunc. Leo penatibus finibus in lorem sed eu mollis. Habitant vestibulum ad, pellentesque egestas accumsan. Fringilla ullamcorper ipsum interdum at semper commodo metus facilisis.
 
 
 
@@ -737,7 +585,7 @@ Metus habitant dignissim integer gravida aliquam sodales, platea sit dis. Ut mas
 
 ::: {.cell wrapfigure='["r",0.3]'}
 ::: {.cell-output-display}
-![](man_files/figure-native/unnamed-chunk-9-1.png)
+![](man_files/figure-pdf/unnamed-chunk-10-1.pdf)
 :::
 :::
 
@@ -752,95 +600,47 @@ Metus habitant dignissim integer gravida aliquam sodales, platea sit dis. Ut mas
 
 <!-- 1. caption and cross-ref doesn't work -->
 
-Commodo, hendrerit vel odio ipsum class velit lectus mollis nunc tempus tincidunt, lectus est lorem varius. Sit, donec duis dictum pretium rhoncus. Ante varius erat sed faucibus eros sollicitudin, donec at mollis duis mattis feugiat. Sollicitudin sed mattis augue non magnis venenatis. Rhoncus magnis molestie dictum sit natoque parturient et fermentum proin. Nunc cubilia turpis pellentesque sit aliquam, eu neque lobortis nec vitae. Hac lorem et porta interdum urna integer platea senectus ligula non. Tortor libero volutpat sed mauris. Sed, magna tristique porttitor iaculis eu elit pellentesque luctus eu ut. Mattis at porta mauris tincidunt ac sit donec sed neque in.
+Donec augue imperdiet bibendum auctor ut sed. Nunc, ipsum ac nibh dis sed mus suspendisse mattis nunc. Sit, sollicitudin amet ut ut in eu in ipsum. Arcu commodo eros gravida efficitur imperdiet in. At varius ac dolor, ut nunc luctus sociosqu purus non, proin tempus. Ex tellus pharetra tempor montes ut mollis platea. Faucibus nisl, enim purus venenatis parturient auctor natoque suscipit arcu leo nulla in. Arcu egestas sodales hac. Imperdiet, platea in turpis tellus ut mus, class eros. Venenatis suscipit efficitur ad ligula in non scelerisque vivamus leo in. Himenaeos mauris quis lorem tortor eleifend sollicitudin. Curabitur bibendum arcu quisque viverra sit, velit hendrerit ac turpis. Laoreet viverra phasellus auctor rhoncus cum est nisi risus nullam egestas congue pretium. Aliquam laoreet porttitor pellentesque maximus tristique. Egestas quis maximus luctus nunc dictum hendrerit vitae leo.
 
-Fames congue dignissim et porta pretium consequat et penatibus dolor. Non fusce sed consectetur efficitur maecenas eu purus? Interdum dapibus vitae massa aliquam libero a efficitur nec. Dignissim amet scelerisque platea, nisl tellus magna auctor. Quis varius sit vulputate turpis ante porttitor lobortis. Ullamcorper eget sed ut dapibus eu, nulla in. Sodales, sapien enim tincidunt luctus tristique massa, ornare consequat proin. Suspendisse pellentesque fermentum, velit taciti tempus ex sapien facilisis augue lorem vestibulum. Nisi enim sapien. Pretium sapien nascetur ultrices eu eu sapien amet proin efficitur. Aenean porttitor urna proin lacus fames molestie.
+Enim ad lorem, non pellentesque primis neque malesuada. Rutrum montes turpis at turpis. Nisi ultricies nunc curae sit eu id est aptent. Adipiscing maecenas duis nam morbi in. Egestas faucibus molestie, ut ut. Ut sed interdum nisi nibh mauris magnis metus, blandit. Auctor diam efficitur, urna a vitae sed quis odio imperdiet sagittis fringilla. Habitasse egestas iaculis ligula eget, arcu rhoncus. Feugiat ut, curae pretium, sem.
 
-Quam lectus nisi nibh pellentesque. Bibendum turpis quis interdum. Non in risus lacus ac! Morbi consequat urna integer at duis a, venenatis lacus penatibus, in. A, et consectetur in, litora blandit lorem. Lobortis at cum ligula potenti lobortis feugiat. Phasellus, donec parturient eu ad ipsum, sed. Ac elementum magna nec.
+Metus pulvinar, sed fusce duis nec mauris litora sit, ipsum. Lacinia odio maximus suspendisse eleifend. Lorem quis sed nec ipsum. Lacinia donec justo nulla per morbi condimentum. Egestas arcu duis, sed adipiscing. Egestas sed mauris ipsum massa, at rutrum id per, non. Sed nibh velit, sapien turpis consectetur fringilla sed ipsum nisl. Odio odio dictum arcu, praesent hendrerit. Mollis, odio condimentum turpis magna ligula orci placerat torquent. Mi maximus id elit arcu ac eget proin, praesent, in ac sed. Semper at sollicitudin sed mauris sed mollis a sed nostra dui est sit. Venenatis nibh lacus nulla, penatibus lacinia.
 See @kable-float.
+
+
 
 
 
 ::: {.cell}
 ::: {.cell-output-display}
+\begin{wraptable}{r}{0pt}\begingroup\fontsize{7}{9}\selectfont
 
-`````{=html}
-<table class="table" style="font-size: 7px; float: right; margin-left: 10px;">
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:right;"> mpg </th>
-   <th style="text-align:right;"> cyl </th>
-   <th style="text-align:right;"> disp </th>
-   <th style="text-align:right;"> hp </th>
-   <th style="text-align:right;"> drat </th>
-   <th style="text-align:right;"> wt </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Mazda RX4 </td>
-   <td style="text-align:right;"> 21.0 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 160 </td>
-   <td style="text-align:right;"> 110 </td>
-   <td style="text-align:right;"> 3.90 </td>
-   <td style="text-align:right;"> 2.620 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Mazda RX4 Wag </td>
-   <td style="text-align:right;"> 21.0 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 160 </td>
-   <td style="text-align:right;"> 110 </td>
-   <td style="text-align:right;"> 3.90 </td>
-   <td style="text-align:right;"> 2.875 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Datsun 710 </td>
-   <td style="text-align:right;"> 22.8 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 108 </td>
-   <td style="text-align:right;"> 93 </td>
-   <td style="text-align:right;"> 3.85 </td>
-   <td style="text-align:right;"> 2.320 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Hornet 4 Drive </td>
-   <td style="text-align:right;"> 21.4 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 258 </td>
-   <td style="text-align:right;"> 110 </td>
-   <td style="text-align:right;"> 3.08 </td>
-   <td style="text-align:right;"> 3.215 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Hornet Sportabout </td>
-   <td style="text-align:right;"> 18.7 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 360 </td>
-   <td style="text-align:right;"> 175 </td>
-   <td style="text-align:right;"> 3.15 </td>
-   <td style="text-align:right;"> 3.440 </td>
-  </tr>
-</tbody>
-</table>
-
-`````
-
+\begin{tabular}[t]{lrrrrrr}
+\toprule
+  & mpg & cyl & disp & hp & drat & wt\\
+\midrule
+\cellcolor{gray!6}{Mazda RX4} & \cellcolor{gray!6}{21.0} & \cellcolor{gray!6}{6} & \cellcolor{gray!6}{160} & \cellcolor{gray!6}{110} & \cellcolor{gray!6}{3.90} & \cellcolor{gray!6}{2.620}\\
+Mazda RX4 Wag & 21.0 & 6 & 160 & 110 & 3.90 & 2.875\\
+\cellcolor{gray!6}{Datsun 710} & \cellcolor{gray!6}{22.8} & \cellcolor{gray!6}{4} & \cellcolor{gray!6}{108} & \cellcolor{gray!6}{93} & \cellcolor{gray!6}{3.85} & \cellcolor{gray!6}{2.320}\\
+Hornet 4 Drive & 21.4 & 6 & 258 & 110 & 3.08 & 3.215\\
+\cellcolor{gray!6}{Hornet Sportabout} & \cellcolor{gray!6}{18.7} & \cellcolor{gray!6}{8} & \cellcolor{gray!6}{360} & \cellcolor{gray!6}{175} & \cellcolor{gray!6}{3.15} & \cellcolor{gray!6}{3.440}\\
+\bottomrule
+\multicolumn{7}{l}{\textsuperscript{a} asdfasdfasdf}\\
+\end{tabular}
+\endgroup{}\end{wraptable}
 :::
 :::
 
 
 
 
-At aliquam ex pellentesque platea, sapien erat pulvinar id vel. Ac dui egestas dui massa arcu. Cubilia himenaeos nam sed massa augue et, sodales eu. Egestas, augue fusce at elementum felis ornare, netus, ipsum. Eget ac eros aliquam. Bibendum lectus et ipsum. Sapien amet ullamcorper vehicula ullamcorper scelerisque augue. Non magnis felis lacinia magna lacinia, sem. Pellentesque maximus commodo in sed aliquet, aliquam vel, nisl erat.
+Euismod neque imperdiet nisl eleifend, placerat aenean faucibus metus vitae consequat arcu. Turpis in morbi ornare vel suspendisse convallis integer a nec nec aliquam. Accumsan tempus lorem semper suspendisse suspendisse efficitur nulla ad quis dolor mus curae aliquam convallis magna. Cras tortor ac luctus, mollis quisque nibh dui purus imperdiet. Ad dictum sapien feugiat, donec non non in. Diam turpis varius laoreet mauris velit turpis rutrum suspendisse. Sem tristique velit nascetur sed. Dui dignissim primis ipsum orci ut nam posuere mattis risus massa sociis amet cum. Mauris, a maximus elementum sed. Leo ligula ornare tortor aliquam curabitur facilisis sed pulvinar. Maximus lobortis, magna per. Senectus elementum per nisl faucibus euismod nunc.
 
-Malesuada dapibus quis, proin fermentum efficitur. Accumsan amet ac laoreet sed, in natoque lobortis pharetra ac curabitur purus? Turpis augue nec sed cras, pretium massa amet sed neque mauris accumsan malesuada aliquet? Ac nisl mauris ipsum mi faucibus eros nunc commodo et. Ut metus sit aenean, nulla curabitur, rhoncus risus, eu. Posuere condimentum dis. Leo dictumst tortor orci a ultricies non vel praesent dictumst vel. Vel fermentum magna curae a dis netus, ante a, suspendisse? Maecenas eros porttitor egestas dolor finibus phasellus sapien neque ac. Turpis diam fringilla. Lorem vestibulum varius urna, ut, lacus et. Sit massa dolor amet ac facilisis non sit.
+Dignissim nam ac dictum, curabitur. Vitae pulvinar ipsum fermentum velit malesuada phasellus malesuada. Rutrum nisi adipiscing elementum tristique commodo fusce tempor imperdiet amet. Euismod ac quisque amet aliquam congue velit. Maximus elementum justo est et, per sem himenaeos felis, in potenti? Auctor, placerat libero condimentum donec netus nibh varius rhoncus non sagittis, mattis turpis. Nunc fermentum sodales proin, pretium nec. Sed blandit libero a pellentesque fringilla, feugiat ultrices luctus. Diam at ultrices id accumsan tristique. Placerat in sed sed ultricies congue. Pretium ac ut montes pretium a metus aliquam, sem dictumst ut lorem. Ipsum ligula iaculis scelerisque dictum diam sapien, erat parturient. Aliquam gravida suspendisse erat nunc, vel. Accumsan pretium, dis donec imperdiet, ipsum sed quisque sed donec in ligula. Diam pretium sagittis non posuere vestibulum sed nascetur, fringilla ornare nulla enim senectus.
 
-Nibh fermentum, pharetra imperdiet. Blandit libero quis porta lorem eu accumsan quis inceptos ut malesuada sapien felis, cubilia pulvinar. Natoque in elit ut nam pretium ad. Et vulputate senectus, nec magnis finibus facilisi. Tincidunt mauris fermentum dapibus in habitant a sed ligula egestas. Adipiscing metus lectus pellentesque curabitur urna nec porttitor condimentum. Feugiat cras penatibus mauris sed aptent gravida nec. Ante pretium molestie parturient orci in lacus. Quis in ut parturient felis sed nisi sed.
+Consectetur in nunc ligula ornare eu neque scelerisque nullam amet consectetur, senectus gravida luctus. Turpis sit lacus et amet aliquam ut mauris magnis vivamus. Aliquam nullam habitant maecenas aliquam sociosqu eget arcu ut at in ac phasellus facilisis dignissim. Ut, non himenaeos facilisis augue quis sed felis. Ligula vulputate, inceptos facilisis vestibulum viverra facilisis. Et volutpat ipsum, nunc lorem vel. Ridiculus, risus felis in volutpat faucibus turpis finibus. Auctor nunc rhoncus eros interdum a, sed quam dictum vestibulum nec sapien. Aliquam in mus.
 
-Et congue sed tempor nisi orci in proin ut eget. Sodales sit sed risus, ipsum. Facilisis vehicula luctus augue eu iaculis. Torquent bibendum, pharetra senectus, sit quisque mauris at. Semper gravida non blandit sociis, sagittis, sed erat vestibulum class nunc. Ipsum lobortis, in vestibulum elementum pharetra. Sed at turpis hendrerit sit bibendum convallis. Sapien tortor sodales consectetur aliquam egestas pulvinar, velit egestas non. Ad pellentesque viverra, sed accumsan mattis pharetra id congue neque sit. Efficitur erat phasellus torquent lacus a, semper mauris magnis. Blandit ullamcorper, penatibus dictum diam, interdum. Venenatis, quis tristique nisl quis. Penatibus, massa eleifend urna dui dictumst. Maximus ipsum elit mauris sit amet, nostra sociis et etiam. Et pharetra at leo habitasse a potenti sodales. Ultrices in turpis faucibus vivamus ut.
+Fermentum leo quam justo sed ut et. Donec pellentesque neque erat phasellus tristique. Enim sed et metus, efficitur sed lorem, hendrerit nulla, sed. Neque mollis ac ad et sem tincidunt! Class eget elit dolor nisi, ac. Suscipit, vivamus ultricies sed orci nulla metus. Odio ad, mi sagittis faucibus ut sed, sociosqu interdum sed ut turpis duis massa nulla. Molestie justo magna nec duis. Nunc orci laoreet diam efficitur sed urna. Malesuada eros faucibus, sapien vestibulum vestibulum, hendrerit. Nisi sed parturient faucibus convallis convallis primis porttitor litora penatibus ex urna sem. Sit enim ut, enim at velit ac himenaeos malesuada.
 
 
 <!-- See Table \ref{tbl-mtsmall}. -->
@@ -870,7 +670,7 @@ Et congue sed tempor nisi orci in proin ut eget. Sodales sit sed risus, ipsum. F
 
 
 
-## Wrap table
+## Wrap table manual
 
 <!-- 1. caption and cross-ref doesn't work -->
 
@@ -893,11 +693,11 @@ Et congue sed tempor nisi orci in proin ut eget. Sodales sit sed risus, ipsum. F
 
 
 
-Morbi aptent ut sed amet gravida dis mauris consequat sapien, vitae. Porta senectus leo tincidunt faucibus nulla interdum ligula diam vestibulum dolor mauris. Lorem rhoncus. Sagittis, etiam id vel feugiat. Erat venenatis nunc felis lorem at lobortis nisl adipiscing felis est varius. Malesuada auctor. Ut scelerisque amet aliquam maecenas sem sapien ex natoque suspendisse. Hendrerit habitasse, lorem amet aptent leo donec erat. Sed euismod mollis in, maximus ridiculus felis eu eros. In netus ut vitae eget lorem a magna, aliquet nullam sed eget. Facilisi eros fermentum, dictum hendrerit enim mauris feugiat! Facilisi non sed montes aenean elementum, arcu facilisis pretium at. Sed senectus pulvinar diam facilisi sed integer luctus vel praesent lobortis mi. Massa diam nam lacus vestibulum tristique. Sed adipiscing arcu, ligula sed sociis mauris ac laoreet, adipiscing in. Lobortis est aenean sem, malesuada vel, litora ipsum cursus sed nisl.
+Ante commodo eget ligula leo ligula elementum ex. Mauris lacus semper enim vestibulum. Habitant finibus turpis primis. Auctor torquent fusce dictum lorem, nec ligula egestas. Nec nullam vitae quis, risus ante maximus arcu cum integer. At auctor, class ligula ac at nec a sed condimentum eu consequat. Ut vel, cubilia nascetur commodo cras tellus in. Magna blandit montes. Eleifend sed porttitor elit ac sed. Netus in mauris faucibus pharetra vitae! Velit habitant dolor amet et proin. Mauris ut interdum mollis sed, penatibus elit nisl.
 
-Nec porta ut aliquam eu eleifend tortor convallis aptent at. Turpis at ad id eu bibendum quis sed. Amet eleifend bibendum at, massa turpis neque consectetur. Dis at interdum, dapibus posuere dictum, est suspendisse amet in eget urna eget. Phasellus tincidunt natoque nullam suscipit nulla sit consectetur faucibus non. Nascetur, suspendisse varius in. Quam, nec aliquam himenaeos ipsum commodo aptent viverra eu nostra, volutpat, tempus sed. Duis lobortis habitant ante et torquent nostra commodo ipsum, at per aenean in inceptos. Magna mi porta inceptos ornare vivamus semper congue. Curabitur purus lorem sed malesuada leo primis erat fermentum praesent in. Per ridiculus lorem ipsum vitae et torquent sit auctor praesent ac aliquet. Tincidunt sed amet platea aliquet in class eget lacus vitae id eget ipsum. Molestie nec aliquam aliquam vitae. Integer ultricies blandit pellentesque suspendisse et dis. Quisque blandit taciti eget ut et.
+Turpis tortor quisque sed, finibus nec. Facilisis dictum at tristique facilisis ac ultrices. Massa torquent sociosqu nisi curabitur diam arcu cum taciti neque tempus nisi himenaeos. Consectetur purus, sodales cubilia ullamcorper et, eu etiam sed taciti urna platea! Sem sed mi in, ut justo sit. Orci elit dolor sit blandit a sed. In senectus eros tempor tellus donec arcu sed non eros amet, congue volutpat sit ac! Sodales himenaeos tristique nec facilisi a neque lorem et, in.
 
-Lacus euismod donec vel lacinia ac ad vivamus nisl ridiculus laoreet dolor maecenas. Quis amet congue sem varius suspendisse. Sagittis curae quis ut metus venenatis sed nibh ultricies. Morbi enim mauris a sed suscipit. Lorem massa vel egestas pellentesque purus ac, pretium ipsum. Natoque laoreet inceptos etiam cum eget massa faucibus velit, varius. Nisl congue justo risus, id ex accumsan ex, arcu cursus! Taciti nec ac consequat curabitur. Facilisis sed auctor porta pellentesque ut sem elit mollis eu risus facilisis gravida. Sed diam erat dui consectetur amet. Dolor laoreet sed eget eros sodales neque in. Semper phasellus suspendisse leo auctor habitasse lobortis. Ut et pretium sapien nisi id.
+Mattis volutpat dolor fusce non duis. Sapien, eu a. Senectus amet, ex magna ut. Litora eu elementum est. Aliquet suscipit sem. Nisl orci proin pellentesque nunc facilisi. Ad ultricies nisi sociosqu lorem duis. Velit feugiat nostra eros posuere, ante sit. Nibh, ligula, lobortis eu, et cum lobortis lectus, sed. Venenatis ligula class pretium vestibulum egestas proin orci. Feugiat tellus, gravida in. A vel, luctus nec amet habitasse scelerisque egestas.
 See Table \ref{tbl-wrap}.
 
 
@@ -906,6 +706,54 @@ See Table \ref{tbl-wrap}.
 
 
 {{< pagebreak >}}
+
+
+
+
+
+
+
+
+
+## Wrap table 2
+
+
+
+
+\begin{wraptable}[20]{r}{5in}
+
+\caption{\label{tbl-wrap2}here is the table}
+\centering
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{lrrrrrr}
+\toprule
+  & mpg & cyl & disp & hp & drat & wt\\
+\midrule
+\cellcolor{gray!6}{Mazda RX4} & \cellcolor{gray!6}{21.0} & \cellcolor{gray!6}{6} & \cellcolor{gray!6}{160} & \cellcolor{gray!6}{110} & \cellcolor{gray!6}{3.90} & \cellcolor{gray!6}{2.620}\\
+Mazda RX4 Wag & 21.0 & 6 & 160 & 110 & 3.90 & 2.875\\
+\cellcolor{gray!6}{Datsun 710} & \cellcolor{gray!6}{22.8} & \cellcolor{gray!6}{4} & \cellcolor{gray!6}{108} & \cellcolor{gray!6}{93} & \cellcolor{gray!6}{3.85} & \cellcolor{gray!6}{2.320}\\
+Hornet 4 Drive & 21.4 & 6 & 258 & 110 & 3.08 & 3.215\\
+\cellcolor{gray!6}{Hornet Sportabout} & \cellcolor{gray!6}{18.7} & \cellcolor{gray!6}{8} & \cellcolor{gray!6}{360} & \cellcolor{gray!6}{175} & \cellcolor{gray!6}{3.15} & \cellcolor{gray!6}{3.440}\\
+\bottomrule
+\end{tabular}
+\end{wraptable}
+
+
+
+Vestibulum lorem dolor inceptos mollis, tincidunt duis nascetur. Tortor eget, dolor tempus placerat gravida ornare eget. Elementum et nunc ligula est duis ut lacus nulla. Ut, justo eu felis rutrum in cursus molestie. Convallis libero suspendisse in, mauris tortor ad dignissim gravida, netus. Augue habitasse class ligula congue non finibus et congue, ac dictum. Amet arcu nec class tincidunt eros at gravida. Nullam scelerisque ornare eu mollis ligula. Vestibulum nascetur urna, pellentesque, vestibulum ligula, eleifend pulvinar. Feugiat, et tortor ridiculus pellentesque nec gravida facilisis! Porttitor egestas sed nunc nisi placerat efficitur himenaeos, lacinia. Dictum pretium luctus, sed, aptent egestas porta ac. In purus, sit quis. Curabitur, purus penatibus sit, netus penatibus cum augue.
+
+Ut efficitur ac. Vel sed amet ultrices ex magna dictum himenaeos, ut, nisl eleifend lectus. At turpis libero vestibulum et a, ac porttitor in. Id fames taciti iaculis nec quisque faucibus ornare ultricies id adipiscing interdum. Gravida aliquam leo, condimentum, venenatis conubia aliquam cras. Metus imperdiet sit fusce sapien sit mauris quis mauris fermentum. Auctor ullamcorper etiam, senectus id ante a mi libero ut. Fusce, vitae lobortis aptent mollis sed tristique nec dui. Sed nec. Nibh posuere curabitur ligula sem dapibus. Ut, sollicitudin sem curabitur magna cum ad et. Porta tincidunt nulla vivamus taciti sed sed.
+
+Sed mauris etiam maecenas risus sed dictumst felis aliquam. Ac iaculis id. In dui lorem risus nullam et sociis platea ullamcorper. Tempor sed ac feugiat magna ultrices bibendum odio in. Euismod congue eros ligula justo semper natoque. Odio vel varius est vel nec est. Sem nisi class mattis arcu morbi, mauris dis, sociis, maximus. In consectetur congue laoreet bibendum eu mauris hendrerit commodo sed dapibus. Et molestie at aliquam curabitur, auctor porttitor ultrices non, sollicitudin. Quam ultricies a aenean eget diam sollicitudin tellus natoque magna, efficitur sodales magna.
+See Table \ref{tbl-wrap2}.
+<!-- See @tbl-wrap2. -->
+
+
+
+{{< pagebreak >}}
+
+
+
 
 
 

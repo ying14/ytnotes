@@ -1,8 +1,8 @@
 ---
 title: "Ying's Manuscript"
 # format: html
-# format: pdf
-format: native
+format: pdf
+# format: native
 prefer-html: true
 keep-md: true
 keep-tex: true
@@ -25,17 +25,46 @@ geometry: margin=.5in
   # - textwidth=4.5in
   # - marginparsep=.25in
   # - marginparwidth=.25in
-include-in-header:     #tex files, unless it says text : |
+include-in-header:
   text: |
-    \newfontfamily\sectionfont{Arial}[Color=2052b0]         %define H1 font
-    \newfontfamily\subsectionfont{Arial}[Color=Blue]        %define H2 font
-    \newfontfamily\subsubsectionfont{Arial}[Color=Black]    %define H3 font
-    \addtokomafont{section}{\sectionfont}                   %set H1 font
-    \addtokomafont{subsection}{\subsectionfont}             %set H2 font
-    \addtokomafont{subsubsection}{\subsubsectionfont}       %set H3 font
-    \setlength{\intextsep}{10pt}                            %set wrapfig margin
-    \setlength{\columnsep}{10pt}                            %set wrapfig margin
-    \usepackage[font=small,justification=raggedright]{caption}  %set caption size: scriptsize, footnotesize, small, normalsize, large, Large
+    %%%%%%%%%%% header fonts %%%%%%%%%%%%%%%%%%
+    % https://tex.stackexchange.com/questions/40034/giving-headlines-a-background-color-spanning-across-the-entire-typearea
+    \newcommand{\mysection}[1]{                  %set H1 font 
+      \Large\sf\bf
+      \setlength{\fboxsep}{0cm}                  %already boxed
+      \colorbox{orange!80}{                      %
+          \begin{minipage}{\linewidth}           %
+              \vspace*{2pt}                      %Space before
+              #1
+              \vspace*{2pt}                     %Space after
+          \end{minipage}                        
+      }}   
+    \setkomafont{section}{\mysection}
+    %\addtokomafont{subsection}{\colorbox{lightgray}}                    %set H2 font
+    \makeatletter
+      \setkomafont{subsection}{\color{white}%
+        \bfseries\Large
+        \begin{tikzpicture}[overlay]
+          \draw[fill=blue] (0,-2pt) rectangle
+          (\linewidth,16.4pt);
+        \end{tikzpicture}}    
+    %\newfontfamily\subsubsectionfont{Arial}[Color=Black]    %define H3 font
+    %\addtokomafont{subsubsection}{\subsubsectionfont}
+    \newfontfamily\paragraphfont{Arial}[Color=2052b0]          %define H4 font
+    \addtokomafont{paragraph}{\paragraphfont}
+    \addtokomafont{subparagraph}{\colorbox{lightgray}}    %define H5 font
+    %%%%%%%%%%% figure/table margins %%%%%%%%%%%%%%%%%%
+    \setlength{\intextsep}{0pt}                            %set wrapfig margin above/below
+    \setlength{\columnsep}{0pt}                            %set wrapfig margin
+    \setlength{\abovecaptionskip}{0pt}                    % spacing above caption, default 10pt
+    \setlength{\belowcaptionskip}{0pt}                     % spacing below caption, default 0pt
+    %%%%%%%%%%%% caption settings %%%%%%%%%%%%%%%%%%%%%
+    % caption size: scriptsize|footnotesize|small|normalsize|large|Large
+    \definecolor{captioncolor}{HTML}{37658c}
+    %\usepackage[labelfont={bf},font={footnotesize,color=captioncolor},justification=RaggedRight]{caption}  
+    \usepackage[labelfont={bf},font={footnotesize,color=captioncolor},justification=raggedright,format=plain]{caption}  
+    %%%%%%%%%%%% hyperref settings %%%%%%%%%%%%%%%%%%%%%
+    \usepackage[draft]{hyperref}                         % turns off all hyperlinks  
 editor: source
 # latex-tinytex: false
 execute: 
@@ -59,7 +88,6 @@ filters:
   - pandoc-wrapfig-mod.py      # https://github.com/scotthartley/pandoc-wrapfig
 #   - spellcheck.lua
 # cap-location: top
-
 ---
 
 ```{r}
@@ -124,6 +152,15 @@ knitr::knit_hooks$set(plot = function(x, options) {  # set new plot hook ...
 library(tidyverse)
 library(yingtools2)
 ```
+
+
+# Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
+
 
 ## Introduction {#sec-introduction}
 
@@ -318,6 +355,7 @@ You can see a wrapped text thing at Figure \ref{fig-wrap-filter}.
 
 
 `r paste(stringi::stri_rand_lipsum(3, start_lipsum = FALSE), collapse = "\n\n")`
+You can see a wrapped text thing at Figure \ref{fig-wrap-filter2}
 You can see a wrapped text thing at @fig-wrap-filter2
 <!-- Figure \ref{fig-wrap-filter2}. -->
 
@@ -327,7 +365,42 @@ You can see a wrapped text thing at @fig-wrap-filter2
 <!-- A cup of sugar makes sweet fudge. Place a rosebush near the porch steps.{l3in,18} -->
 <!-- ::: -->
 
-![\label{fig-wrap-filter2} A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. {l3in,18}](stamp1a.jpg)
+```{r}
+#| output: asis
+
+show_wrapfig <- function(file,title,crossref,width="4in",position="l") {
+  fig_wrap_filter2 <- str_glue("
+\\begin{{wrapfigure}}{{{position}}}{{0\\textwidth}}
+  \\centering
+  \\includegraphics[width={width},height=0.3\\textwidth]{{{file}}}
+  \\caption{{\\label{{{crossref}}}{title}}}
+  \\vspace{{-6pt}}
+\\end{{wrapfigure}}
+")
+  cat(fig_wrap_filter2)
+}
+
+show_wrapfig("stamp1a.jpg",title="TITLE HERE",crossref="fig-wrap-filter2",width="4in",position="l")
+
+# title <- "TITLE HERE"
+# label <- "fig-wrap-filter2"
+# file <- "stamp1a.jpg"
+# width <- "3in"
+# position <- "l"
+# fig_wrap_filter2 <- str_glue("
+# \\begin{{wrapfigure}}{{{position}}}{{0\\textwidth}}
+#   \\centering
+#   \\includegraphics[width={width},height=0.3\\textwidth]{{{file}}}
+#   \\caption{{\\label{{{label}}}{title}}}
+#   \\vspace{{-6pt}}
+# \\end{{wrapfigure}}
+# ")
+# cat(fig_wrap_filter2)
+```
+
+
+
+<!-- ![\label{fig-wrap-filter2} A cup of sugar makes sweet fudge. Place a rosebush near the porch steps. {l3in,18}](stamp1a.jpg) -->
 
 `r paste(stringi::stri_rand_lipsum(4, start_lipsum = FALSE), collapse = "\n\n")`
 
@@ -487,16 +560,19 @@ ggplot(mtcars,aes(x=mpg,y=hp)) + geom_point()
 See @kable-float.
 
 
+
+
 ```{r}
 #| label: kable-float
 
 # [THIS LINE MAKES IT BREAK]tbl-cap: Kable Float
 dt <- mtcars[1:5, 1:6]
-kbl(dt, booktabs = T) %>% kable_styling(position = "float_right",
+kbl(dt, 
+    booktabs = TRUE) %>% kable_styling(position = "float_right",
                                         latex_options="striped",
-                                        wraptable_width="0.4\\textwidth",
-                                        font_size=7)
-
+                                        # wraptable_width="0.4\\textwidth",
+                                        font_size=7) %>%
+  add_footnote("footnote")
 ```
 
 
@@ -525,7 +601,7 @@ kbl(dt, booktabs = T) %>% kable_styling(position = "float_right",
 
 
 
-## Wrap table
+## Wrap table manual
 
 <!-- 1. caption and cross-ref doesn't work -->
 
@@ -551,6 +627,53 @@ See Table \ref{tbl-wrap}.
 
 
 {{< pagebreak >}}
+
+
+
+
+
+## Wrap table 2
+
+
+
+```{r}
+#| output: asis
+
+show_wraptable <- function(table,caption,label,width="4in",height=NULL,position="r",font_size=7, footnote=NULL) {
+  latex <- kable(table,
+            booktabs = TRUE,
+            format="latex",label=label,
+            caption=caption) %>%
+    kable_styling(position = "float_right",
+                  latex_options="striped",
+                  wraptable_width=width,
+                  font_size=font_size) %>% 
+    add_footnote(footnote,notation="none") %>% 
+    as.character()
+  if (!is.null(height)) {
+    #if height is speficied, add it to wraptable line
+    latex <- sub("(\\{wraptable\\})",str_glue("\\1[{height}]"),latex)
+  }
+  
+  latex <- latex %>% str_replace(middle.pattern("\\\\begin\\{wraptable\\}\\{","r","\\}"),position)
+
+  # kable always wants to add "tab:" to the front of the crossref. 
+  latex <- latex %>% str_replace(fixed("tab:"),"")
+  cat(latex)
+}
+dt <- mtcars[1:5, 1:6]
+show_wraptable(dt,caption="here is the table",label="tbl-wrap2",width="5in",height="20")
+```
+
+
+`r paste(stringi::stri_rand_lipsum(3, start_lipsum = FALSE), collapse = "\n\n")`
+See Table \ref{tbl-wrap2}.
+<!-- See @tbl-wrap2. -->
+
+{{< pagebreak >}}
+
+
+
 
 
 <!-- does not work for pdf -->

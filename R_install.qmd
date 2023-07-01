@@ -24,12 +24,22 @@ editor: source
 ```
 
 ## R installation
+#### Windows
+Install: 
 
-Windows: install: R, Rtools, RStudio, Git for Windows, Java JDK 32/64 bit.
+* R
+* Rtools
+* RStudio
+* Git for Windows
+* Java JDK 32/64 bit.
 
-Ubuntu: install R (r-base, r-base-dev), Rstudio, default-jre, default-jdk, libcurl4-openssl-dev, git
 
-macOS: install R, RStudio, JDK (x64)
+#### Ubuntu
+Install: 
+
+* R (r-base, r-base-dev)
+* Rstudio
+* default-jre, default-jdk, libcurl4-openssl-dev, git, cmake
 
 ```{bash}
 #| eval: false
@@ -47,46 +57,61 @@ sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_
 
 sudo apt install --no-install-recommends r-base r-base-dev
 
-sudo apt install default-jre default-jdk libcurl4-openssl-dev git
+sudo apt install default-jre default-jdk libcurl4-openssl-dev git cmake
 
 ```
+
+#### macOS
+Install:
+* R
+* RStudio
+* JDK (x64)
+
+
+## R packages
+
 
 ```{r}
 #| eval: false
 
 cran.pkgs <- c(
-  "tidyverse",
-  "rlang",
-  "roxygen2",
-  "remotes",
-  "reticulate",
-  "reshape2",
-  "plyr",
-  "xlsx",
-  "formula.tools",
-  "Hmisc",
-  "ggrepel",
-  "ggfittext",
-  "BiocManager",
-  "rbenchmark",
+  "tidyverse",   # essential suite of R tools
+  "rlang",       # tools for programming (e.g. tidy eval)
+  "roxygen2",    # documentation system for R packages
+  "remotes",     # installing from Github
+  "reticulate",  # Python interface
+  "BiocManager", # installer for Bioconductor
+  "DT",          # datatables
+  "shiny",       # interactivity in R
+  "usethis",     # package development
+)
+install.packages(cran.pkgs)
+
+optional.pkgs <- c(
+  "rbenchmark", 
   "tictoc",
   "cmprsk",
-  "DT",
-  "shiny",
-  "RJDBC",
+  "Hmisc",
+  "formula.tools",
+  "reshape2",
+  "logistf",
+  "pingr",
+  "styler",
+  "coxphf",
+  "Rtsne",
+  "umap",
+  "rjson",
+  "plyr",
+  "xlsx",
+  "ggrepel",
+  "ggfittext",
   "shinycssloaders",
   "shinyvalidate",
   "ggiraph",
-  "rjson",
-  "usethis",
-  "pingr",
-  "styler",
-  "logistf",
-  "coxphf",
-  "Rtsne",
-  "umap"
+  "RJDBC",
+  "patchwork"
 )
-install.packages(cran.pkgs)
+install.packages(optional.pkgs)
 
 bioc.pkgs <- c(
   "dada2",
@@ -99,6 +124,8 @@ bioc.pkgs <- c(
   "phangorn"
 )
 BiocManager::install(bioc.pkgs)
+
+
 
 remotes::install_github("ying14/yingtools2")
 remotes::install_github("csgillespie/roxygen2Comment")
@@ -116,10 +143,61 @@ remotes::install_github("csgillespie/roxygen2Comment")
 
 ```
 
-Install Miniconda for R
+## Install Miniconda for R
 
 ```{r}
 
 reticulate::py_config()
 
 ```
+
+
+
+
+## R startup:
+
+R environment (site): 
+
+1. File specified by `R_ENVIRON`
+2. `R_HOME`/etc/Renviron.site
+
+R environment (user):
+
+1. File specified by `R_ENVIRON_USER`
+2. `<current_dir>`/.Renviron
+3. `<user_home_dir>`/.Renviron
+
+R profile (site):
+
+1. File specified by `R_PROFILE`
+2. `R_HOME`/etc/Rprofile.site
+
+R profile (user):
+
+1. File specified by `R_PROFILE_USER`
+2. `<current_dir>`/.Rprofile
+3. `<user_home_dir>`/.Rprofile
+
+
+`.libPaths()` determined by: `R_LIBS_USER`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
