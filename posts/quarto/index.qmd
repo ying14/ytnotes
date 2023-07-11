@@ -1,0 +1,322 @@
+---
+title: Quarto Cheatsheet
+description: Basic Quarto syntax
+format: html
+categories: [quarto]
+toc: true
+toc-depth: 2
+toc-location: left
+editor: source
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+
+
+## Markdown Basics
+
+###### Formatted text:
+
+*italics*
+**bold**
+*asdf*
+<span style="color:blue">some *blue* text</span>
+
+`verbatim code`
+inline math: $E = mc^{2}$ <https://quarto.org>
+[link to Quarto](https://quarto.org)
+
+Bullet List
+
+-   unordered list
+    -   sub-item 1
+    -   sub-item 2
+        -   sub-sub-item 1
+-   unordered list
+    -   sub-item 1
+    -   sub-item 2
+        -   sub-sub-item 1
+
+Numberbed list (4-space indent seems preferable)
+
+1.  asdf
+2.  asdf2
+    i)  asdf
+    ii) sdf
+3.  asdf 3
+
+::: callout-note
+Callouts: note that there are five types of callouts, including: `note`, `tip`, `warning`, `caution`, and `important`.
+:::
+
+###### Mermaid plot:
+
+```{mermaid}
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```
+
+##### Picture
+
+![](unnamed.jpg){width="255"}
+
+Here is a footnote reference,[^1] and another.[^2] You can also reference inline![^3]
+
+[^1]: Here is the footnote.
+
+[^2]: Here's one with multiple blocks. Subsequent paragraphs are indented to show that they belong to the previous footnote.
+
+        { some.code }
+
+[^3]: Hello. I am an inline footnote.
+
+<!-- These footnote definitions can go anywhere make sure there is blank line before/after -->
+
+The whole paragraph can be indented, or just the first line. In this way, multi-paragraph footnotes work like multi-paragraph list items.
+
+------------------------------------------------------------------------
+
+## Running R Code
+
+###### Code with output:
+
+```{r}
+library(ggplot2)
+d <- diamonds
+head(d)
+```
+
+###### Load R packages silently (nothing shown below):
+
+<!-- load R packages silently -->
+
+```{r}
+#| include: false
+library(tidyverse)
+library(yingtools2)
+```
+
+###### Un-evaluated code:
+
+```{r}
+#| eval: false
+sqrt(-2)
+```
+
+###### Folded code, with tidy-ing of code:
+
+```{r}
+#| code-fold: true
+#| tidy: true
+r_fibonacci<-function(     n) {
+if (n<=1) {
+return(n     )
+} else {
+return(r_fibonacci(n-1)      +      r_fibonacci(n-2))
+}
+}
+r_fibonacci(10)
+```
+
+###### Plot with options:
+
+```{r}
+#| fig-cap: Diamond plot
+#| fig-scap: caption
+#| fig-width: 4
+#| fig-height: 2.5
+#| fig-align: left
+#| tidy: true
+ggplot(d,aes(x=carat,y=price,color=cut))+geom_point()
+```
+
+## Running Python
+
+###### Python code
+
+```{python}
+import os,sys,time
+def py_fibonacci(n):
+  if n <= 1:
+    return n
+  else:
+    return(py_fibonacci(n-1) + py_fibonacci(n-2))
+py_fibonacci(10)
+```
+
+###### Going back and forth between R and Python:
+
+R:
+
+```{r}
+#| tidy: true
+data <- mtcars %>% select(mpg,cyl,disp)
+head(data,3)
+```
+
+Python:
+
+```{python}
+r.data = r.data.assign(km_per_liter=lambda x: x.mpg / 2.352)
+r.data.head(3)
+```
+
+Back to R:
+
+```{r}
+data <- data %>% mutate(mpg_converted = km_per_liter * 2.352)
+head(data,3)
+```
+
+###### R code inline:
+
+The column names in `data` are: `r names(data) %>% paste(collapse=", ")`
+
+## Tables
+
+###### Simple markdown table:
+
+| Right | Left | Default | Center |
+|------:|:-----|---------|:------:|
+|    12 | 12   | 12      |   12   |
+|   123 | 123  | 123     |  123   |
+|     1 | 1    | 1       |   1    |
+
+###### Kable output
+
+```{r}
+
+
+knitr::kable(head(mtcars,3))
+```
+
+###### Datatable output
+
+```{r}
+DT::datatable(head(mtcars,3))
+```
+
+```{r}
+g <- ggplot(mtcars,aes(x=mpg,y=disp)) +  geom_point()
+g
+```
+
+```{r}
+
+
+
+```
+
+###### Code blocks and output
+
+## Layouts
+
+###### Two outputs, side-by-side (simple)
+
+```{r}
+#| tbl-cap: Two tables
+#| tbl-subcap: ["mtcars", "Just cars"]
+#| layout-ncol: 2
+
+library(knitr)
+
+# table on the left
+kable(head(mtcars[, 1:3]))
+
+# table on the right
+kable(head(cars,3))
+```
+
+###### margin plot:
+
+```{r}
+#| label: fig-mtcars
+#| fig-cap: "MPG vs horsepower, colored by transmission."
+#| column: margin
+
+library(ggplot2)
+mtcars2 <- mtcars
+mtcars2$am <- factor(
+  mtcars$am, labels = c('automatic', 'manual')
+)
+ggplot(mtcars2, aes(hp, mpg, color = am)) +
+  geom_point() +
+  geom_smooth(formula = y ~ x, method = "loess") +
+  theme(legend.position = 'bottom')
+```
+
+###### Aside:
+
+Quarto uses the concept of columns to describe page layout (e.g. the "body" column, the "margin" column, etc.). Here is some text. [This is a span that has the class aside which places it in the margin without a footnote number.]{.aside} Below we'll describe how to arrange content into these columns.
+
+All of the layout capabilities described in this document work for HTML output and many work for PDF and LaTeX output. For details about the PDF / LaTeX output, see PDF/LaTeX Layout.
+
+###### Column margin
+
+```{r}
+#| eval: false
+head(mtcars)
+```
+
+::: column-margin
+We know from *the first fundamental theorem of calculus* that for $x$ in $[a, b]$:
+
+$$\frac{d}{dx}\left( \int_{a}^{x} f(u)\,du\right)=f(x).$$
+:::
+
+###### Tabset:
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: false
+head(mtcars)
+```
+
+## Output
+
+```{r}
+#| eval: true
+#| echo: false
+head(mtcars)
+```
+:::
+
+###### Figure layout with fenced divs:
+
+::: {layout-ncol="2"}
+```{r}
+#| echo: false
+show_linetypes()
+```
+
+```{r}
+#| echo: false
+show_linetypes()
+```
+:::
+
+###### Figure layout
+
+::: {layout="[[70,30],[100]]"}
+```{r}
+#| echo: false
+head(mtcars)
+```
+
+```{r}
+#| echo: false
+
+show_linetypes()
+```
+
+```{r}
+#| echo: false
+plot(mtcars)
+```
+:::

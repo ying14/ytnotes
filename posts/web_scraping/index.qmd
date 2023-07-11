@@ -1,0 +1,43 @@
+---
+title: Webscraping in R
+description: How to perform webscraping in R, using the `rvest` package
+format: html
+categories: [r]
+editor: source
+---
+
+
+
+
+
+## 
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+library(rvest)
+library(yingtools2)
+rm(list=ls())
+urls <- c("https://www.societyforscience.org/regeneron-sts/2020-scholars/",
+         "https://www.societyforscience.org/regeneron-sts/2021-scholars/",
+         "https://www.societyforscience.org/regeneron-sts/2023-scholars/")
+
+get.scholars <- function(url) {
+  html <- read_html(url)
+  lines <- html %>% html_elements("p") %>% html_text()
+  lines <- lines[str_detect(lines,"Age:")]
+  tbl <- tibble(lines=lines) %>%
+    extract(lines,into=c("student","age","high.school","title"),regex="([\\S\\s]+), Age: ([0-9]+\\n?)([\\S\\s]+)\nProject Title: ([\\S\\s]+)",remove=FALSE)
+  tbl
+}
+
+scholars <- urls %>% setNames(.,.) %>% 
+  map_dfr(get.scholars,.id="url") %>%
+  mutate(state=str_extract(high.school,"[A-Z]{2}"))
+
+scholars %>% count(state,sort=T) %>% head(10) %>% knitr::kable()
+
+scholars %>% count(high.school,sort=T) %>% head(10) %>% knitr::kable()
+
+```

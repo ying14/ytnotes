@@ -1,0 +1,1026 @@
+---
+title: Polars notes
+description: Command reference for the `polars` Python package, with R equivalents
+format: html
+editor: source
+categories: [r, python]
+toc: true
+toc-depth: 6
+toc-location: right
+fontsize: small #small, medium, large, 1.2em, 12px, ...
+execute:
+  echo: true #whether to include code block
+  eval: false #whether to run code
+  warning: false #include warnings
+  error: false #include errors
+  output: false #include output
+  # include: false #catch all for  preventing any results (code + results)
+---
+
+
+
+
+### Load package and data 
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+library(tidyverse)
+diamonds
+band_members
+band_instruments
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+import polars as pl
+diamonds_polars = pl.from_pandas(r.diamonds)
+band_members_polars = pl.from_pandas(r.band_members)
+band_instruments_polars = pl.from_pandas(r.band_instruments)
+```
+:::
+::::::::::::::
+
+
+###### Generate a data frame from scratch
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+tibble(
+  id=1:3,
+  color=c("blue","red","green"),
+  size=c("small","medium","large")
+)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+pl.DataFrame(
+  {
+    'id': [1, 2, 3],
+    'color': ['blue', 'red', 'green'],
+    'size': ['small', 'medium', 'large']
+  }
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+###### Read in a TSV file, explicitly
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+file <- "C:/Users/Ying/Desktop/samples/mock/Sample_GutZymo1_IGO_13699_36.kaiju_summary1.tsv"
+
+cols <- list(
+  "outfile"=col_character(), 
+  "percent"=col_double(),
+  "numseqs"=col_integer(),
+  "taxid"=col_character(), 
+  "taxon_name"=col_skip()
+)
+table <- read_tsv(file,skip=1,col_names=names(cols),col_types=cols, na=c("", "NA"))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+cols = {
+  'outfile':pl.Utf8, 
+  'percent':pl.Float64,
+  'numseqs':pl.Int64,
+  'taxid':pl.Utf8, 
+  'taxon_name':None
+}
+
+# read_csv method: 
+columns = [i for i,v in enumerate(cols.values()) if v is not None]
+new_columns = [k for k,v in cols.items() if v is not None]
+dtypes = {k:v for k,v in cols.items() if v is not None}
+table = pl.read_csv(r.file, skip_rows=1, sep='\t', has_header=False, null_values=['','NA'], columns=columns, new_columns=new_columns, dtypes=dtypes)
+
+# lazy_csv method: 
+colnames = ['column_'+str(i+1) for i,v in enumerate(cols.values())]
+dtypes = {k:(v if v is not None else pl.Utf8) for k,v in zip(colnames,cols.values())}
+select_expr = [pl.col(n).alias(c) for n,c,t in zip(colnames,cols.keys(),cols.values()) if t is not None]
+table_lazy = pl.scan_csv(r.file, skip_rows=1, sep='\t', has_header=False, dtypes=dtypes).select(select_expr).collect()
+```
+:::
+::::::::::::::
+
+
+
+
+
+###### Extract vector
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds$color #method 1
+diamonds[["color"]] #method 2
+diamonds %>% pull(color) #method 3
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+diamonds_polars['color'] #method 1
+diamonds_polars.get_column('color') #method 2
+```
+:::
+::::::::::::::
+
+
+
+
+
+
+### Table Characteristics
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+nrow(diamonds) #height
+ncol(diamonds) #width
+dim(diamonds) #height and width
+map(diamonds,class) #list of classes
+glimpse(diamonds) #column datatypes
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+diamonds_polars.height #height
+diamonds_polars.width #width
+diamonds_polars.shape #height and width (tuple)
+diamonds_polars.columns #column names (list)
+diamonds_polars.dtypes #datatypes (list)
+diamonds_polars.schema #column datatypes (dict)
+```
+:::
+::::::::::::::
+
+
+
+### Row/Column Filtering
+
+###### Extract top 3 rows
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds[1:3,] #method 1
+head(diamonds,3) #method 2
+diamonds %>% slice(1:3) #method 3
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+diamonds_polars[[1,2,3],:].to_pandas()
+diamonds_polars.head(3).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Multiple row filter criteria
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% 
+  filter(clarity=="VVS1",
+         price>2000,
+         grepl("[DEF]",color))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .filter(
+    (pl.col('clarity')=='VVS1') &
+    (pl.col('price') > 2000) & 
+    (pl.col('color').cast(pl.Utf8).str.contains('[DEF]'))
+  )
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+
+
+
+
+### Select/Rename columns
+
+
+###### Routine select
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% select(carat,cut,clarity)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .select(['carat','cut','clarity'])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+###### Select columns using regex pattern
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% select(matches("^c"))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .select([
+    pl.col('^c.*$')  
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+###### Select columns of a certain type
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% select(where(is.factor))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .select([
+    pl.col(pl.Categorical)  
+  ])
+).to_pandas()
+
+
+```
+:::
+::::::::::::::
+
+
+
+
+
+###### Select all columns _except_ those specified
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% select(-c(x,y,z))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .select([
+    pl.all().exclude(['x','y','z'])
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+###### Select columns and rename
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% select(price_usd=price,length=x,width=y,depth=z)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .select([
+    pl.col('price').alias('price_usd'),
+    pl.col('x').alias('length'),
+    pl.col('y').alias('width'),
+    pl.col('z').alias('depth')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+###### Select all columns and add prefix
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% rename_with(.fn=~paste0("var_",.))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .select([
+    pl.all().prefix('var_')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+###### Select and programmatically rename
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+varmap <- c("price_usd"="price",
+            "length"="x",
+            "width"="y",
+            "depth"="z")
+diamonds %>% select(!!!varmap)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+varmap = {'price':'price_usd',
+          'x':'length',
+          'y':'width',
+          'z':'depth'}
+(diamonds_polars
+  .select(varmap)
+  .rename(varmap)
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+### Mutate/Transmute
+
+
+###### Mutate
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  mutate(price_thousands=price*1000,
+         log_price=log(price),
+         xyz=paste(x,y,z,sep="+"))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .with_columns([
+    (pl.col('price')*1000).alias('price_thousands'),
+    pl.col('price').log().alias('log_price'),
+    pl.concat_str([pl.col('x'),pl.col('y'),pl.col('z')],sep='+').alias('xyz')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Transmute
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  transmute(
+    color_is_DEF=color %in% c("D","E","F"),
+    color_status=case_when(
+      color=="J" ~ "very poor",
+      color %in% c("H","I") ~ "poor",
+      color %in% c("F","G") ~ "ok",
+      TRUE ~ "excellent"
+    ),
+    clarity=str_to_title(clarity))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .select([
+    pl.col('color').cast(pl.Utf8).is_in(['D','E','F']).alias('color_is_DEF'),
+    pl.when(pl.col('color')=='J').then('very poor')
+      .when(pl.col('color').cast(pl.Utf8).is_in(['H','I'])).then('poor')
+      .when(pl.col('color').cast(pl.Utf8).is_in(['F','G'])).then('ok')
+      .otherwise('excellent')
+      .alias('color_status'),
+    pl.col('clarity').apply(lambda s: s.title())
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+### Group By and Summarize
+
+
+###### Count rows by group
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% 
+  group_by(cut,color) %>%
+  summarize(n=n(),
+            .groups="drop")
+
+diamonds %>% count(cut,color) #shortcut
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .groupby(['cut','color'])
+  .agg([
+    pl.count().alias('n')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+###### Calculate various summaries by group
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  group_by(cut) %>%
+  summarize(n=n(),
+            mean_price=mean(price),
+            max_price=max(price),
+            available_colors=paste(sort(unique(color)),collapse=", "),
+            .groups="drop")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .groupby('cut')
+  .agg([
+    pl.count().alias('n'),
+    pl.col('price').mean().alias('mean_price'),
+    pl.col('price').max().alias('max_price'),
+    pl.col('color').unique().cast(pl.Utf8).sort().str.concat(', ').alias('availble_colors')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Select first row after sorting, by group
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  group_by(cut) %>%
+  arrange(desc(price),depth) %>%
+  slice(1) %>%
+  ungroup()
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .sort(['price','depth'],reverse=[True,False])
+  .groupby('cut')
+  .head(1)
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+
+
+
+
+
+
+
+### Apply function across columns
+
+###### Apply to all columns
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% 
+  mutate(across(.fns=~paste0(.,"_xyz")))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .with_columns([
+    pl.all()+'_xyz'
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+###### Apply to columns using regex
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% 
+  transmute(across(.cols=matches("^c"),.fns=~paste0(.,"_x")))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .select([
+    pl.col('^c.*$') + '_x'
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+###### Apply to columns of a certain type
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% 
+  mutate(across(.cols=where(is.numeric),
+                .fns=~. * 1000))
+
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .with_columns([
+    pl.col([pl.Float64,pl.Int32]) * 1000
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+### Joins
+
+
+
+###### Left join
+	
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+band_members %>% left_join(band_instruments,by="name")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(band_members_polars
+  .join(band_instruments_polars,on='name',how='left')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+###### Inner join
+	
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+band_members %>% inner_join(band_instruments,by="name")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(band_members_polars
+  .join(band_instruments_polars,on='name',how='inner')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+###### Outer join
+	
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+band_members %>% full_join(band_instruments,by="name")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(band_members_polars
+  .join(band_instruments_polars,on='name',how='outer')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Anti join
+	
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+band_members %>% anti_join(band_instruments,by="name")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(band_members_polars
+  .join(band_instruments_polars,on='name',how='anti')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+### Pivoting/Reshaping 
+
+###### Pivot Longer
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  pivot_longer(cols=c(x,y,z),names_to="axis",values_to="mm")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .melt(id_vars=list(set(diamonds_polars.columns).difference(['x','y','z'])),variable_name='variable',value_name='value')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+###### Pivot Wider
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  pivot_wider(id_cols=clarity,names_from=cut,values_from=price,values_fn=mean)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .pivot(index='clarity',values='price',columns='cut',aggregate_fn='mean')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+### Nested columns
+
+###### Split string column into nested list, unnest into long format
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  mutate(cut_word=str_split(cut," ")) %>%
+  unnest(cut_word)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .with_columns([
+    pl.col('cut').cast(pl.Utf8).str.split(' ').alias('cut_word'),
+  ])
+  .explode('cut_word')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+###### Group by a variable and tally others in a nested field
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% 
+  group_by(cut) %>%
+  summarize(clarity_table=list(table(clarity)),
+            .groups="drop")
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .groupby('cut')
+  .agg([
+    pl.col('clarity').value_counts().alias('clarity_counts')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+###### Move columns into single nested column, then unnest to individual columns again.
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  nest(col_color_clarity=c(cut,color,clarity)) %>%
+  unnest(col_color_clarity)
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .with_columns([
+    pl.struct(pl.col(['cut','color','clarity'])).alias('cut_color_clarity')
+  ])
+  .drop(['cut','color','clarity'])
+  .unnest('cut_color_clarity')
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+###### Nested table in a single column, by group
+
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  group_by(color) %>%
+  nest(group_info=-color) %>%
+  ungroup()
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+(diamonds_polars
+  .groupby('color')
+  .agg([
+    pl.struct(pl.all().exclude('color')).alias('group_info')
+  ])
+).to_pandas()
+```
+:::
+::::::::::::::
+
+
+
+
+
+<!-- ###### xxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds     # r code -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{python} -->
+<!-- diamonds_polars.to_pandas()    # python -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+<!-- ###### xxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds     # r code -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{python} -->
+<!-- diamonds_polars.to_pandas()    # python -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+
+
+<!-- ###### xxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds     # r code -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{python} -->
+<!-- diamonds_polars.to_pandas()    # python -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+<!-- ###### xxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds     # r code -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{python} -->
+<!-- diamonds_polars.to_pandas()    # python -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+

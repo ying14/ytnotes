@@ -1,0 +1,210 @@
+---
+title: R install notes
+description: Notes on how to install R and RStudio, specific to each platform.
+format: html
+categories: [r, terminal, windows, mac, linux]
+editor: source
+---
+
+
+
+
+
+
+```{r, include=FALSE, eval=FALSE}
+
+# remotes::dev_package_deps("yingtools2")
+# yy <- remotes::package_deps("ggrepel")
+# 
+# library(GenomeInfoDbData)
+# yy$package
+# 
+# yy %>% dt
+# 
+# pkgs <- installed.packages() %>% as_tibble()
+# 
+# setdiff(pkgs$Package,c(cran.pkgs,bioc.pkgs))
+# xx=available.packages()
+# package.dependencies(x, check = FALSE,
+#                      depLevel = c("Depends", "Imports", "Suggests"))
+
+```
+
+## R installation
+#### Windows
+Install: 
+
+* R
+* Rtools
+* RStudio
+* Git for Windows
+* Java JDK 32/64 bit.
+
+
+#### Ubuntu
+Install: 
+
+* R (r-base, r-base-dev)
+* Rstudio
+* default-jre, default-jdk, libcurl4-openssl-dev, git, cmake
+
+```{bash}
+#| eval: false
+
+# update indices
+sudo apt update -qq
+# install two helper packages we need
+sudo apt install --no-install-recommends software-properties-common dirmngr
+# add the signing key (by Michael Rutter) for these repos
+# To verify key, run gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc 
+# Fingerprint: E298A3A825C0D65DFD57CBB651716619E084DAB9
+wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+# add the R 4.0 repo from CRAN -- adjust 'focal' to 'groovy' or 'bionic' as needed
+sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+
+sudo apt install --no-install-recommends r-base r-base-dev
+
+sudo apt install default-jre default-jdk libcurl4-openssl-dev git cmake
+
+```
+
+#### macOS
+Install:
+* R
+* RStudio
+* JDK (x64)
+
+
+## R packages
+
+
+```{r}
+#| eval: false
+
+cran.pkgs <- c(
+  "tidyverse",   # essential suite of R tools
+  "rlang",       # tools for programming (e.g. tidy eval)
+  "roxygen2",    # documentation system for R packages
+  "remotes",     # installing from Github
+  "reticulate",  # Python interface
+  "BiocManager", # installer for Bioconductor
+  "DT",          # datatables
+  "shiny",       # interactivity in R
+  "usethis",     # package development
+)
+install.packages(cran.pkgs)
+
+optional.pkgs <- c(
+  "rbenchmark", 
+  "tictoc",
+  "cmprsk",
+  "Hmisc",
+  "formula.tools",
+  "reshape2",
+  "logistf",
+  "pingr",
+  "styler",
+  "coxphf",
+  "Rtsne",
+  "umap",
+  "rjson",
+  "plyr",
+  "xlsx",
+  "ggrepel",
+  "ggfittext",
+  "shinycssloaders",
+  "shinyvalidate",
+  "ggiraph",
+  "RJDBC",
+  "patchwork"
+)
+install.packages(optional.pkgs)
+
+bioc.pkgs <- c(
+  "dada2",
+  "seqinr",
+  "phyloseq",
+  "ggtree",
+  "msa",
+  "phytools",
+  "DECIPHER",
+  "phangorn"
+)
+BiocManager::install(bioc.pkgs)
+
+
+
+remotes::install_github("ying14/yingtools2")
+remotes::install_github("csgillespie/roxygen2Comment")
+
+# remotes::install_git("https://github.mskcc.org/taury/ytrecipes.git")
+# remotes::install_git("https://github.mskcc.org/taury/ytdata.git")
+# remotes::install_git("https://github.mskcc.org/taury/ytpipeline.git")
+
+
+
+# git clone https://github.com/ying14/yingtools2
+# git clone https://github.mskcc.org/taury/ytrecipes
+# git clone https://github.mskcc.org/taury/ytdata
+# git clone https://github.mskcc.org/taury/ytpipeline
+
+```
+
+## Install Miniconda for R
+
+```{r}
+
+reticulate::py_config()
+
+```
+
+
+
+
+## R startup:
+
+R environment (site): 
+
+1. File specified by `R_ENVIRON`
+2. `R_HOME`/etc/Renviron.site
+
+R environment (user):
+
+1. File specified by `R_ENVIRON_USER`
+2. `<current_dir>`/.Renviron
+3. `<user_home_dir>`/.Renviron
+
+R profile (site):
+
+1. File specified by `R_PROFILE`
+2. `R_HOME`/etc/Rprofile.site
+
+R profile (user):
+
+1. File specified by `R_PROFILE_USER`
+2. `<current_dir>`/.Rprofile
+3. `<user_home_dir>`/.Rprofile
+
+
+`.libPaths()` determined by: `R_LIBS_USER`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

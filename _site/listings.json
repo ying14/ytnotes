@@ -1,0 +1,18 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/datatable/index.html",
+      "/posts/git_commands/index.html",
+      "/posts/linux_commands/index.html",
+      "/posts/miniconda/index.html",
+      "/posts/modelling/index.html",
+      "/posts/polars/index.html",
+      "/posts/quarto/index.html",
+      "/posts/R_install/index.html",
+      "/posts/sql_commands/index.html",
+      "/posts/wsl_notes/index.html",
+      "/posts/web_scraping/index.html"
+    ]
+  }
+]

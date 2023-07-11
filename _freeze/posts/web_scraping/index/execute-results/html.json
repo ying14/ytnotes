@@ -1,0 +1,14 @@
+{
+  "hash": "364a1ee49a076c504c666f738ea14e2d",
+  "result": {
+    "markdown": "---\ntitle: \"Webscraping in R\"\nformat: html\ncategories: [r]\neditor: source\n---\n\n\n## \n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(rvest)\nlibrary(yingtools2)\nrm(list=ls())\nurls <- c(\"https://www.societyforscience.org/regeneron-sts/2020-scholars/\",\n         \"https://www.societyforscience.org/regeneron-sts/2021-scholars/\",\n         \"https://www.societyforscience.org/regeneron-sts/2023-scholars/\")\n\nget.scholars <- function(url) {\n  html <- read_html(url)\n  lines <- html %>% html_elements(\"p\") %>% html_text()\n  lines <- lines[str_detect(lines,\"Age:\")]\n  tbl <- tibble(lines=lines) %>%\n    extract(lines,into=c(\"student\",\"age\",\"high.school\",\"title\"),regex=\"([\\\\S\\\\s]+), Age: ([0-9]+\\\\n?)([\\\\S\\\\s]+)\\nProject Title: ([\\\\S\\\\s]+)\",remove=FALSE)\n  tbl\n}\n\nscholars <- urls %>% setNames(.,.) %>% \n  map_dfr(get.scholars,.id=\"url\") %>%\n  mutate(state=str_extract(high.school,\"[A-Z]{2}\"))\n\nscholars %>% count(state,sort=T) %>% head(10) %>% knitr::kable()\n```\n\n::: {.cell-output-display}\n|state |   n|\n|:-----|---:|\n|NY    | 274|\n|CA    | 117|\n|NJ    |  56|\n|MA    |  48|\n|VA    |  36|\n|FL    |  34|\n|TX    |  33|\n|NC    |  32|\n|CT    |  29|\n|MD    |  28|\n:::\n\n```{.r .cell-code}\nscholars %>% count(high.school,sort=T) %>% head(10) %>% knitr::kable()\n```\n\n::: {.cell-output-display}\n|high.school                                          |  n|\n|:----------------------------------------------------|--:|\n|Bronx High School of Science, NY                     | 20|\n|North Carolina School of Science and Mathematics, NC | 20|\n|Bergen County Academies, NJ                          | 18|\n|Ossining High School, NY                             | 13|\n|Bergen County Academies, Hackensack, NJ              | 11|\n|Bronx High School of Science, Bronx, NY              | 11|\n|Byram Hills High School, NY                          | 11|\n|Syosset High School, NY                              | 11|\n|The Harker School, CA                                | 10|\n|Greenwich High School, CT                            |  9|\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

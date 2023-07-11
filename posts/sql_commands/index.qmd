@@ -1,0 +1,341 @@
+---
+title: SQL Commands
+description: A listing of some useful SQL commands
+format: html
+editor: source
+categories: [sql]
+fontsize: small #small, medium, large, 1.2em, 12px, ...
+execute:
+  echo: true #whether to include code block
+  eval: false #whether to run code
+  warning: false #include warnings
+  error: false #include errors
+  output: false #include output  
+---
+
+
+
+
+
+
+Create a SQL object in R
+
+```{r}
+#| eval: true
+#| output: true
+library(tidyverse)
+library(dbplyr)
+con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+copy_to(con, diamonds)
+diamonds2 <- tbl(con, "diamonds")
+diamonds2
+```
+
+
+
+
+### Filter by column criteria
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>% 
+  filter(clarity=="VVS1",
+         price>2000,
+         grepl("good",cut,ignore.case=TRUE))
+```
+:::
+::: {.column width="2%"}
+```{r}
+#| eval: false
+#| echo: false
+######work
+diamonds2 %>% 
+  filter(clarity=="VVS1",
+         price>2000,
+         tolower(cut) %like% "%good%") %>%
+  sql_render() %>% as.character() %>% gsub("`","",.) %>% cat()
+```
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{sql, connection=con}
+SELECT *
+FROM diamonds
+WHERE
+  clarity = 'VVS1' AND
+  price > 2000 AND
+  LOWER(cut) like '%good%'
+
+```
+:::
+::::::::::::::
+
+
+### Summarize by group
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  group_by(cut,color) %>% 
+  summarize(n=n(),
+            min_price=min(price),
+            max_price=max(price),
+            mean_price=mean(price),
+            n_distinct_price=n_distinct(price),
+            .groups="drop") 
+```
+:::
+::: {.column width="2%"}
+```{r}
+#| eval: false
+#| echo: false
+######work
+diamonds2 %>%
+  group_by(cut,color) %>% 
+  summarize(n=n(),
+            min_price=min(price),
+            max_price=max(price),
+            mean_price=mean(price),
+            n_distinct_price=n_distinct(price),
+            .groups="drop") %>% 
+  sql_render() %>% as.character() %>% gsub("`","",.) %>% cat()
+```
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{sql, connection=con}
+SELECT
+  cut,
+  color,
+  COUNT(*) AS n,
+  MIN(price) AS min_price,
+  MAX(price) AS max_price,
+  AVG(price) AS mean_price,
+  COUNT(DISTINCT price) AS n_distinct_price
+FROM diamonds
+GROUP BY cut, color
+```
+:::
+::::::::::::::
+
+
+
+
+
+
+
+
+
+### calculations by window
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+diamonds %>%
+  select(cut,price) %>% 
+  mutate(rownumber=row_number(),
+         price_rank=row_number(price),
+         total_rows=n()) %>%
+  group_by(cut) %>%
+  mutate(total_rows_in_group=n(),
+         rownumber_in_group=row_number(),
+         price_rank_in_group=row_number(price)) %>%
+  ungroup()
+
+```
+:::
+::: {.column width="2%"}
+```{r}
+#| eval: false
+#| echo: false
+######work
+diamonds2 %>%
+  select(cut,price) %>% 
+  mutate(rownumber=row_number(),
+         price_rank=row_number(price),
+         total_rows=n()) %>%
+  group_by(cut) %>%
+  mutate(total_rows_in_group=n(),
+         rownumber_in_group=row_number(),
+         price_rank_in_group=row_number(price)) %>%
+  ungroup() %>% 
+  sql_render() %>% as.character() %>% gsub("`","",.) %>% cat()
+```
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{sql, connection=con}
+SELECT
+  cut,
+  price,
+  ROW_NUMBER() OVER () AS rownumber,
+  ROW_NUMBER() OVER (ORDER BY price) AS price_rank,
+  COUNT(*) OVER () AS total_rows,
+  ROW_NUMBER() OVER (PARTITION BY cut) AS rownumber_in_group,
+  ROW_NUMBER() OVER (PARTITION BY cut ORDER BY price) AS price_rank_in_group,
+  COUNT(*) OVER (PARTITION BY cut) AS total_rows_in_group
+FROM diamonds
+```
+:::
+::::::::::::::
+
+
+
+
+
+
+
+<!-- ### xxxxxxxxxxxxxxxxxxxxxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: false -->
+<!-- ######work -->
+<!-- diamonds2 %>%  -->
+<!--   ################### -->
+<!--   sql_render() %>% as.character() %>% gsub("`","",.) %>% cat() -->
+<!-- ``` -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{sql, connection=con} -->
+<!-- SELECT * -->
+<!-- FROM diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+
+<!-- ### xxxxxxxxxxxxxxxxxxxxxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: false -->
+<!-- ######work -->
+<!-- diamonds2 %>%  -->
+<!--   ################### -->
+<!--   sql_render() %>% as.character() %>% gsub("`","",.) %>% cat() -->
+<!-- ``` -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{sql, connection=con} -->
+<!-- SELECT * -->
+<!-- FROM diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+<!-- ### xxxxxxxxxxxxxxxxxxxxxxx -->
+
+<!-- :::::::::::::: {.columns} -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{r} -->
+<!-- diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="2%"} -->
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: false -->
+<!-- ######work -->
+<!-- diamonds2 %>%  -->
+<!--   ################### -->
+<!--   sql_render() %>% as.character() %>% gsub("`","",.) %>% cat() -->
+<!-- ``` -->
+<!-- <!-- empty column to create gap --> -->
+<!-- ::: -->
+<!-- ::: {.column width="49%"} -->
+<!-- ```{sql, connection=con} -->
+<!-- SELECT * -->
+<!-- FROM diamonds -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::::::::::::: -->
+
+
+
+
+
+
+Check if `B` is a subset of `A`:
+
+```sql
+SELECT * 
+FROM B
+WHERE NOT EXISTS (SELECT 1 
+                   FROM   A 
+                   WHERE  A.ID = B.ID)
+```
+
+
+
+
+
+
+
+```sql
+with
+w (mrn, ord_id, test_date) as
+( select distinct LR_MRN, LR_ORD_ID, LR_PERFORMED_DTE from
+idb.LAB_TEXT_LINE
+JOIN idb.LAB_RESULTS
+on LR_MRN=LTL_MRN
+and LR_PERFORMED_DTE=LTL_PERFORMED_DTE
+and LR_RESULT_GUID=LTL_RESULT_GUID
+
+x (key, val, rnum) AS
+( SELECT LTL_RESULT_GUID, LTL_TEXT_RESULT, LTL_LINE_NO
+FROM idb.LAB_TEXT_LINE
+JOIN idb.LAB_RESULTS
+on LR_MRN=LTL_MRN
+and LR_PERFORMED_DTE=LTL_PERFORMED_DTE
+and LR_RESULT_GUID=LTL_RESULT_GUID
+join w
+on LR_MRN=mrn
+and LR_ORD_ID=ord_id
+and LR_PERFORMED_DTE=test_date),
+
+y(key, str, cnt, cnt_max) AS
+( SELECT key, VARCHAR('', 14025), 0, MAX(rnum)
+FROM x
+GROUP BY key
+UNION ALL
+SELECT y.key, y.str || RTRIM(CHAR(x.val)), y.cnt + 1, y.cnt_max
+FROM x, y
+WHERE x.key = y.key AND
+x.rnum = y.cnt + 1 AND
+y.cnt < y.cnt_max ),
+
+z as (SELECT key, str
+FROM y
+WHERE y.cnt = y.cnt_max)
+
+select * from idb.LAB_RESULTS left join z
+on LR_RESULT_GUID=KEY
+```
+
+
+
