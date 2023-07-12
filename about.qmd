@@ -1,19 +1,19 @@
 ---
 title: "About"
-image: profile.jpg
+image: stamp.jpg
 about:
   template: jolla
   links:
     - icon: twitter
       text: Twitter
-      href: https://twitter.com
+      href: https://twitter.com/yingtaur
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/ying-taur-38107712/
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/ying14
 
 ---
 
-About this blog
+It's in blog format but basically notes to myself.

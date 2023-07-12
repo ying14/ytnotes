@@ -80,6 +80,7 @@ ggplot() +
 ### Linear Regression (multiple vars, with interaction)
 
 ```{r}
+#| classes: preview-image
 model <- lm(mpg ~ hp + cyl + hp*cyl, data=mt)
 tidy(model)
 pdata <- tibble(hp=seq_range(mt$hp,n=200)) %>%

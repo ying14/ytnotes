@@ -9,6 +9,7 @@ toc-location: left
 editor: source
 editor_options: 
   chunk_output_type: inline
+image: "thumbnail.jpg"
 ---
 
 

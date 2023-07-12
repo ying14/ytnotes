@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ying Taur">
 <meta name="description" content="Code recipes for modelling in R">
 
 <title>YT Notes - Modelling</title>
@@ -157,6 +158,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Ying Taur </p>
+            </div>
+    </div>
       
     
       
@@ -277,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="linear-regression-multiple-vars-with-interaction" class="level3">
 <h3 class="anchored" data-anchor-id="linear-regression-multiple-vars-with-interaction">Linear Regression (multiple vars, with interaction)</h3>
-<div class="cell">
+<div class="cell preview-image">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl <span class="sc">+</span> hp<span class="sc">*</span>cyl, <span class="at">data=</span>mt)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -371,12 +378,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5 x 1 sparse Matrix of class "dgCMatrix"
-                     s0
-(Intercept) 477.1861699
-mpg          -3.2990043
-wt           20.0317433
-drat         -0.4572541
-qsec        -18.3218541</code></pre>
+                    s0
+(Intercept) 470.705023
+mpg          -3.280904
+wt           18.505501
+drat         -2.468512
+qsec        -17.298734</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate R-squared</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>y_predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">s =</span> best_lambda, <span class="at">newx =</span> x)</span>
@@ -386,7 +393,7 @@ qsec        -18.3218541</code></pre>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>rsq <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> sse<span class="sc">/</span>sst</span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>rsq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8018387</code></pre>
+<pre><code>[1] 0.7959184</code></pre>
 </div>
 </div>
 </section>
@@ -406,12 +413,12 @@ qsec        -18.3218541</code></pre>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5 x 1 sparse Matrix of class "dgCMatrix"
-                    s0
-(Intercept) 482.031434
-mpg          -3.007899
-wt           20.645453
-drat          .       
-qsec        -19.123746</code></pre>
+                   s0
+(Intercept) 476.29995
+mpg          -3.14287
+wt           18.68341
+drat          .      
+qsec        -18.29705</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate R-squared</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>y_predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">s =</span> best_lambda, <span class="at">newx =</span> x)</span>
@@ -421,7 +428,7 @@ qsec        -19.123746</code></pre>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>rsq <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> sse<span class="sc">/</span>sst</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>rsq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8026151</code></pre>
+<pre><code>[1] 0.7982125</code></pre>
 </div>
 </div>
 </section>

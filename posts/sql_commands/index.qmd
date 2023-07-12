@@ -11,6 +11,7 @@ execute:
   warning: false #include warnings
   error: false #include errors
   output: false #include output  
+image: "thumbnail.jpg"
 ---
 
 

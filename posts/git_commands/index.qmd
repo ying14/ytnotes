@@ -4,12 +4,12 @@ description: Commonly used git commands
 format: html
 categories: [terminal]
 editor: source
+image: "thumbnail.jpg"
 ---
 
 
 
-
-
+### Github Commands
 
 Download repository
 
@@ -80,3 +80,24 @@ git fetch --all
 git reset --hard origin/main
 git pull origin main
 ```
+
+
+### Github Pages
+
+Publishing on Github Pages is described here: <https://quarto.org/docs/publishing/github-pages.html>
+For example, <https://github.com/ying14/ytnotes> is published at <https://ying14.github.io/ytnotes/>
+
+The first method is:
+
+1. Set `_quarto.yml` to render the `output-dir: docs` directory, under `project`.
+2. Specify a blank file `.nojekyll` in root directory.
+3. In Github, turn on Github Pages and set it to start in the `docs` directory.
+
+
+
+
+
+
+
+
+

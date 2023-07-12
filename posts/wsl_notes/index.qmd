@@ -4,6 +4,7 @@ description: Useful WSL2 commands
 format: html
 categories: [terminal, windows, linux]
 editor: source
+image: "thumbnail.png"
 ---
 
 

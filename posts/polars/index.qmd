@@ -15,6 +15,7 @@ execute:
   error: false #include errors
   output: false #include output
   # include: false #catch all for  preventing any results (code + results)
+image: "thumbnail.jpg"
 ---
 
 

@@ -4,6 +4,7 @@ description: How to perform webscraping in R, using the `rvest` package
 format: html
 categories: [r]
 editor: source
+image: "thumbnail.png"
 ---
 
 

@@ -15,6 +15,7 @@ execute:
   error: false #include errors
   output: false #include output
   # include: false #catch all for  preventing any results (code + results)
+image: "thumbnail.jpg"
 ---
 
 
@@ -367,7 +368,6 @@ diamonds %>%
 :::
 ::: {.column width="49%"}
 ```{r}
-diamonds.dt <- diamonds %>% as.data.table()
 # by reference!
 #method 1
 (diamonds.dt[, price_thousands:=price*1000]
@@ -410,8 +410,6 @@ diamonds %>%
 :::
 ::: {.column width="49%"}
 ```{r}
-diamonds.dt <- diamonds %>% as.data.table()
-
 diamonds.dt[,.(color_is_DEF=color %in% c("D","E","F"),
                clarity=str_to_title(clarity),
                cut.rating=fifelse(cut %in% c("Ideal","Premium"),"great","ok"),
@@ -449,8 +447,6 @@ diamonds %>% count(cut,color) #shortcut
 :::
 ::: {.column width="49%"}
 ```{r}
-diamonds.dt <- diamonds %>% as.data.table()
-
 diamonds.dt[, .(n=.N), by = c("cut","color")]
 ```
 :::
@@ -475,8 +471,6 @@ diamonds %>%
 :::
 ::: {.column width="49%"}
 ```{r}
-diamonds.dt <- diamonds %>% as.data.table()
-
 diamonds.dt[, by=cut,
             .(n=.N,
               mean_price=mean(price),
@@ -504,9 +498,6 @@ diamonds %>%
 :::
 ::: {.column width="49%"}
 ```{r}
-diamonds.dt <- diamonds %>% as.data.table()
-
-
 (diamonds.dt[,.SD[order(-price,depth)], by=cut]
   [,.SD[1], by=cut])
 
@@ -535,8 +526,6 @@ diamonds %>%
 :::
 ::: {.column width="49%"}
 ```{r}
-diamonds.dt <- diamonds %>% as.data.table()
-
 diamonds.dt[,lapply(.SD, function(x) paste0(x,"_xyz"))]
 ```
 :::
@@ -559,8 +548,6 @@ diamonds %>%
 :::
 ::: {.column width="49%"}
 ```{r}
-diamonds.dt <- diamonds %>% as.data.table()
-
 diamonds.dt[,lapply(.SD,function(x) paste0(x,"_x")),
             .SDcols=patterns("^c")]
 ```
@@ -584,8 +571,6 @@ diamonds %>%
 :::
 ::: {.column width="49%"}
 ```{r}
-diamonds.dt <- diamonds %>% as.data.table()
-
 diamonds.dt[,lapply(.SD,function(x) {
   if (is.numeric(x)) x*1000 else x
 })]

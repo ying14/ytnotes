@@ -4,6 +4,7 @@ description: Typical terminal commands for Miniconda 3
 format: html
 editor: source
 categories: [terminal]
+image: "thumbnail.jpg"
 ---
 
 

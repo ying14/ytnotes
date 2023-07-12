@@ -4,6 +4,7 @@ description: Notes on how to install R and RStudio, specific to each platform.
 format: html
 categories: [r, terminal, windows, mac, linux]
 editor: source
+image: "thumbnail.png"
 ---
 
 
