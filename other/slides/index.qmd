@@ -1,7 +1,28 @@
 ---
-title: "Ying's Slides"
+title: "YT Slides: A Demo"
+# subtitle: "Subtitle here"
+institute: "Memorial Sloan Kettering Cancer Center"
 author: "Ying Taur"
-format: revealjs
+date: 2023-07-19
+format: 
+  revealjs:
+    # transition: slide  # slide transition (foreground)
+    # background-transition: fade  # slide transition (background)
+    title-slide-attributes: 
+      data-background-image: stamp1a.jpg # title slide background
+      data-background-opacity: "0.3"
+      data-background-size: contain
+    # slide-number: "c/t"    # slide number... doesn't work
+    # show-slide-number: all
+    # show-slide-number: print
+    theme: default
+    # chalkboard: true # option for chalkboard
+    # footer: "Footer text" # appears bottom of every slide
+    logo: "stamp1a.jpg" # bottom right 
+    menu:
+      # side: left
+      # width: normal
+      numbers: true #show slide numbers in menu
 editor: source
 execute: 
   echo: false
@@ -9,65 +30,150 @@ execute:
 bibliography: references.bib
 csl: nature.csl
 ---
-
-Notes on how generate revealjs slides.
-
 ```{r}
-#| fig-cap: Plot of Mtcars
+# beige
+# blood
+# dark
+# default
+# league
+# moon
+# night
+# serif
+# simple
+# sky
+# solarized
+
 library(tidyverse)
 library(yingtools2)
 ```
 
 
-## Quarto
+## General markdownNotes on how generate revealjs slides.
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+This uses `revealjs` to operate.
 
-## Bullets
+Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>. We can do **bold**, _italics_, ***bold italics***, superscript^2^ / subscript~2~, ~~strikethrough~~.
+
+* `F` for fullscreen
+* `S` for speaker view
+* `O` for speaker overview
+* `?` for keyboard shortcuts
+
+
+## Bulleted list
+
+Here is how you make bullets. Note that `*`, `+`, or `-` doesn't seem to matter. Make sure there is a blank line above the list.
+
+* Content authored with markdown
+* Output from executable code
+   + executable code A
+   + executable code B  
+      - executable code B1
+      - executable code B2
+* Plots, if you want
+
+## Numbered list
 
 When you click the **Render** button a document will be generated that includes:
 
--   Content authored with markdown
--   Output from executable code
+1. ordered list
+2. item 2
+    i) sub-item 1
+    ii) sub-item 2
+         A.  sub-sub-item 1
+         B.  sub-sub-item 2
+3. Plots, if you want
 
-## Code
+## Bullet list, incremental
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+This will reveal one at a time:
 
-```{r}
-1 + 1
-```
-
-
-## Code chunk
-
-Here is a code chunk:
-```{r}
-#| echo: true
-#| code-line-numbers: false
-ggplot(diamonds,aes(x=carat,y=price,color=cut)) + geom_point()
-
-```
-
-
-## Table
-
-Here is a table:
-```{r}
-knitr::kable(mtcars)
-```
+::: {.incremental}
+* Content authored with markdown
+* Output from executable code
+   + executable code A
+   + executable code B  
+      - executable code B1
+      - executable code B2
+* Plots, if you want
+:::
 
 
-## Data Table
+## Bullet list, automatic numbering
 
-Here is a table:
-```{r}
-DT::datatable(mtcars)
-```
+These numbers are auto-calculated:
+
+(@) Content authored with markdown
+(@) Output from executable code
+(@) executable code A
+(@) executable code B  
+(@) executable code B1
+(@) executable code B2
+(@) Plots, if you want
 
 
 
-## Citations and Footnotes
+## Slide with a pause
+
+content before the pause
+
+. . .
+
+content after the pause
+
+
+
+## Multiple columns
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Left column
+:::
+
+::: {.column width="60%"}
+Right column
+:::
+
+::::
+
+## Make text large as possible
+
+::: {.r-fit-text}
+Big Text
+:::
+
+
+## Make text smaller {.smaller}
+
+If text needs to be smaller, specify `{.smaller}` in the title
+
+
+## Slide with speaker's notes
+
+Slide content here, with speakers notes which you can't see. 
+If you press `S`, you get the speaker notes view.
+
+::: {.notes}
+Speaker notes go here.
+:::
+
+
+
+## Aside info and custom footer
+
+This has aside info, which is like footnote but without numbers.
+
+::: aside
+Some additional commentary of more peripheral interest.
+:::
+
+::: footer
+Custom footer text. This will replace usual footer.
+:::
+
+
+## Footnotes
 
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this. The `echo: false` option disables the printing of code (only output is displayed).
 
@@ -79,18 +185,127 @@ Here is a footnote reference,[^aa] and another.[^longnote] You can also referenc
 
 [^longnote]: Here's one with multiple blocks.
   Subsequent paragraphs are indented to show that they
-belong to the previous footnote.
 
-        { some.code }
-
-  The whole paragraph can be indented, or just the first
-  line.  In this way, multi-paragraph footnotes work like
-  multi-paragraph list items.
-
-
-
+## Citations
 
 Here is a sentence with citation using bibliography. [@cordonnier2009randomized]
 
 The sentence has multiple references. [@adibi2012reduction; @gold2008human; @roach1991ciprofloxacin]
+
+::: {#refs}
+:::
+
+
+## Code
+
+When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+#| echo: true
+1 + 1
+```
+
+## Sidebar
+
+::::: {#special .sidebar}
+
+::: {.warning}
+Here is a warning.
+:::
+
+More content.
+:::::
+
+
+## Code chunk
+
+Here is a code chunk:
+```{r}
+#| echo: true
+#| code-line-numbers: true
+ggplot(diamonds,aes(x=carat,y=price,color=cut)) + geom_point()
+
+```
+
+
+## Python code chunk, highlight certain lines
+
+```{.python code-line-numbers="2,6-8"}
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
+
+## Python code, incremental highlight
+
+```{.python code-line-numbers="|6|9"}
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
+
+## Table
+
+Here is a table:
+```{r}
+knitr::kable(mtcars)
+```
+
+## Data Table
+
+Here is a table:
+```{r}
+DT::datatable(mtcars)
+```
+
+
+
+
+## Repeated background {background-color="black" background-image="stamp1a.jpg" background-size="100px" background-repeat="repeat" background-opacity="0.5"}
+
+
+Content here.
+
+## Figure, normal placement (default: `{width=1050,height=700}`)
+
+![](stamp1a.jpg)
+
+
+## Figure, resized
+
+![](stamp1a.jpg){width="10%"}
+
+
+
+## Figure, absolute positioning
+
+![](stamp1a.jpg){.absolute top=200 left=0 width="350" height="300"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

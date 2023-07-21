@@ -8,10 +8,11 @@
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.353">
+  <meta name="generator" content="quarto-1.3.433">
 
   <meta name="author" content="Ying Taur">
-  <title>YT Notes - Ying’s Slides</title>
+  <meta name="dcterms.date" content="2023-07-19">
+  <title>YT Notes Home - YT Slides: A Demo</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -406,7 +407,7 @@
   
   <script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
   <link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-  <script src="../../site_libs/datatables-binding-0.26/datatables.js"></script>
+  <script src="../../site_libs/datatables-binding-0.27/datatables.js"></script>
   <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <link href="../../site_libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
   <link href="../../site_libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
@@ -418,51 +419,232 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Ying’s Slides</h1>
+<section id="title-slide" data-background-image="stamp1a.jpg" data-background-opacity="0.3" data-background-size="contain" class="quarto-title-block center">
+  <h1 class="title">YT Slides: A Demo</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
 Ying Taur 
 </div>
-</div>
+        <p class="quarto-title-affiliation">
+            Memorial Sloan Kettering Cancer Center
+          </p>
+    </div>
 </div>
 
+  <p class="date">2023-07-19</p>
 </section>
-<section class="slide level2">
-
-<p>Notes on how generate revealjs slides.</p>
+<section id="general-markdownnotes-on-how-generate-revealjs-slides." class="slide level2">
+<h2>General markdownNotes on how generate revealjs slides.</h2>
+<p>This uses <code>revealjs</code> to operate.</p>
+<p>Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <a href="https://quarto.org/docs/presentations/" class="uri">https://quarto.org/docs/presentations/</a>. We can do <strong>bold</strong>, <em>italics</em>, <strong><em>bold italics</em></strong>, superscript<sup>2</sup> / subscript<sub>2</sub>, <del>strikethrough</del>.</p>
+<ul>
+<li><code>F</code> for fullscreen</li>
+<li><code>S</code> for speaker view</li>
+<li><code>O</code> for speaker overview</li>
+<li><code>?</code> for keyboard shortcuts</li>
+</ul>
 </section>
-<section id="quarto" class="slide level2">
-<h2>Quarto</h2>
-<p>Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <a href="https://quarto.org/docs/presentations/" class="uri">https://quarto.org/docs/presentations/</a>.</p>
-</section>
-<section id="bullets" class="slide level2">
-<h2>Bullets</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes:</p>
+<section id="bulleted-list" class="slide level2">
+<h2>Bulleted list</h2>
+<p>Here is how you make bullets. Note that <code>*</code>, <code>+</code>, or <code>-</code> doesn’t seem to matter. Make sure there is a blank line above the list.</p>
 <ul>
 <li>Content authored with markdown</li>
-<li>Output from executable code</li>
+<li>Output from executable code
+<ul>
+<li>executable code A</li>
+<li>executable code B
+<ul>
+<li>executable code B1</li>
+<li>executable code B2</li>
+</ul></li>
+</ul></li>
+<li>Plots, if you want</li>
 </ul>
+</section>
+<section id="numbered-list" class="slide level2">
+<h2>Numbered list</h2>
+<p>When you click the <strong>Render</strong> button a document will be generated that includes:</p>
+<ol type="1">
+<li>ordered list</li>
+<li>item 2
+<ol type="i">
+<li>sub-item 1</li>
+<li>sub-item 2
+<ol type="A">
+<li>sub-sub-item 1</li>
+<li>sub-sub-item 2</li>
+</ol></li>
+</ol></li>
+<li>Plots, if you want</li>
+</ol>
+</section>
+<section id="bullet-list-incremental" class="slide level2">
+<h2>Bullet list, incremental</h2>
+<p>This will reveal one at a time:</p>
+<div>
+<ul>
+<li class="fragment">Content authored with markdown</li>
+<li class="fragment">Output from executable code
+<ul>
+<li class="fragment">executable code A</li>
+<li class="fragment">executable code B
+<ul>
+<li class="fragment">executable code B1</li>
+<li class="fragment">executable code B2</li>
+</ul></li>
+</ul></li>
+<li class="fragment">Plots, if you want</li>
+</ul>
+</div>
+</section>
+<section id="bullet-list-automatic-numbering" class="slide level2">
+<h2>Bullet list, automatic numbering</h2>
+<p>These numbers are auto-calculated:</p>
+<ol class="example" type="1">
+<li>Content authored with markdown</li>
+<li>Output from executable code</li>
+<li>executable code A</li>
+<li>executable code B<br>
+</li>
+<li>executable code B1</li>
+<li>executable code B2</li>
+<li>Plots, if you want</li>
+</ol>
+</section>
+<section id="slide-with-a-pause" class="slide level2">
+<h2>Slide with a pause</h2>
+<p>content before the pause</p>
+<div class="fragment">
+<p>content after the pause</p>
+</div>
+</section>
+<section id="multiple-columns" class="slide level2">
+<h2>Multiple columns</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>Left column</p>
+</div><div class="column" style="width:60%;">
+<p>Right column</p>
+</div>
+</div>
+</section>
+<section id="make-text-large-as-possible" class="slide level2">
+<h2>Make text large as possible</h2>
+<div class="r-fit-text">
+<p>Big Text</p>
+</div>
+</section>
+<section id="make-text-smaller" class="slide level2 smaller">
+<h2>Make text smaller</h2>
+<p>If text needs to be smaller, specify <code>{.smaller}</code> in the title</p>
+</section>
+<section id="slide-with-speakers-notes" class="slide level2">
+<h2>Slide with speaker’s notes</h2>
+<p>Slide content here, with speakers notes which you can’t see. If you press <code>S</code>, you get the speaker notes view.</p>
+<aside class="notes">
+<p>Speaker notes go here.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="aside-info-and-custom-footer" class="slide level2">
+<h2>Aside info and custom footer</h2>
+<p>This has aside info, which is like footnote but without numbers.</p>
+
+<div class="footer">
+<p>Custom footer text. This will replace usual footer.</p>
+</div>
+<aside><div>
+<p>Some additional commentary of more peripheral interest.</p>
+</div></aside></section>
+<section id="footnotes" class="slide level2">
+<h2>Footnotes</h2>
+<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this. The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
+<p>Here is a footnote reference,<sup>1</sup> and another.<sup>2</sup> You can also reference inline!<sup>3</sup></p>
+<!-- These footnote definitions can go anywhere make sure there is blank line before/after -->
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Here is the footnote.</p></li><li id="fn2"><p>Here’s one with multiple blocks. Subsequent paragraphs are indented to show that they</p></li><li id="fn3"><p>Hello. I am an inline footnote.</p></li></ol></aside></section>
+<section id="citations" class="slide level2 smaller scrollable">
+<h2>Citations</h2>
+<p>Here is a sentence with citation using bibliography.<span class="citation" data-cites="cordonnier2009randomized"><sup><a href="#/citations" role="doc-biblioref" onclick="">1</a></sup></span></p>
+<p>The sentence has multiple references.<span class="citation" data-cites="adibi2012reduction gold2008human roach1991ciprofloxacin"><sup><a href="#/citations" role="doc-biblioref" onclick="">2</a>–<a href="#/citations" role="doc-biblioref" onclick="">4</a></sup></span></p>
+<div id="refs" class="references csl-bib-body" data-line-spacing="2" role="list">
+<div id="ref-cordonnier2009randomized" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Cordonnier, C. <em>et al.</em> Randomized study of early versus late immunization with pneumococcal conjugate vaccine after allogeneic stem cell transplantation. <em>Clinical Infectious Diseases</em> <strong>48</strong>, 1392–1401 (2009).</div>
+</div>
+<div id="ref-adibi2012reduction" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Adibi, M. <em>et al.</em> Reduction in hospital admission rates due to post-prostate biopsy infections after augmenting standard antibiotic prophylaxis. <em>The Journal of urology</em> (2012).</div>
+</div>
+<div id="ref-gold2008human" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Gold, M. C. <em>et al.</em> Human innate mycobacterium tuberculosis–reactive <span class="math inline">\(\alpha\)</span><span class="math inline">\(\beta\)</span>TCR+ thymocytes. <em>PLoS pathogens</em> <strong>4</strong>, e39 (2008).</div>
+</div>
+<div id="ref-roach1991ciprofloxacin" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Roach, M. B., George, W. J., Figueroa, T. E., Neal, D. E. &amp; McBride, D. Ciprofloxacin versus gentamicin in prophylaxis against bacteremia in transrectal prostate needle biopsy. <em>Urology</em> <strong>38</strong>, 84–87 (1991).</div>
+</div>
+</div>
 </section>
 <section id="code" class="slide level2">
 <h2>Code</h2>
 <p>When you click the <strong>Render</strong> button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
+</div>
+</section>
+<section id="sidebar" class="slide level2">
+<h2>Sidebar</h2>
+<div id="special" class="sidebar">
+<div class="warning">
+<p>Here is a warning.</p>
+</div>
+<p>More content.</p>
 </div>
 </section>
 <section id="code-chunk" class="slide level2">
 <h2>Code chunk</h2>
 <p>Here is a code chunk:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds,<span class="fu">aes</span>(<span class="at">x=</span>carat,<span class="at">y=</span>price,<span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="true"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">ggplot</span>(diamonds,<span class="fu">aes</span>(<span class="at">x=</span>carat,<span class="at">y=</span>price,<span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
+<section id="python-code-chunk-highlight-certain-lines" class="slide level2">
+<h2>Python code chunk, highlight certain lines</h2>
+<div class="sourceCode" id="cb4" data-code-line-numbers="2,6-8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>r <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.01</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>theta <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> r</span>
+<span id="cb4-6"><a href="#cb4-6"></a>fig, ax <span class="op">=</span> plt.subplots(subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'polar'</span>})</span>
+<span id="cb4-7"><a href="#cb4-7"></a>ax.plot(theta, r)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>ax.set_rticks([<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>])</span>
+<span id="cb4-9"><a href="#cb4-9"></a>ax.grid(<span class="va">True</span>)</span>
+<span id="cb4-10"><a href="#cb4-10"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="python-code-incremental-highlight" class="slide level2">
+<h2>Python code, incremental highlight</h2>
+<div class="sourceCode" id="cb5" data-code-line-numbers="|6|9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>r <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.01</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>theta <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> r</span>
+<span id="cb5-6"><a href="#cb5-6"></a>fig, ax <span class="op">=</span> plt.subplots(subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'polar'</span>})</span>
+<span id="cb5-7"><a href="#cb5-7"></a>ax.plot(theta, r)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>ax.set_rticks([<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>])</span>
+<span id="cb5-9"><a href="#cb5-9"></a>ax.grid(<span class="va">True</span>)</span>
+<span id="cb5-10"><a href="#cb5-10"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 <section id="table" class="slide level2">
 <h2>Table</h2>
 <p>Here is a table:</p>
@@ -959,40 +1141,32 @@ Ying Taur
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="htmlwidget-7ce5873cbb26f667bdf3" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7ce5873cbb26f667bdf3">{"x":{"filter":"none","vertical":false,"data":[["Mazda RX4","Mazda RX4 Wag","Datsun 710","Hornet 4 Drive","Hornet Sportabout","Valiant","Duster 360","Merc 240D","Merc 230","Merc 280","Merc 280C","Merc 450SE","Merc 450SL","Merc 450SLC","Cadillac Fleetwood","Lincoln Continental","Chrysler Imperial","Fiat 128","Honda Civic","Toyota Corolla","Toyota Corona","Dodge Challenger","AMC Javelin","Camaro Z28","Pontiac Firebird","Fiat X1-9","Porsche 914-2","Lotus Europa","Ford Pantera L","Ferrari Dino","Maserati Bora","Volvo 142E"],[21,21,22.8,21.4,18.7,18.1,14.3,24.4,22.8,19.2,17.8,16.4,17.3,15.2,10.4,10.4,14.7,32.4,30.4,33.9,21.5,15.5,15.2,13.3,19.2,27.3,26,30.4,15.8,19.7,15,21.4],[6,6,4,6,8,6,8,4,4,6,6,8,8,8,8,8,8,4,4,4,4,8,8,8,8,4,4,4,8,6,8,4],[160,160,108,258,360,225,360,146.7,140.8,167.6,167.6,275.8,275.8,275.8,472,460,440,78.7,75.7,71.1,120.1,318,304,350,400,79,120.3,95.1,351,145,301,121],[110,110,93,110,175,105,245,62,95,123,123,180,180,180,205,215,230,66,52,65,97,150,150,245,175,66,91,113,264,175,335,109],[3.9,3.9,3.85,3.08,3.15,2.76,3.21,3.69,3.92,3.92,3.92,3.07,3.07,3.07,2.93,3,3.23,4.08,4.93,4.22,3.7,2.76,3.15,3.73,3.08,4.08,4.43,3.77,4.22,3.62,3.54,4.11],[2.62,2.875,2.32,3.215,3.44,3.46,3.57,3.19,3.15,3.44,3.44,4.07,3.73,3.78,5.25,5.424,5.345,2.2,1.615,1.835,2.465,3.52,3.435,3.84,3.845,1.935,2.14,1.513,3.17,2.77,3.57,2.78],[16.46,17.02,18.61,19.44,17.02,20.22,15.84,20,22.9,18.3,18.9,17.4,17.6,18,17.98,17.82,17.42,19.47,18.52,19.9,20.01,16.87,17.3,15.41,17.05,18.9,16.7,16.9,14.5,15.5,14.6,18.6],[0,0,1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,0,1,0,0,0,1],[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1],[4,4,4,3,3,3,3,4,4,4,4,3,3,3,3,3,3,4,4,4,3,3,3,3,3,4,5,5,5,5,5,4],[4,4,1,1,2,1,4,2,2,4,4,3,3,3,4,4,4,1,2,1,1,2,2,4,2,1,2,2,4,6,8,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>mpg<\/th>\n      <th>cyl<\/th>\n      <th>disp<\/th>\n      <th>hp<\/th>\n      <th>drat<\/th>\n      <th>wt<\/th>\n      <th>qsec<\/th>\n      <th>vs<\/th>\n      <th>am<\/th>\n      <th>gear<\/th>\n      <th>carb<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4239fbf2b2ebb10b57cb" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4239fbf2b2ebb10b57cb">{"x":{"filter":"none","vertical":false,"data":[["Mazda RX4","Mazda RX4 Wag","Datsun 710","Hornet 4 Drive","Hornet Sportabout","Valiant","Duster 360","Merc 240D","Merc 230","Merc 280","Merc 280C","Merc 450SE","Merc 450SL","Merc 450SLC","Cadillac Fleetwood","Lincoln Continental","Chrysler Imperial","Fiat 128","Honda Civic","Toyota Corolla","Toyota Corona","Dodge Challenger","AMC Javelin","Camaro Z28","Pontiac Firebird","Fiat X1-9","Porsche 914-2","Lotus Europa","Ford Pantera L","Ferrari Dino","Maserati Bora","Volvo 142E"],[21,21,22.8,21.4,18.7,18.1,14.3,24.4,22.8,19.2,17.8,16.4,17.3,15.2,10.4,10.4,14.7,32.4,30.4,33.9,21.5,15.5,15.2,13.3,19.2,27.3,26,30.4,15.8,19.7,15,21.4],[6,6,4,6,8,6,8,4,4,6,6,8,8,8,8,8,8,4,4,4,4,8,8,8,8,4,4,4,8,6,8,4],[160,160,108,258,360,225,360,146.7,140.8,167.6,167.6,275.8,275.8,275.8,472,460,440,78.7,75.7,71.09999999999999,120.1,318,304,350,400,79,120.3,95.09999999999999,351,145,301,121],[110,110,93,110,175,105,245,62,95,123,123,180,180,180,205,215,230,66,52,65,97,150,150,245,175,66,91,113,264,175,335,109],[3.9,3.9,3.85,3.08,3.15,2.76,3.21,3.69,3.92,3.92,3.92,3.07,3.07,3.07,2.93,3,3.23,4.08,4.93,4.22,3.7,2.76,3.15,3.73,3.08,4.08,4.43,3.77,4.22,3.62,3.54,4.11],[2.62,2.875,2.32,3.215,3.44,3.46,3.57,3.19,3.15,3.44,3.44,4.07,3.73,3.78,5.25,5.424,5.345,2.2,1.615,1.835,2.465,3.52,3.435,3.84,3.845,1.935,2.14,1.513,3.17,2.77,3.57,2.78],[16.46,17.02,18.61,19.44,17.02,20.22,15.84,20,22.9,18.3,18.9,17.4,17.6,18,17.98,17.82,17.42,19.47,18.52,19.9,20.01,16.87,17.3,15.41,17.05,18.9,16.7,16.9,14.5,15.5,14.6,18.6],[0,0,1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,0,1,0,0,0,1],[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1],[4,4,4,3,3,3,3,4,4,4,4,3,3,3,3,3,3,4,4,4,3,3,3,3,3,4,5,5,5,5,5,4],[4,4,1,1,2,1,4,2,2,4,4,3,3,3,4,4,4,1,2,1,1,2,2,4,2,1,2,2,4,6,8,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>mpg<\/th>\n      <th>cyl<\/th>\n      <th>disp<\/th>\n      <th>hp<\/th>\n      <th>drat<\/th>\n      <th>wt<\/th>\n      <th>qsec<\/th>\n      <th>vs<\/th>\n      <th>am<\/th>\n      <th>gear<\/th>\n      <th>carb<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
-<section id="citations-and-footnotes" class="slide level2 smaller scrollable">
-<h2>Citations and Footnotes</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this. The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
-<p>Here is a footnote reference,<sup>1</sup> and another.<sup>2</sup> You can also reference inline!<sup>3</sup></p>
-<!-- These footnote definitions can go anywhere make sure there is blank line before/after -->
-<p>The whole paragraph can be indented, or just the first line. In this way, multi-paragraph footnotes work like multi-paragraph list items.</p>
-<p>Here is a sentence with citation using bibliography.<span class="citation" data-cites="cordonnier2009randomized"><sup><a href="#/citations-and-footnotes" role="doc-biblioref" onclick="">1</a></sup></span></p>
-<p>The sentence has multiple references.<span class="citation" data-cites="adibi2012reduction gold2008human roach1991ciprofloxacin"><sup><a href="#/citations-and-footnotes" role="doc-biblioref" onclick="">2</a>–<a href="#/citations-and-footnotes" role="doc-biblioref" onclick="">4</a></sup></span></p>
+<section id="repeated-background" class="slide level2" data-background-color="black" data-background-image="stamp1a.jpg" data-background-size="100px" data-background-repeat="repeat" data-background-opacity="0.5">
+<h2>Repeated background</h2>
+<p>Content here.</p>
+</section>
+<section id="figure-normal-placement-default-width1050height700" class="slide level2">
+<h2>Figure, normal placement (default: <code>{width=1050,height=700}</code>)</h2>
 
+<img data-src="stamp1a.jpg" class="r-stretch"></section>
+<section id="figure-resized" class="slide level2">
+<h2>Figure, resized</h2>
+
+<img data-src="stamp1a.jpg" style="width:10.0%" class="r-stretch"></section>
+<section id="figure-absolute-positioning" class="slide level2">
+<h2>Figure, absolute positioning</h2>
+<p><img data-src="stamp1a.jpg" class="absolute" style="top: 200px; left: 0px; width: 350px; height: 300px; "></p>
+
+<p><img src="stamp1a.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
-<div id="refs" class="references csl-bib-body" data-line-spacing="2" role="list">
-<div id="ref-cordonnier2009randomized" class="csl-entry" role="listitem">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">Cordonnier, C. <em>et al.</em> Randomized study of early versus late immunization with pneumococcal conjugate vaccine after allogeneic stem cell transplantation. <em>Clinical Infectious Diseases</em> <strong>48</strong>, 1392–1401 (2009).</div>
-</div>
-<div id="ref-adibi2012reduction" class="csl-entry" role="listitem">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline">Adibi, M. <em>et al.</em> Reduction in hospital admission rates due to post-prostate biopsy infections after augmenting standard antibiotic prophylaxis. <em>The Journal of urology</em> (2012).</div>
-</div>
-<div id="ref-gold2008human" class="csl-entry" role="listitem">
-<div class="csl-left-margin">3. </div><div class="csl-right-inline">Gold, M. C. <em>et al.</em> Human innate mycobacterium tuberculosis–reactive <span class="math inline">\(\alpha\)</span><span class="math inline">\(\beta\)</span>TCR+ thymocytes. <em>PLoS pathogens</em> <strong>4</strong>, e39 (2008).</div>
-</div>
-<div id="ref-roach1991ciprofloxacin" class="csl-entry" role="listitem">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline">Roach, M. B., George, W. J., Figueroa, T. E., Neal, D. E. &amp; McBride, D. Ciprofloxacin versus gentamicin in prophylaxis against bacteremia in transrectal prostate needle biopsy. <em>Urology</em> <strong>38</strong>, 84–87 (1991).</div>
-</div>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Here is the footnote.</p></li><li id="fn2"><p>Here’s one with multiple blocks. Subsequent paragraphs are indented to show that they belong to the previous footnote.</p>
-<pre><code>{ some.code }</code></pre>
-</li><li id="fn3"><p>Hello. I am an inline footnote.</p></li></ol></aside></section>
+</section>
 
     </div>
   </div>
@@ -1025,7 +1199,7 @@ Ying Taur
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
