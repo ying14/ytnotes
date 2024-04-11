@@ -77,55 +77,6 @@ pl.DataFrame(
 
 
 
-###### Read in a TSV file, explicitly
-
-:::::::::::::: {.columns}
-::: {.column width="49%"}
-```{r}
-file <- "C:/Users/Ying/Desktop/samples/mock/Sample_GutZymo1_IGO_13699_36.kaiju_summary1.tsv"
-
-cols <- list(
-  "outfile"=col_character(), 
-  "percent"=col_double(),
-  "numseqs"=col_integer(),
-  "taxid"=col_character(), 
-  "taxon_name"=col_skip()
-)
-table <- read_tsv(file,skip=1,col_names=names(cols),col_types=cols, na=c("", "NA"))
-```
-:::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
-```{python}
-cols = {
-  'outfile':pl.Utf8, 
-  'percent':pl.Float64,
-  'numseqs':pl.Int64,
-  'taxid':pl.Utf8, 
-  'taxon_name':None
-}
-
-# read_csv method: 
-columns = [i for i,v in enumerate(cols.values()) if v is not None]
-new_columns = [k for k,v in cols.items() if v is not None]
-dtypes = {k:v for k,v in cols.items() if v is not None}
-table = pl.read_csv(r.file, skip_rows=1, sep='\t', has_header=False, null_values=['','NA'], columns=columns, new_columns=new_columns, dtypes=dtypes)
-
-# lazy_csv method: 
-colnames = ['column_'+str(i+1) for i,v in enumerate(cols.values())]
-dtypes = {k:(v if v is not None else pl.Utf8) for k,v in zip(colnames,cols.values())}
-select_expr = [pl.col(n).alias(c) for n,c,t in zip(colnames,cols.keys(),cols.values()) if t is not None]
-table_lazy = pl.scan_csv(r.file, skip_rows=1, sep='\t', has_header=False, dtypes=dtypes).select(select_expr).collect()
-```
-:::
-::::::::::::::
-
-
-
-
-
 ###### Extract vector
 
 :::::::::::::: {.columns}
@@ -148,21 +99,117 @@ diamonds_polars.get_column('color') #method 2
 ::::::::::::::
 
 
+### Read in Files
 
-
-
-
-### Table Characteristics
+###### Read in a TSV file (with header)
 
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
 ```{r}
-nrow(diamonds) #height
-ncol(diamonds) #width
-dim(diamonds) #height and width
-map(diamonds,class) #list of classes
-glimpse(diamonds) #column datatypes
+file <- "kaiju_summary.tsv"
+table <- read_tsv(file,na=c("","NA"))
 ```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+table = pl.read_csv(r.file, 
+                    separator='\t', 
+                    null_values=['','NA']).to_pandas()
+```
+:::
+::::::::::::::
+
+###### Read in a TSV file (without header)
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+file <- "kaiju.out"
+table <- read_tsv(file,col_names=c("classified","header","taxid","score","taxid_list","acccession_list","matching_seq"))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+table = pl.read_csv(r.file, 
+                    separator='\t', 
+                    has_header=False, 
+                    null_values=['','NA'],
+                    new_columns = ['classified','header','taxid','score','taxid_list','acccession_list','matching_seq']).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Read in a TSV file (without header, explicitly specify columns)
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+file <- "kaiju.out"
+cols <- list(
+  "classified"=col_character(),
+  "header"=col_character(),
+  "taxid"=col_character(),
+  "score"=col_integer(),
+  "taxid_list"=col_character(),
+  "acccession_list"=col_skip(),
+  "matching_seq"=col_character()
+)
+table <- read_tsv(file,col_names=names(cols),col_types=cols, na=c("", "NA"))
+```
+:::
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+::: {.column width="49%"}
+```{python}
+cols = {
+  'classified':pl.Utf8,
+  'header':pl.Utf8,
+  'taxid':pl.Utf8,
+  'score':pl.Int32,
+  'taxid_list':pl.Utf8,
+  'acccession_list':None,
+  'matching_seq':pl.Utf8
+}
+
+columns = [i for i,v in enumerate(cols.values()) if v is not None]
+new_columns = [k for k,v in cols.items() if v is not None]
+dtypes = {k:v for k,v in cols.items() if v is not None}
+table = pl.read_csv(r.file, 
+                    separator='\t', 
+                    has_header=False, 
+                    null_values=['','NA'], 
+                    columns=columns, 
+                    new_columns=new_columns, 
+                    dtypes=dtypes).to_pandas()
+```
+:::
+::::::::::::::
+
+
+###### Read in a TSV file (explicitly without header)
+
+```{r}
+library(reticulate)
+table1 <- table %>% arrange(header)
+table2 <- py$table %>% arrange(header)
+table1 %>% glimpse()
+table2 %>% glimpse()
+
+
+table2$taxid_list
+```
+
+
+### Table Characteristics
+
 :::
 ::: {.column width="2%"}
 <!-- empty column to create gap -->
