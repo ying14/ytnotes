@@ -185,9 +185,30 @@ R profile (user):
 1. File specified by `R_PROFILE_USER`
 2. `<current_dir>`/.Rprofile
 3. `<user_home_dir>`/.Rprofile
+(where `R_USER` is `<user_home_dir>`, at least in Windows)
+
+In R profile, can set options such as Java heap file, and activities before and after session:
+```{r}
+options(java.parameters = "-Xmx8g")
+message("Increased java heap size to 8GB.")
+
+.First <- function() cat("\n   Welcome to R!\n\n")
+.Last <- function()  cat("\n   Goodbye!\n\n")
+```
 
 
-`.libPaths()` determined by: `R_LIBS_USER`
+In R environment, can set `R_LIBS_USER` to modify default `.libPaths()`, 
+`idbdw_UX` and `idbdw_PW` for `ytdata`, or
+`BLASTDB` for location of BLAST database:
+
+```
+R_LIBS_USER = C:/Users/Ying/R/packages
+idbdw_UX = <username>
+idbdw_PW = <password>
+BLASTDB = C:/blastdb
+```
+
+
 
 
 

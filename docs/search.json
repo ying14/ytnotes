@@ -242,7 +242,7 @@
     "href": "posts/R_install/index.html#r-startup",
     "title": "R install notes",
     "section": "R startup:",
-    "text": "R startup:\nR environment (site):\n\nFile specified by R_ENVIRON\nR_HOME/etc/Renviron.site\n\nR environment (user):\n\nFile specified by R_ENVIRON_USER\n&lt;current_dir&gt;/.Renviron\n&lt;user_home_dir&gt;/.Renviron\n\nR profile (site):\n\nFile specified by R_PROFILE\nR_HOME/etc/Rprofile.site\n\nR profile (user):\n\nFile specified by R_PROFILE_USER\n&lt;current_dir&gt;/.Rprofile\n&lt;user_home_dir&gt;/.Rprofile\n\n.libPaths() determined by: R_LIBS_USER"
+    "text": "R startup:\nR environment (site):\n\nFile specified by R_ENVIRON\nR_HOME/etc/Renviron.site\n\nR environment (user):\n\nFile specified by R_ENVIRON_USER\n&lt;current_dir&gt;/.Renviron\n&lt;user_home_dir&gt;/.Renviron\n\nR profile (site):\n\nFile specified by R_PROFILE\nR_HOME/etc/Rprofile.site\n\nR profile (user):\n\nFile specified by R_PROFILE_USER\n&lt;current_dir&gt;/.Rprofile\n&lt;user_home_dir&gt;/.Rprofile (where R_USER is &lt;user_home_dir&gt;, at least in Windows)\n\nIn R profile, can set options such as Java heap file, and activities before and after session:\n\noptions(java.parameters = \"-Xmx8g\")\nmessage(\"Increased java heap size to 8GB.\")\n\nIncreased java heap size to 8GB.\n\n.First &lt;- function() cat(\"\\n   Welcome to R!\\n\\n\")\n.Last &lt;- function()  cat(\"\\n   Goodbye!\\n\\n\")\n\nIn R environment, can set R_LIBS_USER to modify default .libPaths(), idbdw_UX and idbdw_PW for ytdata, or BLASTDB for location of BLAST database:\nR_LIBS_USER = C:/Users/Ying/R/packages\nidbdw_UX = &lt;username&gt;\nidbdw_PW = &lt;password&gt;\nBLASTDB = C:/blastdb"
   },
   {
     "objectID": "posts/sql_commands/index.html",

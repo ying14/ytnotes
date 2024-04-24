@@ -333,9 +333,23 @@ numpy_version:  1.23.2</code></pre>
 <ol type="1">
 <li>File specified by <code>R_PROFILE_USER</code></li>
 <li><code>&lt;current_dir&gt;</code>/.Rprofile</li>
-<li><code>&lt;user_home_dir&gt;</code>/.Rprofile</li>
+<li><code>&lt;user_home_dir&gt;</code>/.Rprofile (where <code>R_USER</code> is <code>&lt;user_home_dir&gt;</code>, at least in Windows)</li>
 </ol>
-<p><code>.libPaths()</code> determined by: <code>R_LIBS_USER</code></p>
+<p>In R profile, can set options such as Java heap file, and activities before and after session:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">java.parameters =</span> <span class="st">"-Xmx8g"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"Increased java heap size to 8GB."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Increased java heap size to 8GB.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>.First <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">   Welcome to R!</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>.Last <span class="ot">&lt;-</span> <span class="cf">function</span>()  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">   Goodbye!</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In R environment, can set <code>R_LIBS_USER</code> to modify default <code>.libPaths()</code>, <code>idbdw_UX</code> and <code>idbdw_PW</code> for <code>ytdata</code>, or <code>BLASTDB</code> for location of BLAST database:</p>
+<pre><code>R_LIBS_USER = C:/Users/Ying/R/packages
+idbdw_UX = &lt;username&gt;
+idbdw_PW = &lt;password&gt;
+BLASTDB = C:/blastdb</code></pre>
 
 
 </section>
