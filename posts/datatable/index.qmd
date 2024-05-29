@@ -38,9 +38,9 @@ band_instruments
 ::: {.g-col-6}
 ```{r}
 library(data.table)
-diamonds.dt <- diamonds %>% as.data.table()
-band_members.dt <- band_members %>% as.data.table()
-band_instruments.dt <- band_instruments %>% as.data.table()
+diamonds.dt <- as.data.table(diamonds)
+band_members.dt <- as.data.table(band_members)
+band_instruments.dt <- as.data.table(band_instruments)
 ```
 :::
 ::::::::::::::
@@ -88,7 +88,11 @@ cols <- list(
   "taxid"=col_character(), 
   "taxon_name"=col_skip()
 )
-table <- read_tsv(file,skip=1,col_names=names(cols),col_types=cols, na=c("", "NA"))
+table <- read_tsv(file,
+                  skip=1,
+                  col_names=names(cols),
+                  col_types=cols, 
+                  na=c("", "NA"))
 ```
 :::
 
@@ -106,8 +110,10 @@ drop <- which(is.na(cols)) %>% unname()
 col.names <- names(cols)[!is.na(cols)]
 colClasses <- cols[!is.na(cols)] %>% {setNames(seq_along(.),.)} %>% as.list()
 table2 <- fread(file,header=TRUE,
-                drop=drop,col.names = col.names,
-                colClasses=colClasses,na.strings=c("","NA"))
+                drop=drop,
+                col.names = col.names,
+                colClasses=colClasses,
+                na.strings=c("","NA"))
 ```
 :::
 ::::::::::::::
