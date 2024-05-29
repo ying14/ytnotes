@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,8 +91,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
@@ -195,6 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#find-largest-file-in-directory--a-lists-file-sizes" id="toc-find-largest-file-in-directory--a-lists-file-sizes" class="nav-link" data-scroll-target="#find-largest-file-in-directory--a-lists-file-sizes">Find largest file in directory (<code>-a</code> lists file sizes)</a></li>
   </ul></li>
+  <li><a href="#devices" id="toc-devices" class="nav-link" data-scroll-target="#devices">Devices</a></li>
   <li><a href="#x2go-commands" id="toc-x2go-commands" class="nav-link" data-scroll-target="#x2go-commands">X2GO commands</a></li>
   </ul>
 </nav>
@@ -292,14 +292,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># du -k -d1 * | sort -nr | cut -f2 | xargs -d '\n' du -sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
+<section id="devices" class="level2">
+<h2 class="anchored" data-anchor-id="devices">Devices</h2>
+<p>List mountable devices</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> lshw <span class="at">-class</span> disk <span class="at">-short</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lsblk</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 <section id="x2go-commands" class="level2">
 <h2 class="anchored" data-anchor-id="x2go-commands">X2GO commands</h2>
 <p>List sessions</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">x2golistsessions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">x2golistsessions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre class="47409|ying-50-1666546387_stdkde_dp32|50|iski0021|r|2022-10-23t13:33:07|eccbae477812d21a69840bf3a59515a1|10.252.13.86|39201|39202|2022-10-31t10:30:30|ying|680416|39203|-1|-1"><code>ying@iski0021[ying] 47409|ying-50-1666546387_stDKDE_dp32|50|iski0021|R|2022-10-23T13:33:07|eccbae477812d21a69840bf3a59515a1|10.252.13.86|39201|39202|2022-10-31T10:30:30|ying|680416|39203|-1|-1</code></pre>
 <p>Field 1 <code>47409</code> is agent ID Field 2 <code>ying-50-1666546387_stDKDE_dp32</code> is session ID.</p>
 <p>Terminate session</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">x2goterminate-session</span> <span class="op">&lt;</span>sessio_ID<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">x2goterminate-session</span> <span class="op">&lt;</span>sessio_ID<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

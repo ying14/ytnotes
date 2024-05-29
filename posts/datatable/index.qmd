@@ -22,10 +22,11 @@ image: "thumbnail.jpg"
 
 
 
+
 ### Load package and data 
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 library(tidyverse)
 diamonds
@@ -33,10 +34,8 @@ band_members
 band_instruments
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 library(data.table)
 diamonds.dt <- diamonds %>% as.data.table()
@@ -51,8 +50,8 @@ band_instruments.dt <- band_instruments %>% as.data.table()
 
 ###### Generate a data frame from scratch
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 tibble(
   id=1:3,
@@ -61,10 +60,8 @@ tibble(
 )
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 data.table(
   id=1:3,
@@ -80,8 +77,8 @@ data.table(
 
 ###### Read in a TSV file, explicitly
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 file <- "C:/Users/Ying/Desktop/samples/mock/Sample_GutZymo1_IGO_13699_36.kaiju_summary1.tsv"
 cols <- list(
@@ -94,10 +91,8 @@ cols <- list(
 table <- read_tsv(file,skip=1,col_names=names(cols),col_types=cols, na=c("", "NA"))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 file <- "C:/Users/Ying/Desktop/samples/mock/Sample_GutZymo1_IGO_13699_36.kaiju_summary1.tsv"
 cols2 <- c(
@@ -125,18 +120,16 @@ table2 <- fread(file,header=TRUE,
 
 ###### Extract top 3 rows
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds[1:3,] #method 1
 head(diamonds,3) #method 2
 diamonds %>% slice(1:3) #method 3
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt[1:3,] #method 1
 diamonds.dt[1:3] #method 2
@@ -147,8 +140,8 @@ diamonds.dt[1:3] #method 2
 
 ###### Multiple row filter criteria
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% 
   filter(clarity=="VVS1",
@@ -156,10 +149,8 @@ diamonds %>%
          grepl("[DEF]",color))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt[clarity=="VVS1" & 
               price>2000 & 
@@ -176,16 +167,14 @@ diamonds.dt[clarity=="VVS1" &
 
 ###### Routine select
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(carat,cut,clarity)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt <- diamonds %>% as.data.table()
 #method 1
@@ -205,16 +194,14 @@ diamonds.dt[, .(carat,cut,clarity)]
 
 ###### Select columns using regex pattern
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(matches("^c"))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 #method 1
 cols <- grep("^c",  names(diamonds.dt)) 
@@ -229,16 +216,14 @@ diamonds.dt[, .SD, .SDcols=patterns("^c")]
 
 ###### Select columns of a certain type
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(where(is.factor))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt[, .SD, .SDcols = is.factor]
 ```
@@ -251,16 +236,14 @@ diamonds.dt[, .SD, .SDcols = is.factor]
 
 ###### Select all columns _except_ those specified
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(-c(x,y,z))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 #method 1
 diamonds.dt[, !c("x","y","z")]
@@ -275,16 +258,14 @@ diamonds.dt[, -..cols]
 
 ###### Select columns and rename
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(price_usd=price,length=x,width=y,depth=z)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 # by reference!
 setnames(diamonds.dt,
@@ -298,16 +279,14 @@ setnames(diamonds.dt,
 
 ###### Select all columns and add prefix
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% rename_with(.fn=~paste0("var_",.))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 # by reference!
 setnames(diamonds.dt,
@@ -322,8 +301,8 @@ setnames(diamonds.dt,
 
 ###### Select and programmatically rename
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 varmap <- c("price_usd"="price",
             "length"="x",
@@ -332,10 +311,8 @@ varmap <- c("price_usd"="price",
 diamonds %>% select(!!!varmap)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 # by reference!
 varmap <- c("price_usd"="price",
@@ -354,8 +331,8 @@ setnames(diamonds.dt,old=varmap,new=names(varmap))
 
 ###### Mutate
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   mutate(price_thousands=price*1000,
@@ -363,10 +340,8 @@ diamonds %>%
          xyz=paste(x,y,z,sep="+"))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 # by reference!
 #method 1
@@ -388,8 +363,8 @@ diamonds.dt[, ':='(price_thousands=price*1000,
 
 ###### Transmute
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 
 diamonds %>%
@@ -405,10 +380,8 @@ diamonds %>%
     ))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt[,.(color_is_DEF=color %in% c("D","E","F"),
                clarity=str_to_title(clarity),
@@ -431,8 +404,8 @@ diamonds.dt[,.(color_is_DEF=color %in% c("D","E","F"),
 
 ###### Count rows by group
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% 
   group_by(cut,color) %>%
@@ -442,10 +415,8 @@ diamonds %>%
 diamonds %>% count(cut,color) #shortcut
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt[, .(n=.N), by = c("cut","color")]
 ```
@@ -454,8 +425,8 @@ diamonds.dt[, .(n=.N), by = c("cut","color")]
 
 ###### Calculate various summaries by group
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   group_by(cut) %>%
@@ -466,10 +437,8 @@ diamonds %>%
             .groups="drop")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt[, by=cut,
             .(n=.N,
@@ -483,8 +452,8 @@ diamonds.dt[, by=cut,
 
 ###### Select first row after sorting, by group
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   group_by(cut) %>%
@@ -493,10 +462,8 @@ diamonds %>%
   ungroup()
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 (diamonds.dt[,.SD[order(-price,depth)], by=cut]
   [,.SD[1], by=cut])
@@ -514,17 +481,15 @@ diamonds.dt[,.SD[order(-price,depth)][1], by=cut]
 
 ###### Apply to all columns
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% 
   mutate(across(.fns=~paste0(.,"_xyz")))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt[,lapply(.SD, function(x) paste0(x,"_xyz"))]
 ```
@@ -536,17 +501,15 @@ diamonds.dt[,lapply(.SD, function(x) paste0(x,"_xyz"))]
 
 ###### Apply to columns using regex
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   transmute(across(.cols=matches("^c"),.fns=~paste0(.,"_x")))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt[,lapply(.SD,function(x) paste0(x,"_x")),
             .SDcols=patterns("^c")]
@@ -558,18 +521,16 @@ diamonds.dt[,lapply(.SD,function(x) paste0(x,"_x")),
 
 ###### Apply to columns of a certain type
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   mutate(across(.cols=where(is.numeric),
                 .fns=~. * 1000))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt[,lapply(.SD,function(x) {
   if (is.numeric(x)) x*1000 else x
@@ -588,16 +549,14 @@ diamonds.dt[,lapply(.SD,function(x) {
 
 ###### Left join
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 band_members %>% left_join(band_instruments,by="name")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 band_instruments.dt[band_members.dt, on = "name"]
 
@@ -612,16 +571,14 @@ merge(band_members.dt,
 
 ###### Inner join
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 band_members %>% inner_join(band_instruments,by="name")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 band_members.dt[band_instruments.dt, on="name",nomatch=0]
 
@@ -635,16 +592,14 @@ merge(band_members.dt, band_instruments.dt, by="name")
 
 ###### Outer join
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 band_members %>% full_join(band_instruments,by="name")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 merge(band_members.dt, band_instruments.dt, all = TRUE, by = "name")
 ```
@@ -654,16 +609,14 @@ merge(band_members.dt, band_instruments.dt, all = TRUE, by = "name")
 
 ###### Anti join
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 band_members %>% anti_join(band_instruments,by="name")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 band_members.dt[!band_instruments.dt, on ="name"]
 ```
@@ -674,17 +627,15 @@ band_members.dt[!band_instruments.dt, on ="name"]
 
 ###### Pivot Longer
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   pivot_longer(cols=c(x,y,z),names_to="axis",values_to="mm")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 melt(diamonds.dt,
      measure.vars = c("x","y","z"),
@@ -699,17 +650,15 @@ melt(diamonds.dt,
 
 ###### Pivot Wider
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   pivot_wider(id_cols=clarity,names_from=cut,values_from=price,values_fn=mean)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 dcast(diamonds.dt,
       clarity ~ cut, 
@@ -724,18 +673,16 @@ dcast(diamonds.dt,
 
 ###### Split string column into nested list, unnest into long format
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   mutate(cut_word=str_split(cut," ")) %>%
   unnest(cut_word)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 
 # diamonds.dt <- diamonds %>% as.data.table()
@@ -751,8 +698,8 @@ diamonds %>%
 
 ###### Group by a variable and tally others in a nested field
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   group_by(cut) %>%
@@ -760,10 +707,8 @@ diamonds %>%
             .groups="drop")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 # ????????????????????????
 ```
@@ -775,18 +720,16 @@ diamonds %>%
 
 ###### Move columns into single nested column, then unnest to individual columns again.
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   nest(col_color_clarity=c(cut,color,clarity)) %>%
   unnest(col_color_clarity)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 # ????????????????????????
 ```
@@ -800,8 +743,8 @@ diamonds %>%
 ###### Nested table in a single column, by group
 
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   group_by(color) %>%
@@ -809,10 +752,8 @@ diamonds %>%
   ungroup()
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 # ????????????????????????
 ```
@@ -828,8 +769,8 @@ diamonds %>%
 ###### Inject list of expressions into a group_by/summarize
 
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 byvar <- c("cut","color","clarity")
 cmds <- rlang::exprs(
@@ -845,10 +786,8 @@ diamonds %>%
             .groups="drop")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{r}
 diamonds.dt <- diamonds %>% as.data.table()
 byvar <- c("cut","color","clarity")

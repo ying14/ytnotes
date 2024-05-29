@@ -23,8 +23,8 @@ image: "thumbnail.jpg"
 
 ### Load package and data 
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 library(tidyverse)
 diamonds
@@ -32,10 +32,8 @@ band_members
 band_instruments
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 import polars as pl
 diamonds_polars = pl.from_pandas(r.diamonds)
@@ -48,8 +46,8 @@ band_instruments_polars = pl.from_pandas(r.band_instruments)
 
 ###### Generate a data frame from scratch
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 tibble(
   id=1:3,
@@ -58,10 +56,8 @@ tibble(
 )
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 pl.DataFrame(
   {
@@ -79,18 +75,16 @@ pl.DataFrame(
 
 ###### Extract vector
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds$color #method 1
 diamonds[["color"]] #method 2
 diamonds %>% pull(color) #method 3
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 diamonds_polars['color'] #method 1
 diamonds_polars.get_column('color') #method 2
@@ -103,17 +97,15 @@ diamonds_polars.get_column('color') #method 2
 
 ###### Read in a TSV file (with header)
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 file <- "kaiju_summary.tsv"
 table <- read_tsv(file,na=c("","NA"))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 table = pl.read_csv(r.file, 
                     separator='\t', 
@@ -124,17 +116,15 @@ table = pl.read_csv(r.file,
 
 ###### Read in a TSV file (without header)
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 file <- "kaiju.out"
 table <- read_tsv(file,col_names=c("classified","header","taxid","score","taxid_list","acccession_list","matching_seq"))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 table = pl.read_csv(r.file, 
                     separator='\t', 
@@ -148,8 +138,8 @@ table = pl.read_csv(r.file,
 
 ###### Read in a TSV file (without header, explicitly specify columns)
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 file <- "kaiju.out"
 cols <- list(
@@ -164,10 +154,8 @@ cols <- list(
 table <- read_tsv(file,col_names=names(cols),col_types=cols, na=c("", "NA"))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 cols = {
   'classified':pl.Utf8,
@@ -211,10 +199,8 @@ table2$taxid_list
 ### Table Characteristics
 
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 diamonds_polars.height #height
 diamonds_polars.width #width
@@ -232,18 +218,16 @@ diamonds_polars.schema #column datatypes (dict)
 
 ###### Extract top 3 rows
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds[1:3,] #method 1
 head(diamonds,3) #method 2
 diamonds %>% slice(1:3) #method 3
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 diamonds_polars[[1,2,3],:].to_pandas()
 diamonds_polars.head(3).to_pandas()
@@ -254,8 +238,8 @@ diamonds_polars.head(3).to_pandas()
 
 ###### Multiple row filter criteria
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% 
   filter(clarity=="VVS1",
@@ -263,10 +247,8 @@ diamonds %>%
          grepl("[DEF]",color))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .filter(
@@ -292,16 +274,14 @@ diamonds %>%
 
 ###### Routine select
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(carat,cut,clarity)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .select(['carat','cut','clarity'])
@@ -314,16 +294,14 @@ diamonds %>% select(carat,cut,clarity)
 
 ###### Select columns using regex pattern
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(matches("^c"))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .select([
@@ -338,16 +316,14 @@ diamonds %>% select(matches("^c"))
 
 ###### Select columns of a certain type
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(where(is.factor))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .select([
@@ -366,16 +342,14 @@ diamonds %>% select(where(is.factor))
 
 ###### Select all columns _except_ those specified
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(-c(x,y,z))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .select([
@@ -390,16 +364,14 @@ diamonds %>% select(-c(x,y,z))
 
 ###### Select columns and rename
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% select(price_usd=price,length=x,width=y,depth=z)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .select([
@@ -417,16 +389,14 @@ diamonds %>% select(price_usd=price,length=x,width=y,depth=z)
 
 ###### Select all columns and add prefix
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% rename_with(.fn=~paste0("var_",.))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .select([
@@ -442,8 +412,8 @@ diamonds %>% rename_with(.fn=~paste0("var_",.))
 
 ###### Select and programmatically rename
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 varmap <- c("price_usd"="price",
             "length"="x",
@@ -452,10 +422,8 @@ varmap <- c("price_usd"="price",
 diamonds %>% select(!!!varmap)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 varmap = {'price':'price_usd',
           'x':'length',
@@ -476,8 +444,8 @@ varmap = {'price':'price_usd',
 
 ###### Mutate
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   mutate(price_thousands=price*1000,
@@ -485,10 +453,8 @@ diamonds %>%
          xyz=paste(x,y,z,sep="+"))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .with_columns([
@@ -504,8 +470,8 @@ diamonds %>%
 
 ###### Transmute
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   transmute(
@@ -519,10 +485,8 @@ diamonds %>%
     clarity=str_to_title(clarity))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .select([
@@ -548,8 +512,8 @@ diamonds %>%
 
 ###### Count rows by group
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% 
   group_by(cut,color) %>%
@@ -559,10 +523,8 @@ diamonds %>%
 diamonds %>% count(cut,color) #shortcut
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .groupby(['cut','color'])
@@ -576,8 +538,8 @@ diamonds %>% count(cut,color) #shortcut
 
 ###### Calculate various summaries by group
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   group_by(cut) %>%
@@ -588,10 +550,8 @@ diamonds %>%
             .groups="drop")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .groupby('cut')
@@ -609,8 +569,8 @@ diamonds %>%
 
 ###### Select first row after sorting, by group
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   group_by(cut) %>%
@@ -619,10 +579,8 @@ diamonds %>%
   ungroup()
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .sort(['price','depth'],reverse=[True,False])
@@ -648,17 +606,15 @@ diamonds %>%
 
 ###### Apply to all columns
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% 
   mutate(across(.fns=~paste0(.,"_xyz")))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .with_columns([
@@ -674,17 +630,15 @@ diamonds %>%
 
 ###### Apply to columns using regex
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% 
   transmute(across(.cols=matches("^c"),.fns=~paste0(.,"_x")))
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .select([
@@ -699,8 +653,8 @@ diamonds %>%
 
 ###### Apply to columns of a certain type
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% 
   mutate(across(.cols=where(is.numeric),
@@ -708,10 +662,8 @@ diamonds %>%
 
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .with_columns([
@@ -732,16 +684,14 @@ diamonds %>%
 
 ###### Left join
 	
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 band_members %>% left_join(band_instruments,by="name")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (band_members_polars
   .join(band_instruments_polars,on='name',how='left')
@@ -754,16 +704,14 @@ band_members %>% left_join(band_instruments,by="name")
 
 ###### Inner join
 	
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 band_members %>% inner_join(band_instruments,by="name")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (band_members_polars
   .join(band_instruments_polars,on='name',how='inner')
@@ -777,16 +725,14 @@ band_members %>% inner_join(band_instruments,by="name")
 
 ###### Outer join
 	
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 band_members %>% full_join(band_instruments,by="name")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (band_members_polars
   .join(band_instruments_polars,on='name',how='outer')
@@ -798,16 +744,14 @@ band_members %>% full_join(band_instruments,by="name")
 
 ###### Anti join
 	
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 band_members %>% anti_join(band_instruments,by="name")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (band_members_polars
   .join(band_instruments_polars,on='name',how='anti')
@@ -820,17 +764,15 @@ band_members %>% anti_join(band_instruments,by="name")
 
 ###### Pivot Longer
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   pivot_longer(cols=c(x,y,z),names_to="axis",values_to="mm")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .melt(id_vars=list(set(diamonds_polars.columns).difference(['x','y','z'])),variable_name='variable',value_name='value')
@@ -844,17 +786,15 @@ diamonds %>%
 
 ###### Pivot Wider
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   pivot_wider(id_cols=clarity,names_from=cut,values_from=price,values_fn=mean)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .pivot(index='clarity',values='price',columns='cut',aggregate_fn='mean')
@@ -869,18 +809,16 @@ diamonds %>%
 
 ###### Split string column into nested list, unnest into long format
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   mutate(cut_word=str_split(cut," ")) %>%
   unnest(cut_word)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .with_columns([
@@ -897,8 +835,8 @@ diamonds %>%
 
 ###### Group by a variable and tally others in a nested field
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>% 
   group_by(cut) %>%
@@ -906,10 +844,8 @@ diamonds %>%
             .groups="drop")
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .groupby('cut')
@@ -926,18 +862,16 @@ diamonds %>%
 
 ###### Move columns into single nested column, then unnest to individual columns again.
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   nest(col_color_clarity=c(cut,color,clarity)) %>%
   unnest(col_color_clarity)
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .with_columns([
@@ -957,8 +891,8 @@ diamonds %>%
 ###### Nested table in a single column, by group
 
 
-:::::::::::::: {.columns}
-::: {.column width="49%"}
+:::::::::::::: {.grid}
+::: {.g-col-6}
 ```{r}
 diamonds %>%
   group_by(color) %>%
@@ -966,10 +900,8 @@ diamonds %>%
   ungroup()
 ```
 :::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="49%"}
+
+::: {.g-col-6}
 ```{python}
 (diamonds_polars
   .groupby('color')
@@ -987,8 +919,8 @@ diamonds %>%
 
 <!-- ###### xxxx -->
 
-<!-- :::::::::::::: {.columns} -->
-<!-- ::: {.column width="49%"} -->
+<!-- :::::::::::::: {.grid} -->
+<!-- ::: {.g-col-6} -->
 <!-- ```{r} -->
 <!-- diamonds     # r code -->
 <!-- ``` -->
@@ -996,7 +928,7 @@ diamonds %>%
 <!-- ::: {.column width="2%"} -->
 <!-- <!-- empty column to create gap --> -->
 <!-- ::: -->
-<!-- ::: {.column width="49%"} -->
+<!-- ::: {.g-col-6} -->
 <!-- ```{python} -->
 <!-- diamonds_polars.to_pandas()    # python -->
 <!-- ``` -->
@@ -1008,8 +940,8 @@ diamonds %>%
 
 <!-- ###### xxxx -->
 
-<!-- :::::::::::::: {.columns} -->
-<!-- ::: {.column width="49%"} -->
+<!-- :::::::::::::: {.grid} -->
+<!-- ::: {.g-col-6} -->
 <!-- ```{r} -->
 <!-- diamonds     # r code -->
 <!-- ``` -->
@@ -1017,7 +949,7 @@ diamonds %>%
 <!-- ::: {.column width="2%"} -->
 <!-- <!-- empty column to create gap --> -->
 <!-- ::: -->
-<!-- ::: {.column width="49%"} -->
+<!-- ::: {.g-col-6} -->
 <!-- ```{python} -->
 <!-- diamonds_polars.to_pandas()    # python -->
 <!-- ``` -->
@@ -1031,8 +963,8 @@ diamonds %>%
 
 <!-- ###### xxxx -->
 
-<!-- :::::::::::::: {.columns} -->
-<!-- ::: {.column width="49%"} -->
+<!-- :::::::::::::: {.grid} -->
+<!-- ::: {.g-col-6} -->
 <!-- ```{r} -->
 <!-- diamonds     # r code -->
 <!-- ``` -->
@@ -1040,7 +972,7 @@ diamonds %>%
 <!-- ::: {.column width="2%"} -->
 <!-- <!-- empty column to create gap --> -->
 <!-- ::: -->
-<!-- ::: {.column width="49%"} -->
+<!-- ::: {.g-col-6} -->
 <!-- ```{python} -->
 <!-- diamonds_polars.to_pandas()    # python -->
 <!-- ``` -->
@@ -1052,8 +984,8 @@ diamonds %>%
 
 <!-- ###### xxxx -->
 
-<!-- :::::::::::::: {.columns} -->
-<!-- ::: {.column width="49%"} -->
+<!-- :::::::::::::: {.grid} -->
+<!-- ::: {.g-col-6} -->
 <!-- ```{r} -->
 <!-- diamonds     # r code -->
 <!-- ``` -->
@@ -1061,7 +993,7 @@ diamonds %>%
 <!-- ::: {.column width="2%"} -->
 <!-- <!-- empty column to create gap --> -->
 <!-- ::: -->
-<!-- ::: {.column width="49%"} -->
+<!-- ::: {.g-col-6} -->
 <!-- ```{python} -->
 <!-- diamonds_polars.to_pandas()    # python -->
 <!-- ``` -->

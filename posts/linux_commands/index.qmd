@@ -134,6 +134,22 @@ sudo find /tmp -type f -atime +10 -exec du {} + | awk '{ total += $1 }; END { pr
 # du -k -d1 * | sort -nr | cut -f2 | xargs -d '\n' du -sh
 ```
 
+
+## Devices
+
+List mountable devices
+``` sh
+sudo lshw -class disk -short
+```
+
+``` sh
+lsblk
+```
+
+
+
+
+
 ## X2GO commands
 
 List sessions
