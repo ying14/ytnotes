@@ -91,7 +91,7 @@ cran.pkgs <- c(
   "BiocManager", # installer for Bioconductor
   "DT",          # datatables
   "shiny",       # interactivity in R
-  "usethis",     # package development
+  "usethis"     # package development
 )
 install.packages(cran.pkgs)
 
@@ -110,14 +110,15 @@ optional.pkgs <- c(
   "umap",
   "rjson",
   "plyr",
-  "xlsx",
   "ggrepel",
   "ggfittext",
   "shinycssloaders",
   "shinyvalidate",
   "ggiraph",
   "RJDBC",
-  "patchwork"
+  "patchwork",
+  "openxlsx2",
+  "ssh"
 )
 install.packages(optional.pkgs)
 

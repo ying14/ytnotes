@@ -11,67 +11,119 @@ image: "thumbnail.jpg"
 
 ### Github Commands
 
+File status:
+
+1. clean pull
+2. unstaged changes (modifying new files, adding new files)
+3. staged changes (`git stage -A`)
+4. committed changes (`git commit -m "message"`)
+5. pushed changes (`git push`)
+
 Download repository
 
 ``` bash
 git clone https://github.com/ying14/yingtools2
 ```
 
-Inspect origins
+Get information
 
 ``` bash
-git remote -v
-```
+# view repository
+git remote -v    
 
-Shows what branch we are on, and which files have changed, whether staged or not.
-
-``` bash
+# view unstaged changes, staged changes, commits
 git status
+
+# show changes
+git diff
+
+# show recent commits (including remote and local unpushed)
+git log 
+
+# sequence of events
+git reflog 
+
+# list local and remote branches
+git branch -a 
 ```
 
-Stage changes
+
+
+Stage changes (2&rarr;3)
 
 ``` bash
+# add all
+git add -A
+
+# add file
 git add README.md
 ```
 
-Undo staging
 
-``` bash
-git reset HEAD README.md
-```
 
-Stage changes
-
-``` bash
-git add --all
-```
-
-`git add README.md` for a specific file
-
-Commit staged changes
+Commit staged changes (3&rarr;4)
 
 ``` bash
 git commit -m 'message'
 ```
 
-Push committed changes
+Push committed changes (4&rarr;5)
 
 ``` bash
 git push
 ```
 
-Pull committed changes
+Pull committed changes (1)
 
 ``` bash
 git pull
 ```
 
-Log of changes, with hash
+
+
+Undo Unstaged changes (2&rarr;1)
+``` bash
+# undo all file changes
+git checkout -- . 
+
+# undo all new files
+git clean -df
+
+# undo specific file changes
+git checkout README.md
+```
+
+Undo staging (3&rarr;2)
+``` bash
+# remove all staging 
+git reset
+
+# un-stage specific file
+git reset README.md
+```
+
+Remove commit (34&rarr;2)
 
 ``` bash
-git log
+#undo last commit
+git reset HEAD~1
 ```
+
+Undo committed changes (234&rarr;1)
+
+``` bash
+#undo last commit
+git reset --hard HEAD~1
+
+```
+
+Go back to last push (2345&rarr;1)
+``` bash
+#undo last commit
+git reset --hard origin/main
+
+```
+
 
 fresh install of repo
 
