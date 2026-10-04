@@ -1,0 +1,14 @@
+{
+  "hash": "69127e1a1afaa8784712df67e12de5d1",
+  "result": {
+    "markdown": "---\ntitle: Datatable notes\ndescription: Command reference for the `datatable` package\nformat: html\neditor: source\ncategories: [r]\ntoc: true\ntoc-depth: 6\ntoc-location: right\nfontsize: small #small, medium, large, 1.2em, 12px, ...\nexecute:\n  echo: true #whether to include code block\n  eval: false #whether to run code\n  warning: false #include warnings\n  error: false #include errors\n  output: false #include output\n  # include: false #catch all for  preventing any results (code + results)\nimage: \"thumbnail.jpg\"\nfilters:\n  - comparison-grid.lua\n---\n\n\n### Load data\n\n###### R / tidyverse\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\ndiamonds\nband_members\nband_instruments\n```\n:::\n\n\n###### R / data.table\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(data.table)\ndiamonds.dt <- as.data.table(diamonds)\nband_members.dt <- as.data.table(band_members)\nband_instruments.dt <- as.data.table(band_instruments)\n```\n:::\n\n\n###### Python / Polars\n\n::: {.cell}\n\n```{.python .cell-code}\nimport polars as pl\ndiamonds_polars = pl.from_pandas(r.diamonds)\nband_members_polars = pl.from_pandas(r.band_members)\nband_instruments_polars = pl.from_pandas(r.band_instruments)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

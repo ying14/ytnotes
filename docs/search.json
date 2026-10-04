@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "YT Notes",
     "section": "",
-    "text": "Datatable notes\n\n\n\n\n\n\n\nr\n\n\n\n\nCommand reference for the datatable package\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nGit commands\n\n\n\n\n\n\n\nterminal\n\n\n\n\nCommonly used git commands\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nLinux Commands\n\n\n\n\n\n\n\nterminal\n\n\nlinux\n\n\n\n\nUseful Linux terminal commands\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nMiniconda3 commands\n\n\n\n\n\n\n\nterminal\n\n\n\n\nTypical terminal commands for Miniconda 3\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nModelling\n\n\n\n\n\n\n\nr\n\n\n\n\nCode recipes for modelling in R\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nPolars notes\n\n\n\n\n\n\n\nr\n\n\npython\n\n\n\n\nCommand reference for the polars Python package, with R equivalents\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nQuarto Cheatsheet\n\n\n\n\n\n\n\nquarto\n\n\n\n\nBasic Quarto syntax\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nR install notes\n\n\n\n\n\n\n\nr\n\n\nterminal\n\n\nwindows\n\n\nmac\n\n\nlinux\n\n\n\n\nNotes on how to install R and RStudio, specific to each platform.\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nSQL Commands\n\n\n\n\n\n\n\nsql\n\n\n\n\nA listing of some useful SQL commands\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nWSL2 Notes\n\n\n\n\n\n\n\nterminal\n\n\nwindows\n\n\nlinux\n\n\n\n\nUseful WSL2 commands\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nWebscraping in R\n\n\n\n\n\n\n\nr\n\n\n\n\nHow to perform webscraping in R, using the rvest package\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\nNo matching items"
+    "text": "Datatable notes\n\n\n\n\n\n\n\nr\n\n\n\n\nCommand reference for the datatable package\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nDatatable notes\n\n\n\n\n\n\n\nr\n\n\n\n\nCommand reference for the datatable package\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nGit commands\n\n\n\n\n\n\n\nterminal\n\n\n\n\nCommonly used git commands\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nLinux Commands\n\n\n\n\n\n\n\nterminal\n\n\nlinux\n\n\n\n\nUseful Linux terminal commands\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nMiniconda3 commands\n\n\n\n\n\n\n\nterminal\n\n\n\n\nTypical terminal commands for Miniconda 3\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nModelling\n\n\n\n\n\n\n\nr\n\n\n\n\nCode recipes for modelling in R\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nPolars notes\n\n\n\n\n\n\n\nr\n\n\npython\n\n\n\n\nCommand reference for the polars Python package, with R equivalents\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nQuarto Cheatsheet\n\n\n\n\n\n\n\nquarto\n\n\n\n\nBasic Quarto syntax\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nR install notes\n\n\n\n\n\n\n\nr\n\n\nterminal\n\n\nwindows\n\n\nmac\n\n\nlinux\n\n\n\n\nNotes on how to install R and RStudio, specific to each platform.\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nSQL Commands\n\n\n\n\n\n\n\nsql\n\n\n\n\nA listing of some useful SQL commands\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nWSL2 Notes\n\n\n\n\n\n\n\nterminal\n\n\nwindows\n\n\nlinux\n\n\n\n\nUseful WSL2 commands\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\n  \n\n\n\n\nWebscraping in R\n\n\n\n\n\n\n\nr\n\n\n\n\nHow to perform webscraping in R, using the rvest package\n\n\n\n\n\n\nYing Taur\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "other/slides/index.html#quarto",
@@ -572,5 +572,19 @@
     "title": "Datatable notes 2",
     "section": "",
     "text": "and here\nMore text"
+  },
+  {
+    "objectID": "posts/datatable2/index.html",
+    "href": "posts/datatable2/index.html",
+    "title": "Datatable notes",
+    "section": "",
+    "text": "Load data\n\nR / tidyverse\n\nlibrary(tidyverse)\ndiamonds\nband_members\nband_instruments\n\n\n\nR / data.table\n\nlibrary(data.table)\ndiamonds.dt &lt;- as.data.table(diamonds)\nband_members.dt &lt;- as.data.table(band_members)\nband_instruments.dt &lt;- as.data.table(band_instruments)\n\n\n\nPython / Polars\n\nimport polars as pl\ndiamonds_polars = pl.from_pandas(r.diamonds)\nband_members_polars = pl.from_pandas(r.band_members)\nband_instruments_polars = pl.from_pandas(r.band_instruments)"
+  },
+  {
+    "objectID": "posts/datatable2/index.html#heading-2",
+    "href": "posts/datatable2/index.html#heading-2",
+    "title": "Datatable notes",
+    "section": "Heading 2",
+    "text": "Heading 2\n\nLoad package and data\n\n\n\nlibrary(tidyverse)\ndiamonds\nband_members\nband_instruments\n\n\n\n\nlibrary(data.table)\ndiamonds.dt &lt;- as.data.table(diamonds)\nband_members.dt &lt;- as.data.table(band_members)\nband_instruments.dt &lt;- as.data.table(band_instruments)"
   }
 ]

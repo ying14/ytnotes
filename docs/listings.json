@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/datatable/index.html",
+      "/posts/datatable2/index.html",
       "/posts/git_commands/index.html",
       "/posts/linux_commands/index.html",
       "/posts/miniconda/index.html",
